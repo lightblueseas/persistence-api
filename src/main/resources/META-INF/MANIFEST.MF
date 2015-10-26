@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Built-By: asterios
+Build-Jdk: 1.7.0_15
+
