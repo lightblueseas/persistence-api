@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
+	<packaging>pom</packaging>
 	<version>3.0.0</version>
 	
 	<name>${project.artifactId}</name>
@@ -25,6 +26,23 @@
 		<developerConnection>scm:git:git@github.com:lightblueseas/persistence-api.git</developerConnection>
 		<url>git:@github.com:lightblueseas/persistence-api.git</url>
 	</scm>
+	
+	<ciManagement>
+		<system>travis-ci</system>
+		<url>https://travis-ci.org/lightblueseas/persistence-api</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/lightblueseas/persistence-api/issues</url>
+	</issueManagement>
+
+	<modules>
+		<module>business-api</module>
+		<module>data-api</module>
+		<module>data-usertype</module>
+		<module>data-initialization</module>
+	</modules>
 
 	<properties>
 		<!-- JAVAX.INJECT version -->
@@ -144,5 +162,5 @@
 
 		</plugins>
 	</build>
-
+	
 </project>
