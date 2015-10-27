@@ -12,11 +12,12 @@
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
 	<version>3.0.0</version>
+	<inceptionYear>2015</inceptionYear>
 	
 	<name>${project.artifactId}</name>
 	
 	<description>
-		Project for that holds base classes for persistence like base entity or base business objects and mapper for mapping between them.
+		Parent project that holds module projects for base classes for persistence like base entity or base business objects and mapper for mapping between them.
 	</description>
 
 	<url>https://github.com/lightblueseas/persistence-api</url>
