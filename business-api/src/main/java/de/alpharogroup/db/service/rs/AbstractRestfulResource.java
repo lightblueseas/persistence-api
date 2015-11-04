@@ -7,10 +7,10 @@ import de.alpharogroup.db.service.entitymapper.BusinessMapperService;
 import lombok.Getter;
 import lombok.Setter;
 
-public class AbstractRestfulResource<PK extends Serializable, BO extends BusinessObject<PK>> implements RestfulResource<PK, BO> {
+public class AbstractRestfulResource<PK extends Serializable, BO extends BusinessObject<PK>, BMS extends BusinessMapperService<PK, BO>> implements RestfulResource<PK, BO> {
 	@Getter
 	@Setter
-	private BusinessMapperService<PK, BO> businessMapperService;
+	private BMS businessMapperService;
 	
 	@Override
 	public BO read(PK id) {
