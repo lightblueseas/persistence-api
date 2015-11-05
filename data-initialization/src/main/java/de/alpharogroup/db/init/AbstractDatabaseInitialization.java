@@ -22,23 +22,55 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
 import org.hibernate.engine.jdbc.internal.Formatter;
 
+/**
+ * The abstract class {@link AbstractDatabaseInitialization} for initialize a database.
+ */
 public abstract class AbstractDatabaseInitialization
 {
 
+	/** The Constant DELETE_PROCESS. */
 	protected static final String DELETE_PROCESS = "delete";
+
+	/** The Constant CREATE_PROCESS. */
 	protected static final String CREATE_PROCESS = "create";
+
+	/** The Constant DROP_PROCESS. */
 	protected static final String DROP_PROCESS = "drop";
+
+	/** The database properties. */
 	protected final Properties databaseProperties;
+
+	/** The host. */
 	protected String host;
+
+	/** The database name. */
 	protected String databaseName;
+
+	/** The database user. */
 	protected String databaseUser;
+
+	/** The database password. */
 	protected String databasePassword;
+
+	/** The initialization process. */
 	protected String initializationProcess;
+
+	/** The file encoding. */
 	protected String fileEncoding;
+
+	/** The log. */
 	protected boolean log;
+
+	/** The postgres database. */
 	protected boolean postgresDatabase;
 
-	public AbstractDatabaseInitialization(Properties databaseProperties)
+	/**
+	 * Instantiates a new {@link AbstractDatabaseInitialization}.
+	 *
+	 * @param databaseProperties
+	 *            the database properties
+	 */
+	public AbstractDatabaseInitialization(final Properties databaseProperties)
 	{
 		this.databaseProperties = databaseProperties;
 		host = databaseProperties.getProperty("jdbc.host");
@@ -48,8 +80,8 @@ public abstract class AbstractDatabaseInitialization
 		initializationProcess = databaseProperties.getProperty("jdbc.create.db.process");
 		fileEncoding = databaseProperties.getProperty("jdbc.file.encoding");
 		log = BooleanUtils.toBoolean(databaseProperties.getProperty("jdbc.show.sql.log"));
-		String vendor = databaseProperties.getProperty("jdbc.db.vendor");
-		if (vendor != null && !vendor.isEmpty())
+		final String vendor = databaseProperties.getProperty("jdbc.db.vendor");
+		if ((vendor != null) && !vendor.isEmpty())
 		{
 			postgresDatabase = BooleanUtils.toBoolean(vendor);
 		}
@@ -59,15 +91,224 @@ public abstract class AbstractDatabaseInitialization
 		}
 	}
 
+	/**
+	 * Creates the initialization script.
+	 *
+	 * @param processtype
+	 *            the processtype
+	 * @return true, if successful
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	protected boolean createInitializationScript(final String processtype) throws IOException
+	{
+		// Get the sql dir...
+		final File sqlDir = getSqlDir();
+		final File insertsDir = getInsertDir();
+		final StringBuilder sb = new StringBuilder();
+		final Formatter formatter = new DDLFormatterImpl();
+		final File schema = new File(sqlDir, "schema.sql");
+		if (postgresDatabase)
+		{
+			final String result = replaceMediumblobToBytea(schema);
+			sb.append(formatter.format(result));
+		}
+		else
+		{
+			final String result = ReadFileUtils.readFromFile(schema);
+			sb.append(formatter.format(result));
+		}
+		sb.append(System.getProperty("line.separator"));
+		sb.append(System.getProperty("line.separator"));
+		if (processtype.equals(DELETE_PROCESS))
+		{
+			final File createEnums = new File(sqlDir, "createEnumTypes.sql");
+			if (createEnums.exists())
+			{
+				final String result = ReadFileUtils.readFromFile(createEnums);
+				sb.append(result);
+				sb.append(System.getProperty("line.separator"));
+			}
+			final File updateEnums = new File(sqlDir, "updateEnumFields.sql");
+			if (updateEnums.exists())
+			{
+				final String result = ReadFileUtils.readFromFile(updateEnums);
+				sb.append(result);
+				sb.append(System.getProperty("line.separator"));
+			}
+		}
+		final File createIndexesAndForeignKeys = new File(sqlDir, "createIndexesAndForeignKeys.sql");
+		if (createIndexesAndForeignKeys.exists())
+		{
+			final String result = ReadFileUtils.readFromFile(createIndexesAndForeignKeys);
+			sb.append(result);
+		}
+		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
+		final boolean writen = WriteFileUtils.writeStringToFile(initializeSchemaDdl, sb.toString(),
+			fileEncoding);
+		return writen;
+	}
+
+	/**
+	 * Creates the schema.
+	 *
+	 * @param jdbcConnection
+	 *            the jdbc connection
+	 * @param processtype
+	 *            the processtype
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws SQLException
+	 *             the SQL exception
+	 */
+	protected void createSchema(final Connection jdbcConnection, final String processtype)
+		throws FileNotFoundException, IOException, SQLException
+	{
+		initializeScriptFiles();
+		final boolean writen = createInitializationScript(processtype);
+
+		if (writen)
+		{
+			System.err.println(writen);
+		}
+		createSchemaFromScript(jdbcConnection);
+	}
+
+	/**
+	 * Creates the initialization script for the schema.
+	 *
+	 * @param jdbcConnection
+	 *            the jdbc connection
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws SQLException
+	 *             Signals that an sql error has occurred.
+	 */
+	protected void createSchemaFromScript(final Connection jdbcConnection) throws IOException,
+		SQLException
+	{
+		final File insertsDir = getInsertDir();
+		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
+		final String result = ReadFileUtils.readFromFile(initializeSchemaDdl);
+		ConnectionsUtils.executeSqlScript(jdbcConnection, result, log);
+	}
+
+	/**
+	 * Deletes and creates an empty database without tables so without creating the database schema.
+	 *
+	 * @throws ClassNotFoundException
+	 *             occurs if a class has not been found
+	 * @throws SQLException
+	 *             Signals that an sql error has occurred.
+	 */
+	protected void deleteAndCreateEmptyDatabaseWithoutTables() throws ClassNotFoundException,
+		SQLException
+	{
+		ConnectionsUtils.dropPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword);
+		newEmptyDatabaseWithoutTables();
+	}
+
+	/**
+	 * Drops all tables and sequences.
+	 *
+	 * @param jdbcConnection
+	 *            the jdbc connection
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws SQLException
+	 *             Signals that an sql error has occurred.
+	 */
+	protected void dropTablesAndSequences(final Connection jdbcConnection) throws IOException,
+		SQLException
+	{
+		final File projectDir = PathFinder.getProjectDirectory();
+		final File dropSchemaSqlFile = PathFinder.getRelativePathTo(projectDir, "/",
+			"src/main/resources/dll", "dropSchema.sql");
+		if (!dropSchemaSqlFile.exists())
+		{
+			CreateFileUtils.newFileQuietly(dropSchemaSqlFile);
+		}
+		ConnectionsUtils.executeSqlScript(
+			(BufferedReader)StreamUtils.getReader(dropSchemaSqlFile, fileEncoding, false),
+			jdbcConnection, log);
+	}
+
+	/**
+	 * Gets the database properties.
+	 *
+	 * @return the database properties
+	 */
 	public Properties getDatabaseProperties()
 	{
 		return databaseProperties;
 	}
 
+	/**
+	 * Gets the insert dir.
+	 *
+	 * @return the insert dir
+	 */
+	protected File getInsertDir()
+	{
+		final File insertsDir = new File(getSqlDir(), "inserts");
+		return insertsDir;
+	}
 
+	/**
+	 * Gets the process type to execute. Default is the 'drop' process type.
+	 *
+	 * @return the process type
+	 */
+	protected String getProcessType()
+	{
+		String processtype = DROP_PROCESS;
+		if (initializationProcess != null)
+		{
+			final String arg = initializationProcess;
+			if (arg.equals(DELETE_PROCESS) || arg.equals(DROP_PROCESS))
+			{
+				processtype = arg;
+			}
+		}
+		return processtype;
+	}
+
+	/**
+	 * Gets the script files.
+	 *
+	 * @return the script files
+	 */
+	protected abstract List<File> getScriptFiles();
+
+	/**
+	 * Gets the sql dir.
+	 *
+	 * @return the sql dir
+	 */
+	protected File getSqlDir()
+	{
+		// The resources destination dir
+		final File resDestDir = PathFinder.getSrcMainResourcesDir();
+		// Get the sql dir...
+		final File sqlDir = new File(resDestDir, "dll");
+		return sqlDir;
+	}
+
+	/**
+	 * Initialize database.
+	 *
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public void initializeDatabase() throws ClassNotFoundException, SQLException, IOException
 	{
-		String processtype = getProcessType();
+		final String processtype = getProcessType();
 
 		if (processtype.equals(DELETE_PROCESS))
 		{
@@ -88,85 +329,10 @@ public abstract class AbstractDatabaseInitialization
 			initializeDatabase(jdbcConnection);
 			// close connection...
 		}
-
 	}
 
 	/**
-	 * Gets the process type to execute. Default is the 'drop' process type.
-	 *
-	 * @return the process type
-	 */
-	protected String getProcessType()
-	{
-		String processtype = DROP_PROCESS;
-		if (initializationProcess != null)
-		{
-			String arg = initializationProcess;
-			if (arg.equals(DELETE_PROCESS) || arg.equals(DROP_PROCESS))
-			{
-				processtype = arg;
-			}
-		}
-		return processtype;
-	}
-
-	/**
-	 * Deletes and creates an empty database without tables so without creating the database schema.
-	 * 
-	 * @throws ClassNotFoundException
-	 *             occurs if a class has not been found
-	 * @throws SQLException
-	 *             Signals that an sql error has occurred.
-	 */
-	protected void deleteAndCreateEmptyDatabaseWithoutTables() throws ClassNotFoundException,
-		SQLException
-	{
-		ConnectionsUtils.dropPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword);
-		newEmptyDatabaseWithoutTables();
-	}
-
-	/**
-	 * Creates an empty database without tables and no database schema.
-	 * 
-	 * @throws ClassNotFoundException
-	 *             occurs if a class has not been found
-	 * @throws SQLException
-	 *             Signals that an sql error has occurred.
-	 */
-	protected void newEmptyDatabaseWithoutTables() throws ClassNotFoundException, SQLException
-	{
-		ConnectionsUtils.newPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword,
-			"", "");
-	}
-
-
-	/**
-	 * Gets the insert dir.
-	 * 
-	 * @return the insert dir
-	 */
-	protected File getInsertDir()
-	{
-		final File insertsDir = new File(getSqlDir(), "inserts");
-		return insertsDir;
-	}
-
-	/**
-	 * Gets the sql dir.
-	 * 
-	 * @return the sql dir
-	 */
-	protected File getSqlDir()
-	{
-		// The resources destination dir
-		final File resDestDir = PathFinder.getSrcMainResourcesDir();
-		// Get the sql dir...
-		final File sqlDir = new File(resDestDir, "dll");
-		return sqlDir;
-	}
-
-	/**
-	 * Drops all tables and sequences.
+	 * Initialize database.
 	 *
 	 * @param jdbcConnection
 	 *            the jdbc connection
@@ -175,100 +341,18 @@ public abstract class AbstractDatabaseInitialization
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void dropTablesAndSequences(final Connection jdbcConnection) throws IOException,
+	protected void initializeDatabase(final Connection jdbcConnection) throws IOException,
 		SQLException
 	{
-		File projectDir = PathFinder.getProjectDirectory();
-		File dropSchemaSqlFile = PathFinder.getRelativePathTo(projectDir, "/",
-			"src/main/resources/dll", "dropSchema.sql");
-		if (!dropSchemaSqlFile.exists())
+		final List<File> scriptFiles = getScriptFiles();
+		final int size = scriptFiles.size();
+		for (int i = 0; i < size; i++)
 		{
-			CreateFileUtils.newFileQuietly(dropSchemaSqlFile);
+			ConnectionsUtils.executeSqlScript(
+				(BufferedReader)StreamUtils.getReader(scriptFiles.get(i), fileEncoding, false),
+				jdbcConnection, log);
 		}
-		ConnectionsUtils.executeSqlScript(
-			(BufferedReader)StreamUtils.getReader(dropSchemaSqlFile, fileEncoding, false),
-			jdbcConnection, log);
 	}
-
-	/**
-	 * Creates the initialization script.
-	 *
-	 * @param processtype
-	 *            the processtype
-	 * @return true, if successful
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	protected boolean createInitializationScript(String processtype) throws IOException
-	{
-		// Get the sql dir...
-		final File sqlDir = getSqlDir();
-		final File insertsDir = getInsertDir();
-		StringBuilder sb = new StringBuilder();
-		Formatter formatter = new DDLFormatterImpl();
-		File schema = new File(sqlDir, "schema.sql");
-		if (postgresDatabase)
-		{
-			String result = replaceMediumblobToBytea(schema);
-			sb.append(formatter.format(result));
-		}
-		else
-		{
-			String result = ReadFileUtils.readFromFile(schema);
-			sb.append(formatter.format(result));
-		}
-		sb.append(System.getProperty("line.separator"));
-		sb.append(System.getProperty("line.separator"));
-		if (processtype.equals(DELETE_PROCESS))
-		{
-			File createEnums = new File(sqlDir, "createEnumTypes.sql");
-			if (createEnums.exists())
-			{
-				String result = ReadFileUtils.readFromFile(createEnums);
-				sb.append(result);
-				sb.append(System.getProperty("line.separator"));
-			}
-			File updateEnums = new File(sqlDir, "updateEnumFields.sql");
-			if (updateEnums.exists())
-			{
-				String result = ReadFileUtils.readFromFile(updateEnums);
-				sb.append(result);
-				sb.append(System.getProperty("line.separator"));
-			}
-		}
-		File createIndexesAndForeignKeys = new File(sqlDir, "createIndexesAndForeignKeys.sql");
-		if (createIndexesAndForeignKeys.exists())
-		{
-			String result = ReadFileUtils.readFromFile(createIndexesAndForeignKeys);
-			sb.append(result);
-		}
-		File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
-		boolean writen = WriteFileUtils.writeStringToFile(initializeSchemaDdl, sb.toString(),
-			fileEncoding);
-		return writen;
-	}
-
-	protected String replaceMediumblobToBytea(File schema) throws IOException
-	{
-		String contentSchema = ReadFileUtils.readFromFile(schema);
-		String result = StringUtils.replace(contentSchema, "MEDIUMBLOB", "BYTEA");
-		WriteFileUtils.writeStringToFile(schema, result, "UTF-8");
-		return result;
-	}
-
-	protected void createSchema(Connection jdbcConnection, String processtype)
-		throws FileNotFoundException, IOException, SQLException
-	{
-		initializeScriptFiles();
-		boolean writen = createInitializationScript(processtype);
-
-		if (writen)
-		{
-			System.err.println(writen);
-		}
-		createSchemaFromScript(jdbcConnection);
-	}
-
 
 	/**
 	 * Initialize the script files from the generated schema file from the hibernate3-maven-plugin.
@@ -280,22 +364,22 @@ public abstract class AbstractDatabaseInitialization
 	 */
 	protected void initializeScriptFiles() throws FileNotFoundException, IOException
 	{
-		File projectDir = PathFinder.getProjectDirectory();
-		File schemaDllDir = PathFinder.getRelativePathTo(projectDir, "/", "target/hibernate3/sql",
+		final File projectDir = PathFinder.getProjectDirectory();
+		final File schemaDllDir = PathFinder.getRelativePathTo(projectDir, "/", "target/hibernate3/sql",
 			"schema.ddl");
 		if (schemaDllDir.exists())
 		{
-			File schemaSqlDir = PathFinder.getRelativePathTo(projectDir, "/",
+			final File schemaSqlDir = PathFinder.getRelativePathTo(projectDir, "/",
 				"src/main/resources/dll", "schema.sql");
-			File dropSchemaSqlDir = PathFinder.getRelativePathTo(projectDir, "/",
+			final File dropSchemaSqlDir = PathFinder.getRelativePathTo(projectDir, "/",
 				"src/main/resources/dll", "dropSchema.sql");
-			File createIndexesAndForeignKeys = PathFinder.getRelativePathTo(projectDir, "/",
+			final File createIndexesAndForeignKeys = PathFinder.getRelativePathTo(projectDir, "/",
 				"src/main/resources/dll", "createIndexesAndForeignKeys.sql");
-			List<String> lines = ReadFileUtils.readLinesInList(schemaDllDir);
-			List<String> dropTables = new ArrayList<>();
-			List<String> createTables = new ArrayList<>();
-			List<String> createIndexesAndAlterTable = new ArrayList<>();
-			for (String currentLine : lines)
+			final List<String> lines = ReadFileUtils.readLinesInList(schemaDllDir);
+			final List<String> dropTables = new ArrayList<>();
+			final List<String> createTables = new ArrayList<>();
+			final List<String> createIndexesAndAlterTable = new ArrayList<>();
+			for (final String currentLine : lines)
 			{
 				if (currentLine.startsWith("alter table")
 					&& currentLine.contains("drop constraint"))
@@ -326,49 +410,34 @@ public abstract class AbstractDatabaseInitialization
 	}
 
 	/**
-	 * Creates the initialization script for the schema.
-	 * 
-	 * @param jdbcConnection
-	 *            the jdbc connection
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * Creates an empty database without tables and no database schema.
+	 *
+	 * @throws ClassNotFoundException
+	 *             occurs if a class has not been found
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void createSchemaFromScript(final Connection jdbcConnection) throws IOException,
-		SQLException
+	protected void newEmptyDatabaseWithoutTables() throws ClassNotFoundException, SQLException
 	{
-		final File insertsDir = getInsertDir();
-		File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
-		String result = ReadFileUtils.readFromFile(initializeSchemaDdl);
-		ConnectionsUtils.executeSqlScript(jdbcConnection, result, log);
+		ConnectionsUtils.newPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword,
+			"", "");
 	}
 
-
-	protected abstract List<File> getScriptFiles();
-
-
 	/**
-	 * Initialize database.
-	 * 
-	 * @param jdbcConnection
-	 *            the jdbc connection
+	 * Replace mediumblob to bytea.
+	 *
+	 * @param schema
+	 *            the schema
+	 * @return the string
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
-	 * @throws SQLException
-	 *             Signals that an sql error has occurred.
 	 */
-	protected void initializeDatabase(final Connection jdbcConnection) throws IOException,
-		SQLException
+	protected String replaceMediumblobToBytea(final File schema) throws IOException
 	{
-		List<File> scriptFiles = getScriptFiles();
-		int size = scriptFiles.size();
-		for (int i = 0; i < size; i++)
-		{
-			ConnectionsUtils.executeSqlScript(
-				(BufferedReader)StreamUtils.getReader(scriptFiles.get(i), fileEncoding, false),
-				jdbcConnection, log);
-		}
+		final String contentSchema = ReadFileUtils.readFromFile(schema);
+		final String result = StringUtils.replace(contentSchema, "MEDIUMBLOB", "BYTEA");
+		WriteFileUtils.writeStringToFile(schema, result, "UTF-8");
+		return result;
 	}
 
 }

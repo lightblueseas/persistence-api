@@ -19,6 +19,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * The Class {@link BaseAttribute}.
+ *
+ * @param <T> the generic type
+ */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
@@ -31,6 +36,7 @@ public abstract class BaseAttribute<T extends Serializable> extends BaseEntity<T
 	/**  The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The attributes. */
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		      name="base_attributes",
