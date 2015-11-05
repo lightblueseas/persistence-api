@@ -22,5 +22,7 @@ public abstract class BaseBusinessObject<K> implements BusinessObject<K> {
 	private static final long serialVersionUID = 1L;
 	
 	/** The id. */
+	@Getter
+	@Setter
 	K id;
 }
