@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 	
 	<artifactId>data-initialization</artifactId>
@@ -15,19 +15,16 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
 		</dependency>
 		<!-- JAULP DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>jaulp.lang</artifactId>
-			<version>${jaulp.lang.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>jaulp.xml</artifactId>
-			<version>${jaulp.xml.version}</version>
 		</dependency>
 
 	</dependencies>
