@@ -43,6 +43,7 @@
 		<module>data-api</module>
 		<module>data-usertype</module>
 		<module>data-initialization</module>
+		<module>rest-api</module>
 	</modules>
 
 	<properties>
@@ -72,6 +73,12 @@
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>data-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>business-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- HIBERNATE DEPENDENCIES -->

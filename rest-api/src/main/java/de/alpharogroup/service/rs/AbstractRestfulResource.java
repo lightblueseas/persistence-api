@@ -1,4 +1,4 @@
-package de.alpharogroup.db.service.rs;
+package de.alpharogroup.service.rs;
 
 import java.io.Serializable;
 
