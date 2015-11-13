@@ -57,7 +57,7 @@
 		<!-- DB DRIVER version -->
 		<postgresql.version>9.2-1003-jdbc4</postgresql.version>
 		<!-- JAULP versions -->
-		<jaulp.core.version>4.2.0</jaulp.core.version>
+		<jaulp.core.version>4.3.0</jaulp.core.version>
 		<jaulp.lang.version>${jaulp.core.version}</jaulp.lang.version>
 		<jaulp.xml.version>${jaulp.core.version}</jaulp.xml.version>
 		<!-- EXTERNAL LIBRARIES versions -->
