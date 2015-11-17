@@ -4,55 +4,55 @@ import java.util.List;
 
 import org.dozer.MappingException;
 
-import de.alpharogroup.db.domain.BusinessObject;
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.domain.DomainObject;
 
 /**
  * The Interface {@link EntityBOMapper} provides the methods for mapping
- * entities to business objects and back.
+ * entities to domain objects and back.
  *
  * @param <E>
  *            the element type
  * @param <BO>
  *            the generic type
  */
-public interface EntityBOMapper<E extends BaseEntity<?>, BO extends BusinessObject<?>> {
+public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject<?>> {
 
 	/**
-	 * Maps the given entity object to a business object.
+	 * Maps the given entity object to a domain object.
 	 *
 	 * @param entity
 	 *            the entity
-	 * @return the business object
+	 * @return the domain object
 	 */
-	BO toBusinessObject(E entity);
+	BO toDomainObject(E entity);
 
 	/**
-	 * Maps the given list of entity objects to a list of business objects.
+	 * Maps the given list of entity objects to a list of domain objects.
 	 *
 	 * @param entities
 	 *            the entities
-	 * @return the list of business objects.
+	 * @return the list of domain objects.
 	 */
-	List<BO> toBusinessObjects(List<E> entities);
+	List<BO> toDomainObjects(List<E> entities);
 
 	/**
-	 * Maps the given list of business objects to a list of entity objects.
+	 * Maps the given list of domain objects to a list of entity objects.
 	 *
-	 * @param businessObjects
-	 *            the list of business objects
+	 * @param domainObjects
+	 *            the list of domain objects
 	 * @return the list of entity objects.
 	 */
-	List<E> toEntities(List<BO> businessObjects);
+	List<E> toEntities(List<BO> domainObjects);
 
 	/**
-	 * Maps the given business object to a entity object.
+	 * Maps the given domain object to a entity object.
 	 *
-	 * @param businessObject
-	 *            the business object
+	 * @param domainObject
+	 *            the domain object
 	 * @return the entity object
 	 */
-	E toEntity(BO businessObject);
+	E toEntity(BO domainObject);
 
 	/**
 	 * Constructs new instance of destinationClass and performs mapping between

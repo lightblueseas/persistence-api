@@ -8,21 +8,21 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.MappingException;
 
-import de.alpharogroup.db.domain.BusinessObject;
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsUtils;
 import lombok.Getter;
 
 /**
  * The abstract class {@link AbstractEntityBOMapper} provides an base
- * implementation for mapping entities to business objects and back.
+ * implementation for mapping entities to domain objects and back.
  *
  * @param <E>
  *            the element type
  * @param <BO>
  *            the generic type
  */
-public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends BusinessObject<?>>
+public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject<?>>
 		implements EntityBOMapper<E, BO> {
 
 	/**
@@ -37,10 +37,10 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractEntityBOMapper.class,
 			getClass(), 0);
 
-	/** The business object class. */
+	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<BO> businessObjectClass = (Class<BO>) TypeArgumentsUtils
+	private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsUtils
 			.getTypeArgument(AbstractEntityBOMapper.class, getClass(), 1);
 
 	/**
@@ -79,9 +79,9 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO toBusinessObject(final E entity) {
+	public BO toDomainObject(final E entity) {
 		if (entity != null) {
-			return this.mapper.map(entity, getBusinessObjectClass());
+			return this.mapper.map(entity, getDomainObjectClass());
 		}
 		return null;
 	}
@@ -90,25 +90,25 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<BO> toBusinessObjects(final List<E> entities) {
-		final List<BO> businessObjects = new ArrayList<>();
+	public List<BO> toDomainObjects(final List<E> entities) {
+		final List<BO> domainObjects = new ArrayList<>();
 		if ((entities != null) && !entities.isEmpty()) {
 			for (final E entity : entities) {
-				businessObjects.add(toBusinessObject(entity));
+				domainObjects.add(toDomainObject(entity));
 			}
 		}
-		return businessObjects;
+		return domainObjects;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> toEntities(final List<BO> businessObjects) {
+	public List<E> toEntities(final List<BO> domainObjects) {
 		final List<E> entities = new ArrayList<>();
-		if ((businessObjects != null) && !businessObjects.isEmpty()) {
-			for (final BO businessObject : businessObjects) {
-				entities.add(toEntity(businessObject));
+		if ((domainObjects != null) && !domainObjects.isEmpty()) {
+			for (final BO domainObject : domainObjects) {
+				entities.add(toEntity(domainObject));
 			}
 		}
 		return entities;
@@ -118,9 +118,9 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public E toEntity(final BO businessObject) {
-		if(businessObject != null) {
-			return this.mapper.map(businessObject, getEntityClass());
+	public E toEntity(final BO domainObject) {
+		if(domainObject != null) {
+			return this.mapper.map(domainObject, getEntityClass());
 		}
 		return null;
 	}

@@ -11,7 +11,7 @@
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.4.0</version>
+	<version>3.5.0</version>
 	<inceptionYear>2015</inceptionYear>
 	
 	<name>${project.artifactId}</name>
@@ -44,6 +44,7 @@
 		<module>data-usertype</module>
 		<module>data-initialization</module>
 		<module>rest-api</module>
+		<module>domain-api</module>
 	</modules>
 
 	<properties>
@@ -79,6 +80,12 @@
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>business-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>domain-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- HIBERNATE DEPENDENCIES -->

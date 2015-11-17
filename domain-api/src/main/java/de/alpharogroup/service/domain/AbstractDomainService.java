@@ -1,33 +1,33 @@
-package de.alpharogroup.db.service.entitymapper;
+package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
-import de.alpharogroup.db.domain.BusinessObject;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityBOMapper;
+import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.lang.TypeArgumentsUtils;
 
 /**
- * The Class {@link AbstractBusinessMapperService}.
+ * The Class {@link AbstractDomainService}.
  *
  * @param <PK> the generic type of the primary key
- * @param <BO> the generic type of the business object
+ * @param <BO> the generic type of the domain object
  * @param <E> the element type of the entity
  * @param <DAO> the generic type of the data transfer object
  * @param <M> the generic type of the entity mapper
  */
-public abstract class AbstractBusinessMapperService<
+public abstract class AbstractDomainService<
 PK extends Serializable, 
-BO extends BusinessObject<PK>, 
+BO extends DomainObject<PK>, 
 E extends BaseEntity<PK>, 
 DAO extends EntityManagerDao<E, PK>,
 M extends EntityBOMapper<E, BO>>
  implements
-		BusinessMapperService<PK, BO> {
+		DomainService<PK, BO> {
 	/** The dao reference. */
 	@Setter
 	@Getter
@@ -42,12 +42,12 @@ M extends EntityBOMapper<E, BO>>
     /** The entity class. */
     @SuppressWarnings("unchecked")
     @Getter
-    private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractBusinessMapperService.class, getClass(), 2);
+    private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractDomainService.class, getClass(), 2);
     
-    /** The business object class. */
+    /** The domain object class. */
     @SuppressWarnings("unchecked")
     @Getter
-    private final Class<BO> businessObjectClass = (Class<BO>) TypeArgumentsUtils.getTypeArgument(AbstractBusinessMapperService.class, getClass(), 1);
+    private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsUtils.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/**
 	 * {@inheritDoc}
@@ -55,26 +55,26 @@ M extends EntityBOMapper<E, BO>>
 	@Override
 	public BO read(PK id) {
 		E entity = dao.get(id);
-		return getMapper().toBusinessObject(entity);
+		return getMapper().toDomainObject(entity);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO create(BO businessObject) {
-		E entity = getMapper().toEntity(businessObject);
-		businessObject.setId(dao.save(entity));
-		return businessObject;
+	public BO create(BO domainObject) {
+		E entity = getMapper().toEntity(domainObject);
+		domainObject.setId(dao.save(entity));
+		return domainObject;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(BO businessObject) {
-		E entity = dao.get(businessObject.getId());
-		ObjectExtensions.copyQuietly(entity, businessObject);
+	public void update(BO domainObject) {
+		E entity = dao.get(domainObject.getId());
+		ObjectExtensions.copyQuietly(entity, domainObject);
 		dao.merge(entity);
 	}
 

@@ -5,18 +5,24 @@
     <artifactId>persistence-api</artifactId>
     <version>3.5.0</version>
   </parent>
-  <artifactId>rest-api</artifactId>
-
+  <artifactId>domain-api</artifactId>
+  
+  
 	<dependencies>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>domain-api</artifactId>
+			<artifactId>data-api</artifactId>
+		</dependency>
+		<!-- JAULP DEPENDENCIES -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jaulp.lang</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
 		</dependency>
 		
 	</dependencies>

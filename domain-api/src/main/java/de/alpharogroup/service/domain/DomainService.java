@@ -1,25 +1,18 @@
-package de.alpharogroup.service.rs;
+package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
-
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
 import de.alpharogroup.domain.DomainObject;
 
 /**
- * The Interface {@link RestfulResource}.
+ * The Interface {@link DomainService} provide methods for crud processes.
  *
  * @param <PK>
  *            the generic type of the primary key
- * @param <DO>
+ * @param <BO>
  *            the generic type of the domain object
  */
-public interface RestfulResource<PK extends Serializable, DO extends DomainObject<PK>> {
+public interface DomainService<PK extends Serializable, BO extends DomainObject<PK>> {
 
 	/**
 	 * Creates an entity from the given domain object and persist it to the underlying database.
@@ -28,9 +21,7 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 *            the domain object
 	 * @return the domain object with the id from the entity.
 	 */
-	@POST
-	@Path("/")
-	DO create(DO domainObject);
+	BO create(BO domainObject);
 
 	/**
 	 * Deletes an entity with the given id.
@@ -38,8 +29,6 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 * @param id
 	 *            the id
 	 */
-	@DELETE
-	@Path("/{id}/")
 	void delete(PK id);
 
 	/**
@@ -49,9 +38,7 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 *            the id
 	 * @return the domain object
 	 */
-	@GET
-	@Path("/{id}/")
-	DO read(@PathParam("id") PK id);
+	BO read(PK id);
 
 	/**
 	 * Updates the given domain object to the underlying database.
@@ -59,8 +46,6 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 * @param domainObject
 	 *            the domain object
 	 */
-	@PUT
-	@Path("/")
-	void update(DO domainObject);
+	void update(BO domainObject);
 
 }

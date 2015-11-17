@@ -1,13 +1,13 @@
-package de.alpharogroup.db.domain;
+package de.alpharogroup.domain;
 
 import java.io.Serializable;
 
 /**
- * Marker interface for business objects.
+ * Marker interface for domain objects.
  *
  * @param <K> the primary key type of the corresponding entity
  */
-public interface BusinessObject<K> extends Serializable {
+public interface DomainObject<K> extends Serializable {
 
 	/**
 	 * Gets the id.

@@ -1,4 +1,4 @@
-package de.alpharogroup.db.domain;
+package de.alpharogroup.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.ToString;
 
 
 /**
- * The abstract class BaseBusinessObject is the base class for all business objects.
+ * The abstract class {@link BaseDomainObject} is the base class for all domain objects.
  *
  * @param <K> the primary key type of the corresponding entity
  */
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class BaseBusinessObject<K> implements BusinessObject<K> {
+public abstract class BaseDomainObject<K> implements DomainObject<K> {
 	/**
 	 * The serialVersionUID.
 	 */
