@@ -2,12 +2,14 @@ package de.alpharogroup.db.entitymapper;
 
 import java.util.List;
 
+import org.dozer.MappingException;
+
 import de.alpharogroup.db.domain.BusinessObject;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The Interface {@link EntityBOMapper} provides the methods for mapping entities to business
- * objects and back.
+ * The Interface {@link EntityBOMapper} provides the methods for mapping
+ * entities to business objects and back.
  *
  * @param <E>
  *            the element type
@@ -51,5 +53,39 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends BusinessObje
 	 * @return the entity object
 	 */
 	E toEntity(BO businessObject);
+
+	/**
+	 * Constructs new instance of destinationClass and performs mapping between
+	 * from source
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param source
+	 *            the source
+	 * @param destinationClass
+	 *            the destination class
+	 * @return the new instance of destinationClass mapped to source object.
+	 * @throws MappingException
+	 *             is thrown if something goes wrong with the mapping process.
+	 */
+	<T, S> T map(S source, Class<T> destinationClass) throws MappingException;
+	
+	/**
+	 * Constructs new instances of destinationClass and performs mapping between
+	 * from source
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param source
+	 *            the list of source objects
+	 * @param destinationClass
+	 *            the destination class
+	 * @return the new instance of destinationClass mapped to source object.
+	 * @throws MappingException
+	 *             is thrown if something goes wrong with the mapping process.
+	 */
+	<T, S> List<T> map(List<S> sources, Class<T> destinationClass) throws MappingException;
+	
+	
 
 }

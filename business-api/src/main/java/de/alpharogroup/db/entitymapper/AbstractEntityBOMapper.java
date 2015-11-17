@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.dozer.MappingException;
 
 import de.alpharogroup.db.domain.BusinessObject;
 import de.alpharogroup.db.entity.BaseEntity;
@@ -27,35 +28,17 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	/**
 	 * The mapper instance.
 	 */
-
-	/**
-	 * Gets the mapper.
-	 *
-	 * @return the mapper
-	 */
 	@Getter
 	private final Mapper mapper;
 
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
-
-	/**
-	 * Gets the entity class.
-	 *
-	 * @return the entity class
-	 */
 	@Getter
 	private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractEntityBOMapper.class,
 			getClass(), 0);
 
 	/** The business object class. */
 	@SuppressWarnings("unchecked")
-
-	/**
-	 * Gets the business object class.
-	 *
-	 * @return the business object class
-	 */
 	@Getter
 	private final Class<BO> businessObjectClass = (Class<BO>) TypeArgumentsUtils
 			.getTypeArgument(AbstractEntityBOMapper.class, getClass(), 1);
@@ -140,6 +123,28 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 			return this.mapper.map(businessObject, getEntityClass());
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T, S> T map(S source, Class<T> destinationClass) throws MappingException {		
+		return getMapper().map(source, destinationClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T, S> List<T> map(List<S> sources, Class<T> destinationClass) throws MappingException {
+		final List<T> destination = new ArrayList<>();
+		if ((sources != null) && !sources.isEmpty()) {
+			for(final S source : sources) {
+				destination.add(map(source, destinationClass));
+			}
+		}
+		return destination;
 	}
 
 }
