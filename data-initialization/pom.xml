@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>3.5.0</version>
+		<version>3.6.0</version>
 	</parent>
-	
+
 	<artifactId>data-initialization</artifactId>
 
 	<dependencies>
@@ -16,17 +16,17 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
-		<!-- JAULP DEPENDENCIES -->
+		<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.lang</artifactId>
+			<artifactId>jcommons-lang</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.xml</artifactId>
+			<artifactId>xml-extensions</artifactId>
 		</dependency>
 
 	</dependencies>
-	
+
 </project>

@@ -5,17 +5,17 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>2.0.0</version>
+		<version>2.2.0</version>
 		<relativePath></relativePath>
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.5.0</version>
+	<version>3.6.0</version>
 	<inceptionYear>2015</inceptionYear>
-	
+
 	<name>${project.artifactId}</name>
-	
+
 	<description>
 		Parent project that holds module projects for base classes for persistence like base entity or base business objects and mapper for mapping between them.
 	</description>
@@ -27,7 +27,7 @@
 		<developerConnection>scm:git:git@github.com:lightblueseas/persistence-api.git</developerConnection>
 		<url>git:@github.com:lightblueseas/persistence-api.git</url>
 	</scm>
-	
+
 	<ciManagement>
 		<system>travis-ci</system>
 		<url>https://travis-ci.org/lightblueseas/persistence-api</url>
@@ -57,108 +57,99 @@
 		<spring.version>4.1.5.RELEASE</spring.version>
 		<!-- DB DRIVER version -->
 		<postgresql.version>9.2-1003-jdbc4</postgresql.version>
-		<!-- JAULP versions -->
-		<jaulp.core.version>4.3.0</jaulp.core.version>
-		<jaulp.lang.version>${jaulp.core.version}</jaulp.lang.version>
-		<jaulp.xml.version>${jaulp.core.version}</jaulp.xml.version>
+		<!-- NEW EXTENSIONS LIB versions -->
+		<extensions-lib.version>4.7.0</extensions-lib.version>
+		<jcommons-lang.version>${extensions-lib.version}</jcommons-lang.version>
+		<xml-extensions.version>${extensions-lib.version}</xml-extensions.version>
 		<!-- EXTERNAL LIBRARIES versions -->
 		<dozer.version>5.5.1</dozer.version>
 		<!-- REST-API versions -->
 		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
 	</properties>
-	
+
 	<dependencyManagement>
 
-	<dependencies>
+		<dependencies>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>data-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>data-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>business-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>business-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>domain-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!-- HIBERNATE DEPENDENCIES -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>domain-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- HIBERNATE DEPENDENCIES -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
 
-		<!-- SPRING DEPENDENCIES -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+			<!-- SPRING DEPENDENCIES -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<!-- DB DRIVER DEPENDENCIES -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
-		</dependency>
-		<!-- JAULP DEPENDENCIES -->
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.lang</artifactId>
-			<version>${jaulp.lang.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- DB DRIVER DEPENDENCIES -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			</dependency>
+			<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jcommons-lang</artifactId>
+				<version>${jcommons-lang.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.xml</artifactId>
-			<version>${jaulp.xml.version}</version>
-		</dependency>
-		<!-- DOZER DEPENDENCIES -->		
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
-			<version>${dozer.version}</version>
-		</dependency>
-		<!-- REST-API versions -->
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>${javax.ws.rs-api.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>xml-extensions</artifactId>
+				<version>${xml-extensions.version}</version>
+			</dependency>
+			<!-- DOZER DEPENDENCIES -->
+			<dependency>
+				<groupId>net.sf.dozer</groupId>
+				<artifactId>dozer</artifactId>
+				<version>${dozer.version}</version>
+			</dependency>
+			<!-- REST-API versions -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${javax.ws.rs-api.version}</version>
+			</dependency>
 
-	</dependencies>	
-	
+		</dependencies>
+
 	</dependencyManagement>
-
-	<dependencies>
-		<!-- LOMBOK DEPENDENCIES -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-
-	</dependencies>
 
 	<build>
 		<plugins>
-		
+
 			<plugin>
 				<inherited>true</inherited>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
@@ -169,5 +160,5 @@
 
 		</plugins>
 	</build>
-	
+
 </project>

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>3.5.0</version>
+		<version>3.6.0</version>
 	</parent>
 	
 	<artifactId>data-api</artifactId>
@@ -26,15 +26,15 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
-		<!-- JAULP DEPENDENCIES -->
+		<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.lang</artifactId>
+			<artifactId>jcommons-lang</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.xml</artifactId>
+			<artifactId>xml-extensions</artifactId>
 		</dependency>
 
 	</dependencies>
