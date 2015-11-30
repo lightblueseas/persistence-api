@@ -59,7 +59,9 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * from source
 	 *
 	 * @param <T>
-	 *            the generic type
+	 *            the generic type of the destinationClass
+	 * @param <S>
+	 *            the generic type of the source
 	 * @param source
 	 *            the source
 	 * @param destinationClass
@@ -75,8 +77,10 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * from source
 	 *
 	 * @param <T>
-	 *            the generic type
-	 * @param source
+	 *            the generic type of the destinationClass
+	 * @param <S>
+	 *            the generic type of the source
+	 * @param sources
 	 *            the list of source objects
 	 * @param destinationClass
 	 *            the destination class
