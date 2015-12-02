@@ -10,7 +10,7 @@ import org.dozer.MappingException;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.domain.DomainObject;
-import de.alpharogroup.lang.TypeArgumentsUtils;
+import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
 /**
@@ -34,13 +34,13 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractEntityBOMapper.class,
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractEntityBOMapper.class,
 			getClass(), 0);
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsUtils
+	private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsExtensions
 			.getTypeArgument(AbstractEntityBOMapper.class, getClass(), 1);
 
 	/**

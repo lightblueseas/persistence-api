@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import lombok.Getter;
 import lombok.Setter;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.lang.TypeArgumentsUtils;
+import de.alpharogroup.lang.TypeArgumentsExtensions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +25,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 
 	@Getter
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>) TypeArgumentsUtils.getFirstTypeArgument(JpaEntityManagerDao.class, this.getClass());
+	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(JpaEntityManagerDao.class, this.getClass());
 	
 	/** The data source. */
 	@Setter

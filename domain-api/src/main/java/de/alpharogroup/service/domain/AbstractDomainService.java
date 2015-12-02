@@ -9,7 +9,7 @@ import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityBOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.ObjectExtensions;
-import de.alpharogroup.lang.TypeArgumentsUtils;
+import de.alpharogroup.lang.TypeArgumentsExtensions;
 
 /**
  * The Class {@link AbstractDomainService}.
@@ -42,12 +42,12 @@ M extends EntityBOMapper<E, BO>>
     /** The entity class. */
     @SuppressWarnings("unchecked")
     @Getter
-    private final Class<E> entityClass = (Class<E>) TypeArgumentsUtils.getTypeArgument(AbstractDomainService.class, getClass(), 2);
+    private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 2);
     
     /** The domain object class. */
     @SuppressWarnings("unchecked")
     @Getter
-    private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsUtils.getTypeArgument(AbstractDomainService.class, getClass(), 1);
+    private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/**
 	 * {@inheritDoc}

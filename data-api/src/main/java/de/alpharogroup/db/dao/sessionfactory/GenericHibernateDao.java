@@ -7,7 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.lang.TypeArgumentsUtils;
+import de.alpharogroup.lang.TypeArgumentsExtensions;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -54,7 +54,7 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 
 	/** Class type. */
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>) TypeArgumentsUtils.getFirstTypeArgument(GenericHibernateDao.class, this.getClass());
+	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(GenericHibernateDao.class, this.getClass());
 
 	/**
 	 * {@inheritDoc}
