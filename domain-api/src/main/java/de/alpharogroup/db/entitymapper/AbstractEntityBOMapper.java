@@ -1,6 +1,7 @@
 package de.alpharogroup.db.entitymapper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<BO> toDomainObjects(final List<E> entities) {
+	public List<BO> toDomainObjects(final Collection<E> entities) {
 		final List<BO> domainObjects = new ArrayList<>();
 		if ((entities != null) && !entities.isEmpty()) {
 			for (final E entity : entities) {
@@ -104,7 +105,7 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> toEntities(final List<BO> domainObjects) {
+	public List<E> toEntities(final Collection<BO> domainObjects) {
 		final List<E> entities = new ArrayList<>();
 		if ((domainObjects != null) && !domainObjects.isEmpty()) {
 			for (final BO domainObject : domainObjects) {
@@ -137,7 +138,7 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T, S> List<T> map(List<S> sources, Class<T> destinationClass) throws MappingException {
+	public <T, S> List<T> map(Collection<S> sources, Class<T> destinationClass) throws MappingException {
 		final List<T> destination = new ArrayList<>();
 		if ((sources != null) && !sources.isEmpty()) {
 			for(final S source : sources) {

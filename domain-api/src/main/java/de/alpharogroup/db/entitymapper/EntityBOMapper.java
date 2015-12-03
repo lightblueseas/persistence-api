@@ -1,5 +1,6 @@
 package de.alpharogroup.db.entitymapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.dozer.MappingException;
@@ -34,7 +35,7 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the entities
 	 * @return the list of domain objects.
 	 */
-	List<BO> toDomainObjects(List<E> entities);
+	List<BO> toDomainObjects(Collection<E> entities);
 
 	/**
 	 * Maps the given list of domain objects to a list of entity objects.
@@ -43,7 +44,7 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the list of domain objects
 	 * @return the list of entity objects.
 	 */
-	List<E> toEntities(List<BO> domainObjects);
+	List<E> toEntities(Collection<BO> domainObjects);
 
 	/**
 	 * Maps the given domain object to a entity object.
@@ -81,14 +82,14 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @param <S>
 	 *            the generic type of the source
 	 * @param sources
-	 *            the list of source objects
+	 *            the collection of source objects
 	 * @param destinationClass
 	 *            the destination class
 	 * @return the new instance of destinationClass mapped to source object.
 	 * @throws MappingException
 	 *             is thrown if something goes wrong with the mapping process.
 	 */
-	<T, S> List<T> map(List<S> sources, Class<T> destinationClass) throws MappingException;
+	<T, S> List<T> map(Collection<S> sources, Class<T> destinationClass) throws MappingException;
 	
 	
 
