@@ -115,8 +115,8 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @return the new instance of destinationClass mapped to source object.
 	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
 	 */
-	default <T, S> T map(S source, Class<T> destinationClass) throws MappingException {		
-		return getMapper().map(source, destinationClass);
+	default <T, S> T map(S source, Class<T> destinationClass) throws MappingException {	
+		return MapperExtensions.map(getMapper(), source, destinationClass);
 	};
 	
 	/**
@@ -131,13 +131,7 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
 	 */
 	default <T, S> List<T> map(Collection<S> sources, Class<T> destinationClass) throws MappingException {
-		final List<T> destination = new ArrayList<>();
-		if ((sources != null) && !sources.isEmpty()) {
-			for(final S source : sources) {
-				destination.add(map(source, destinationClass));
-			}
-		}
-		return destination;
+		return MapperExtensions.map(getMapper(), sources, destinationClass);
 	};	
 
 }
