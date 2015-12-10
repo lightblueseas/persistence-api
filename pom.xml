@@ -11,7 +11,7 @@
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.8.0</version>
+	<version>3.9.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -45,6 +45,7 @@
 		<module>data-initialization</module>
 		<module>rest-api</module>
 		<module>domain-api</module>
+		<module>rest-client</module>
 	</modules>
 
 	<properties>
@@ -61,10 +62,15 @@
 		<extensions-lib.version>4.8.0</extensions-lib.version>
 		<jcommons-lang.version>${extensions-lib.version}</jcommons-lang.version>
 		<xml-extensions.version>${extensions-lib.version}</xml-extensions.version>
+		<silly-collections.version>${extensions-lib.version}</silly-collections.version>
 		<!-- EXTERNAL LIBRARIES versions -->
 		<dozer.version>5.5.1</dozer.version>
 		<!-- REST-API versions -->
 		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
+		<!-- CXF versions -->
+		<cxf.version>3.1.4</cxf.version>
+		<cxf-rt-rs-client.version>${cxf.version}</cxf-rt-rs-client.version>
+		<jackson-jaxrs-json-provider.version>2.6.3</jackson-jaxrs-json-provider.version>
 	</properties>
 
 	<dependencyManagement>
@@ -122,6 +128,12 @@
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
+				<artifactId>silly-collections</artifactId>
+				<version>${silly-collections.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
 				<artifactId>xml-extensions</artifactId>
 				<version>${xml-extensions.version}</version>
 			</dependency>
@@ -131,11 +143,23 @@
 				<artifactId>dozer</artifactId>
 				<version>${dozer.version}</version>
 			</dependency>
-			<!-- REST-API versions -->
+			<!-- REST-API DEPENDENCIES -->
 			<dependency>
 				<groupId>javax.ws.rs</groupId>
 				<artifactId>javax.ws.rs-api</artifactId>
 				<version>${javax.ws.rs-api.version}</version>
+			</dependency>
+			<!-- CXF DEPENDENCIES -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-rs-client</artifactId>
+				<version>${cxf-rt-rs-client.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${jackson-jaxrs-json-provider.version}</version>
 			</dependency>
 
 		</dependencies>
