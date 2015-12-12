@@ -12,16 +12,16 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
 /**
- * The abstract class {@link AbstractEntityBOMapper} provides an base
+ * The abstract class {@link AbstractEntityDOMapper} provides an base
  * implementation for mapping entities to domain objects and back.
  *
  * @param <E>
  *            the element type
- * @param <BO>
+ * @param <DO>
  *            the generic type
  */
-public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject<?>>
-		implements EntityBOMapper<E, BO> {
+public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>>
+		implements EntityDOMapper<E, DO> {
 
 	/**
 	 * The mapper instance.
@@ -32,29 +32,29 @@ public abstract class AbstractEntityBOMapper<E extends BaseEntity<?>, BO extends
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractEntityBOMapper.class,
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractEntityDOMapper.class,
 			this.getClass(), 0);
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsExtensions
-			.getTypeArgument(AbstractEntityBOMapper.class, this.getClass(), 1);
+	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
 
 	/**
-	 * Instantiates a new {@link AbstractEntityBOMapper}.
+	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 */
-	public AbstractEntityBOMapper() {
+	public AbstractEntityDOMapper() {
 		this(Collections.<String> emptyList());
 	}
 
 	/**
-	 * Instantiates a new {@link AbstractEntityBOMapper}.
+	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 *
 	 * @param mappingFiles
 	 *            the mapping files
 	 */
-	public AbstractEntityBOMapper(final List<String> mappingFiles) {
+	public AbstractEntityDOMapper(final List<String> mappingFiles) {
 		mapper = newMapper(mappingFiles);
 	}
 

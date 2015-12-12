@@ -9,10 +9,10 @@ import de.alpharogroup.domain.DomainObject;
  *
  * @param <PK>
  *            the generic type of the primary key
- * @param <BO>
+ * @param <DO>
  *            the generic type of the domain object
  */
-public interface DomainService<PK extends Serializable, BO extends DomainObject<PK>> {
+public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>> {
 
 	/**
 	 * Creates an entity from the given domain object and persist it to the underlying database.
@@ -21,7 +21,7 @@ public interface DomainService<PK extends Serializable, BO extends DomainObject<
 	 *            the domain object
 	 * @return the domain object with the id from the entity.
 	 */
-	BO create(BO domainObject);
+	DO create(DO domainObject);
 
 	/**
 	 * Deletes an entity with the given id.
@@ -38,7 +38,7 @@ public interface DomainService<PK extends Serializable, BO extends DomainObject<
 	 *            the id
 	 * @return the domain object
 	 */
-	BO read(PK id);
+	DO read(PK id);
 
 	/**
 	 * Updates the given domain object to the underlying database.
@@ -46,6 +46,6 @@ public interface DomainService<PK extends Serializable, BO extends DomainObject<
 	 * @param domainObject
 	 *            the domain object
 	 */
-	void update(BO domainObject);
+	void update(DO domainObject);
 
 }

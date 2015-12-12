@@ -11,15 +11,15 @@ import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.domain.DomainObject;
 
 /**
- * The Interface {@link EntityBOMapper} provides the methods for mapping
+ * The Interface {@link EntityDOMapper} provides the methods for mapping
  * entities to domain objects and back.
  *
  * @param <E>
- *            the element type
- * @param <BO>
- *            the generic type
+ *            the element type of the entity object
+ * @param <DO>
+ *            the generic type of the domain object
  */
-public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject<?>> {
+public interface EntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>> {
 
 	/**
 	 * Gets the mapper.
@@ -27,21 +27,21 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @return the mapper
 	 */
 	Mapper getMapper();
-	
+
 	/**
 	 * Gets the domain object class.
 	 *
 	 * @return the domain object class
 	 */
-	Class<BO> getDomainObjectClass();
-	
+	Class<DO> getDomainObjectClass();
+
 	/**
 	 * Gets the entity class.
 	 *
 	 * @return the entity class
 	 */
 	Class<E> getEntityClass();
-	
+
 	/**
 	 * Maps the given entity object to a domain object.
 	 *
@@ -49,7 +49,7 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the entity
 	 * @return the domain object
 	 */
-	default BO toDomainObject(E entity) {
+	default DO toDomainObject(final E entity) {
 		if (entity != null) {
 			return getMapper().map(entity, getDomainObjectClass());
 		}
@@ -63,8 +63,8 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the entities
 	 * @return the list of domain objects.
 	 */
-	default List<BO> toDomainObjects(Collection<E> entities) {
-		final List<BO> domainObjects = new ArrayList<>();
+	default List<DO> toDomainObjects(final Collection<E> entities) {
+		final List<DO> domainObjects = new ArrayList<>();
 		if ((entities != null) && !entities.isEmpty()) {
 			for (final E entity : entities) {
 				domainObjects.add(toDomainObject(entity));
@@ -80,10 +80,10 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the list of domain objects
 	 * @return the list of entity objects.
 	 */
-	default List<E> toEntities(Collection<BO> domainObjects) {
+	default List<E> toEntities(final Collection<DO> domainObjects) {
 		final List<E> entities = new ArrayList<>();
 		if ((domainObjects != null) && !domainObjects.isEmpty()) {
-			for (final BO domainObject : domainObjects) {
+			for (final DO domainObject : domainObjects) {
 				entities.add(toEntity(domainObject));
 			}
 		}
@@ -97,7 +97,7 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 *            the domain object
 	 * @return the entity object
 	 */
-	default E toEntity(BO domainObject) {
+	default E toEntity(final DO domainObject) {
 		if(domainObject != null) {
 			return getMapper().map(domainObject, getEntityClass());
 		}
@@ -115,10 +115,10 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @return the new instance of destinationClass mapped to source object.
 	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
 	 */
-	default <T, S> T map(S source, Class<T> destinationClass) throws MappingException {	
+	default <T, S> T map(final S source, final Class<T> destinationClass) throws MappingException {
 		return MapperExtensions.map(getMapper(), source, destinationClass);
 	};
-	
+
 	/**
 	 * Constructs new instances of destinationClass and performs mapping between
 	 * from source.
@@ -130,8 +130,8 @@ public interface EntityBOMapper<E extends BaseEntity<?>, BO extends DomainObject
 	 * @return the new instance of destinationClass mapped to source object.
 	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
 	 */
-	default <T, S> List<T> map(Collection<S> sources, Class<T> destinationClass) throws MappingException {
+	default <T, S> List<T> map(final Collection<S> sources, final Class<T> destinationClass) throws MappingException {
 		return MapperExtensions.map(getMapper(), sources, destinationClass);
-	};	
+	};
 
 }

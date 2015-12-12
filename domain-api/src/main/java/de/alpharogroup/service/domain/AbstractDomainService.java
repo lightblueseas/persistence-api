@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entitymapper.EntityBOMapper;
+import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
@@ -15,19 +15,19 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
  * The Class {@link AbstractDomainService}.
  *
  * @param <PK> the generic type of the primary key
- * @param <BO> the generic type of the domain object
+ * @param <DO> the generic type of the domain object
  * @param <E> the element type of the entity
  * @param <DAO> the generic type of the data transfer object
  * @param <M> the generic type of the entity mapper
  */
 public abstract class AbstractDomainService<
 PK extends Serializable, 
-BO extends DomainObject<PK>, 
+DO extends DomainObject<PK>, 
 E extends BaseEntity<PK>, 
 DAO extends EntityManagerDao<E, PK>,
-M extends EntityBOMapper<E, BO>>
+M extends EntityDOMapper<E, DO>>
  implements
-		DomainService<PK, BO> {
+		DomainService<PK, DO> {
 	/** The dao reference. */
 	@Setter
 	@Getter
@@ -47,13 +47,13 @@ M extends EntityBOMapper<E, BO>>
     /** The domain object class. */
     @SuppressWarnings("unchecked")
     @Getter
-    private final Class<BO> domainObjectClass = (Class<BO>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 1);
+    private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO read(PK id) {
+	public DO read(PK id) {
 		E entity = dao.get(id);
 		return getMapper().toDomainObject(entity);
 	}
@@ -62,7 +62,7 @@ M extends EntityBOMapper<E, BO>>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO create(BO domainObject) {
+	public DO create(DO domainObject) {
 		E entity = getMapper().toEntity(domainObject);
 		domainObject.setId(dao.save(entity));
 		return domainObject;
@@ -72,7 +72,7 @@ M extends EntityBOMapper<E, BO>>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(BO domainObject) {
+	public void update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
 		ObjectExtensions.copyQuietly(entity, domainObject);
 		dao.merge(entity);
