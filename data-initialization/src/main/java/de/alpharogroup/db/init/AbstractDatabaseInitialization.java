@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
+import org.hibernate.engine.jdbc.internal.Formatter;
+
 import de.alpharogroup.file.create.CreateFileExtensions;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileExtensions;
 import de.alpharogroup.io.StreamExtensions;
 import de.alpharogroup.jdbc.ConnectionsExtensions;
-
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
-import org.hibernate.engine.jdbc.internal.Formatter;
 
 /**
  * The abstract class {@link AbstractDatabaseInitialization} for initialize a database.
@@ -78,7 +78,7 @@ public abstract class AbstractDatabaseInitialization
 		databaseUser = databaseProperties.getProperty("jdbc.user");
 		databasePassword = databaseProperties.getProperty("jdbc.password");
 		initializationProcess = databaseProperties.getProperty("jdbc.create.db.process");
-		fileEncoding = databaseProperties.getProperty("jdbc.file.encoding");
+		fileEncoding = databaseProperties.getProperty("jdbc.file.encoding", "UTF-8");
 		log = BooleanUtils.toBoolean(databaseProperties.getProperty("jdbc.show.sql.log"));
 		final String vendor = databaseProperties.getProperty("jdbc.db.vendor");
 		if ((vendor != null) && !vendor.isEmpty())
@@ -310,6 +310,13 @@ public abstract class AbstractDatabaseInitialization
 	{
 		final String processtype = getProcessType();
 
+		// check if database exist...
+		final boolean dbExists = ConnectionsExtensions.existsPostgreSQLDatabase(host, databaseName,
+			databaseUser, databasePassword);
+		if(!dbExists) {
+			newEmptyDatabaseWithoutTables();
+		}
+
 		if (processtype.equals(DELETE_PROCESS))
 		{
 			deleteAndCreateEmptyDatabaseWithoutTables();
@@ -420,7 +427,7 @@ public abstract class AbstractDatabaseInitialization
 	protected void newEmptyDatabaseWithoutTables() throws ClassNotFoundException, SQLException
 	{
 		ConnectionsExtensions.newPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword,
-			"", "");
+			fileEncoding, null);
 	}
 
 	/**
