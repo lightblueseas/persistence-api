@@ -29,22 +29,22 @@ public abstract class AbstractDatabaseInitialization
 {
 
 	/** The Constant JDBC_DB_VENDOR_KEY for the properties key. */
-	private static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
+	public static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
 
 	/** The Constant JDBC_SHOW_SQL_LOG_KEY. */
-	private static final String JDBC_SHOW_SQL_LOG_KEY = "jdbc.show.sql.log";
+	public static final String JDBC_SHOW_SQL_LOG_KEY = "jdbc.show.sql.log";
 
 	/** The Constant JDBC_FILE_ENCODING_KEY. */
-	private static final String JDBC_FILE_ENCODING_KEY = "jdbc.file.encoding";
+	public static final String JDBC_FILE_ENCODING_KEY = "jdbc.file.encoding";
 
 	/** The Constant JDBC_CREATE_DB_PROCESS_KEY. */
-	private static final String JDBC_CREATE_DB_PROCESS_KEY = "jdbc.create.db.process";
+	public static final String JDBC_CREATE_DB_PROCESS_KEY = "jdbc.create.db.process";
 
 	/** The Constant JDBC_PASSWORD_KEY. */
-	private static final String JDBC_PASSWORD_KEY = "jdbc.password";
+	public static final String JDBC_PASSWORD_KEY = "jdbc.password";
 
 	/** The Constant JDBC_USER_KEY. */
-	private static final String JDBC_USER_KEY = "jdbc.user";
+	public static final String JDBC_USER_KEY = "jdbc.user";
 
 	/** The Constant JDBC_DB_NAME_KEY. */
 	public static final String JDBC_DB_NAME_KEY = "jdbc.db.name";
