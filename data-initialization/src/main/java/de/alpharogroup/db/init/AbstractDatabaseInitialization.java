@@ -34,6 +34,9 @@ public abstract class AbstractDatabaseInitialization
 	/** The Constant CREATE_PROCESS. */
 	protected static final String CREATE_PROCESS = "create";
 
+	/** The Constant CREATE_PROCESS. */
+	protected static final String CREATE_EMPTY_PROCESS = "create-empty";
+
 	/** The Constant DROP_PROCESS. */
 	protected static final String DROP_PROCESS = "drop";
 
@@ -267,7 +270,10 @@ public abstract class AbstractDatabaseInitialization
 		if (initializationProcess != null)
 		{
 			final String arg = initializationProcess;
-			if (arg.equals(DELETE_PROCESS) || arg.equals(DROP_PROCESS))
+			if (arg.equals(DELETE_PROCESS)
+				|| arg.equals(DROP_PROCESS)
+				|| arg.equals(CREATE_PROCESS)
+				|| arg.equals(CREATE_EMPTY_PROCESS))
 			{
 				processtype = arg;
 			}
@@ -317,24 +323,28 @@ public abstract class AbstractDatabaseInitialization
 			newEmptyDatabaseWithoutTables();
 		}
 
-		if (processtype.equals(DELETE_PROCESS))
-		{
-			deleteAndCreateEmptyDatabaseWithoutTables();
-		}
-		try ( // Get jdbc connection...
-		Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host, databaseName,
-			databaseUser, databasePassword))
-		{
-			if (processtype.equals(DROP_PROCESS))
+		if(!processtype.equals(CREATE_EMPTY_PROCESS)) {
+
+			if (processtype.equals(DELETE_PROCESS))
 			{
-				// drop database schema...
-				dropTablesAndSequences(jdbcConnection);
+				deleteAndCreateEmptyDatabaseWithoutTables();
 			}
-			// create database schema...
-			createSchema(jdbcConnection, processtype);
-			// initialize database with some data...
-			initializeDatabase(jdbcConnection);
-			// close connection...
+			try ( // Get jdbc connection...
+			Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host, databaseName,
+				databaseUser, databasePassword))
+			{
+				if (processtype.equals(DROP_PROCESS))
+				{
+					// drop database schema...
+					dropTablesAndSequences(jdbcConnection);
+				}
+				// create database schema...
+				createSchema(jdbcConnection, processtype);
+				// initialize database with some data...
+				initializeDatabase(jdbcConnection);
+				// close connection...
+			}
+
 		}
 	}
 
@@ -427,7 +437,7 @@ public abstract class AbstractDatabaseInitialization
 	protected void newEmptyDatabaseWithoutTables() throws ClassNotFoundException, SQLException
 	{
 		ConnectionsExtensions.newPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword,
-			fileEncoding, null);
+			null, null);
 	}
 
 	/**
