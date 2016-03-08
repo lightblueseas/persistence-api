@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import de.alpharogroup.db.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,21 +20,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Attribute<T extends Serializable>
 extends BaseEntity<T>
-implements Cloneable { 
-	
+implements Cloneable {
+
 	/**  The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
 	@Column(name = "name", length = 64)
 	private String name;
-	
-	/** The type. */
-	@Column(name = "type", length = 256)
-	private String type; 
-	
+
 	/** The value. */
 	@Column(name = "value", length = 2048)
 	private String value;
- 
+
 }

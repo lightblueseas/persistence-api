@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import de.alpharogroup.lang.ObjectExtensions;
-import de.alpharogroup.xml.XmlUtils;
+import de.alpharogroup.xml.XmlExtensions;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -77,7 +77,7 @@ public abstract class BaseEntity<PK extends Serializable> implements
 		Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
 		String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
 		aliases.put(lqSimpleName, getClass());
-		String xml = XmlUtils.toXmlWithXStream(this, aliases);
+		String xml = XmlExtensions.toXmlWithXStream(this, aliases);
 		return xml;
 	}
 

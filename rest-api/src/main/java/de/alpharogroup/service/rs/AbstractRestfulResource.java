@@ -2,8 +2,8 @@ package de.alpharogroup.service.rs;
 
 import java.io.Serializable;
 
-import de.alpharogroup.db.domain.BusinessObject;
-import de.alpharogroup.db.service.entitymapper.BusinessMapperService;
+import de.alpharogroup.domain.DomainObject;
+import de.alpharogroup.service.domain.DomainService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,34 +12,26 @@ import lombok.Setter;
  *
  * @param <PK>
  *            the generic type of the primary key
- * @param <BO>
- *            the generic type of the business object
- * @param <BMS> the generic type of the business mapper service interface 
+ * @param <DO>
+ *            the generic type of the domain object
+ * @param <BMS> the generic type of the domain service interface 
  */
-public class AbstractRestfulResource<PK extends Serializable, BO extends BusinessObject<PK>, BMS extends BusinessMapperService<PK, BO>> implements RestfulResource<PK, BO> {
+public class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, BMS extends DomainService<PK, DO>> implements RestfulResource<PK, DO> {
 	
 	/**
-	 * Gets the business mapper service.
-	 *
-	 * @return the business mapper service
+	 * The domain service.
 	 */
 	@Getter
-	
-	/**
-	 * Sets the business mapper service.
-	 *
-	 * @param businessMapperService the new business mapper service
-	 */
 	@Setter
-	private BMS businessMapperService;
+	private BMS domainService;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO create(final BO businessObject) {
-		final BO newBusinessObject = businessMapperService.create(businessObject);
-		return newBusinessObject;
+	public DO create(final DO domainObject) {
+		final DO newDomainObject = domainService.create(domainObject);
+		return newDomainObject;
 	}
 
 	/**
@@ -47,24 +39,24 @@ public class AbstractRestfulResource<PK extends Serializable, BO extends Busines
 	 */
 	@Override
 	public void delete(final PK id) {
-		businessMapperService.delete(id);
+		domainService.delete(id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BO read(final PK id) {
-		final BO businessObject = businessMapperService.read(id);
-		return businessObject;
+	public DO read(final PK id) {
+		final DO domainObject = domainService.read(id);
+		return domainObject;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(final BO businessObject) {
-		businessMapperService.update(businessObject);
+	public void update(final DO domainObject) {
+		domainService.update(domainObject);
 	}
 
 }
