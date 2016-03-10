@@ -10,8 +10,8 @@ import javax.persistence.Converter;
 /**
  * The class {@link ZonedDateTimeConverter} is an attribute converter for {@link ZonedDateTime} to {@link Date}.
  *
- * @param ZonedDateTime the type of the entity attribute
- * @param Date the type of the database column
+ * {@link ZonedDateTime} the type of the entity attribute
+ * {@link Date} the type of the database column
  */
 @Converter(autoApply = true)
 public class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, Date> {

@@ -10,8 +10,8 @@ import javax.persistence.Converter;
 /**
  * The class {@link LocalDateTimeConverter} is an attribute converter for {@link LocalDateTime} to {@link Date}.
  *
- * @param LocalDateTime the type of the entity attribute
- * @param Date the type of the database column
+ * {@link LocalDateTime} the type of the entity attribute
+ * {@link Date} the type of the database column
  */
 @Converter(autoApply = true)
 public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Date> {
@@ -33,4 +33,5 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
         final Instant instant = value.toInstant();
         return LocalDateTime.from(instant);
     }
+
 }
