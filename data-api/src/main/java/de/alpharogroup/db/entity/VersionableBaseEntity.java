@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Class {@link VersionableBaseEntity}.
+ * The class {@link VersionableBaseEntity} has a version property for the optimistic lock value.
  *
- * @param <T> the generic type
+ * @param <T> the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
