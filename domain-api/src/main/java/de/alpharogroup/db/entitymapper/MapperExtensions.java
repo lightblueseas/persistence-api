@@ -34,7 +34,7 @@ public final class MapperExtensions
 		throws MappingException
 	{
 		return mapper.map(source, destinationClass);
-	};
+	}
 
 	/**
 	 * Constructs new instances of destinationClass and performs mapping between from source.
@@ -65,6 +65,6 @@ public final class MapperExtensions
 			}
 		}
 		return destination;
-	};
+	}
 
 }

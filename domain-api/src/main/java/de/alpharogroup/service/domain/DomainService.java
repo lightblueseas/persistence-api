@@ -1,6 +1,7 @@
 package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.alpharogroup.domain.DomainObject;
 
@@ -47,5 +48,13 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *            the domain object
 	 */
 	void update(DO domainObject);
+	
+
+	/**
+	 * Returns a list of all domain objects.
+	 * 
+	 * @return list of all domain objects
+	 */
+	List<DO> findAll();
 
 }

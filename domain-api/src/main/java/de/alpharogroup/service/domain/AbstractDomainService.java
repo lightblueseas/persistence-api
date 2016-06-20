@@ -1,15 +1,18 @@
 package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The Class {@link AbstractDomainService}.
@@ -28,6 +31,8 @@ DAO extends EntityManagerDao<E, PK>,
 M extends EntityDOMapper<E, DO>>
  implements
 		DomainService<PK, DO> {
+
+
 	/** The dao reference. */
 	@Setter
 	@Getter
@@ -84,6 +89,18 @@ M extends EntityDOMapper<E, DO>>
 	@Override
 	public void delete(PK id) {
 		dao.delete(id);
-	}	
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DO> findAll() {
+		Collection<E> all = dao.findAll();
+		List<DO> domainObjects = new ArrayList<>();
+		for(E entity : all) {
+			domainObjects.add(getMapper().toDomainObject(entity));
+		}
+		return domainObjects;
+	}
 }
