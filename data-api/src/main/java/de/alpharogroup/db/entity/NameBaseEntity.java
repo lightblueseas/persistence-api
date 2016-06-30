@@ -31,6 +31,6 @@ public abstract class NameBaseEntity<T extends Serializable> extends Versionable
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
-	@Column( name = "name"  )
+	@Column( unique=true, name = "name"  )
 	private String name;
 }
