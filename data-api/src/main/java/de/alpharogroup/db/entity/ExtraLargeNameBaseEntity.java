@@ -31,6 +31,6 @@ public abstract class ExtraLargeNameBaseEntity<T extends Serializable> extends V
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
-	@Column( name = "name", length = 1024  )
+	@Column( unique=true, name = "name", length = 1024  )
 	private String name;
 }
