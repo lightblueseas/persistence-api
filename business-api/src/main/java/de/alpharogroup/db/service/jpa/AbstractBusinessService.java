@@ -28,7 +28,7 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/** The dao reference. */
+	/** The dao reference. TODO lombokify */
 	private DAO dao;
 
 	/**
