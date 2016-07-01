@@ -1,4 +1,4 @@
-package de.alpharogroup.db.service.api;
+package de.alpharogroup.db.service.sessionfactory.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,9 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.type.Type;
+
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.service.api.BusinessService;
 
 /**
  * The Interface BusinessService.
@@ -15,33 +18,8 @@ import org.hibernate.type.Type;
  * @param <PK>
  *            the type of the primary key from the domain object
  */
-public interface BusinessService<T, PK extends Serializable> extends Serializable
+public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends BusinessService<T, PK>
 {
-
-	/**
-	 * Delete all persistent objects in the given list.
-	 * 
-	 * @param objects
-	 *            the list with the persistent objects to delete
-	 */
-	void delete(final List<T> objects);
-
-	/**
-	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
-	 * obj) directly
-	 * 
-	 * @param id
-	 *            the id
-	 */
-	void delete(PK id);
-
-	/**
-	 * Deletes the given object from persistent storage in the database.
-	 * 
-	 * @param object
-	 *            the persistent object
-	 */
-	void delete(T object);
 
 	/**
 	 * Delete all persistent objects in the given list and flush.
@@ -68,23 +46,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	void deleteAndFlush(final T object);
 
 	/**
-	 * Remove this instance from the session cache.
-	 * 
-	 * @param object
-	 *            the object to evict.
-	 */
-	void evict(T object);
-
-	/**
-	 * Checks if an entry exists with the given id.
-	 * 
-	 * @param id
-	 *            the id to check
-	 * @return true, if an entry exists with the given id, otherwise false.
-	 */
-	boolean exists(PK id);
-
-	/**
 	 * Returns a list from the result from the given hqlquery.
 	 * 
 	 * @param hqlQuery
@@ -103,13 +64,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	 */
 	List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues,
 		final Type[] paramTypes, final Integer start, final Integer count);
-
-	/**
-	 * Returns a list of objects.
-	 * 
-	 * @return list of objects
-	 */
-	List<T> findAll();
 
 	/**
 	 * Hibernate wrapper.
@@ -137,15 +91,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	void flush();
 
 	/**
-	 * Retrieve a persisted object with a given id from the database.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return An object of type T
-	 */
-	T get(PK id);
-
-	/**
 	 * Gets the hibernate session.
 	 * 
 	 * @return the hibernate session
@@ -162,24 +107,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	void setSession(Session session);
 
 	/**
-	 * Retrieve a persisted object with a given id from the database.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return An object of type T
-	 */
-	T load(PK id);
-
-	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object
-	 */
-	T merge(final T object);
-
-	/**
 	 * Merge and flush.
 	 * 
 	 * @param object
@@ -187,32 +114,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	 * @return the object
 	 */
 	T mergeAndFlush(final T object);
-
-	/**
-	 * Re-read the state of the given instance from the underlying database.
-	 * 
-	 * @param object
-	 *            the object to refresh.
-	 */
-	void refresh(final T object);
-
-	/**
-	 * Save all new objects in the given list.
-	 * 
-	 * @param objects
-	 *            the list to save
-	 * @return the list with the ids of the saved objects
-	 */
-	List<PK> save(List<T> objects);
-
-	/**
-	 * Persist the given object into database.
-	 * 
-	 * @param object
-	 *            the new instance to save.
-	 * @return the id of the saved object
-	 */
-	PK save(T object);
 
 	/**
 	 * Save all given objects into database and flush.
@@ -231,22 +132,6 @@ public interface BusinessService<T, PK extends Serializable> extends Serializabl
 	 * @return the id of the saved object
 	 */
 	PK saveAndFlush(final T object);
-
-	/**
-	 * Save or update all given objects into database.
-	 * 
-	 * @param objects
-	 *            the objects to save or update.
-	 */
-	void saveOrUpdate(List<T> objects);
-
-	/**
-	 * Save or update the given object into database.
-	 * 
-	 * @param object
-	 *            the object to save or update.
-	 */
-	void saveOrUpdate(T object);
 
 	/**
 	 * Save or update all given objects into database and flush.

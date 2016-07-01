@@ -1,4 +1,4 @@
-package de.alpharogroup.db.service.jpa;
+package de.alpharogroup.db.service.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +15,7 @@ import de.alpharogroup.db.entity.BaseEntity;
  */
 public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends
 		Serializable {
-
+	
 	/**
 	 * Delete all persistent objects in the given list.
 	 * 
