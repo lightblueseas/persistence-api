@@ -9,8 +9,8 @@ import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
-import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
+import de.alpharogroup.lang.object.CopyObjectExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -79,7 +79,7 @@ M extends EntityDOMapper<E, DO>>
 	@Override
 	public void update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
-		ObjectExtensions.copyQuietly(entity, domainObject);
+		CopyObjectExtensions.copyQuietly(entity, domainObject);
 		dao.merge(entity);
 	}
 

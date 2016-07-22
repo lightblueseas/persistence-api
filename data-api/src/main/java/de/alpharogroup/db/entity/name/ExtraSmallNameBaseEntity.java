@@ -1,4 +1,4 @@
-package de.alpharogroup.db.entity;
+package de.alpharogroup.db.entity.name;
 
 import java.io.Serializable;
 
@@ -9,12 +9,13 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import de.alpharogroup.db.entity.VersionableBaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link NameBaseEntity} is a base entity for a table with a single value.
+ * The class {@link ExtraSmallNameBaseEntity} is a base entity for a table with a single value.
  *
  * @param <T> the generic type of the id
  */
@@ -24,13 +25,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class LargeNameBaseEntity<T extends Serializable> extends VersionableBaseEntity<T>
+public abstract class ExtraSmallNameBaseEntity<T extends Serializable> extends VersionableBaseEntity<T>
 {
 
 	/**  The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
-	@Column( unique=true, name = "name", length = 512  )
+	@Column( unique=false, name = "name", length = 64  )
 	private String name;
 }

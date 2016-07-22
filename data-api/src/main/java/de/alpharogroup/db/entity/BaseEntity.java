@@ -12,14 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+import de.alpharogroup.lang.object.CloneObjectExtensions;
+import de.alpharogroup.xml.XmlExtensions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import de.alpharogroup.lang.ObjectExtensions;
-import de.alpharogroup.xml.XmlExtensions;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * The Class BaseEntity holds the primary key.
@@ -55,7 +55,7 @@ public abstract class BaseEntity<PK extends Serializable> implements
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return ObjectExtensions.cloneObjectQuietly(this);
+		return CloneObjectExtensions.cloneObjectQuietly(this);
 	}
 
 	/**
