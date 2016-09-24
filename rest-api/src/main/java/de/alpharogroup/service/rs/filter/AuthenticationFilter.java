@@ -1,6 +1,7 @@
 package de.alpharogroup.service.rs.filter;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.annotation.Priority;
 import javax.ws.rs.NotAuthorizedException;
@@ -11,10 +12,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
-
-import org.apache.poi.ss.formula.functions.FinanceLib;
-
-import java.security.Principal;
 
 import de.alpharogroup.service.rs.Securable;
 
