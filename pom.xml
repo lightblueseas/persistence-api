@@ -71,6 +71,7 @@
 		<cxf.version>3.1.4</cxf.version>
 		<cxf-rt-rs-client.version>${cxf.version}</cxf-rt-rs-client.version>
 		<jackson-jaxrs-json-provider.version>2.6.3</jackson-jaxrs-json-provider.version>
+		<javaee-api.version>7.0</javaee-api.version>
 	</properties>
 
 	<dependencyManagement>
@@ -148,6 +149,12 @@
 				<groupId>javax.ws.rs</groupId>
 				<artifactId>javax.ws.rs-api</artifactId>
 				<version>${javax.ws.rs-api.version}</version>
+			</dependency>
+			<!-- JAVAEE-API DEPENDENCIES -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee-api.version}</version>
 			</dependency>
 			<!-- CXF DEPENDENCIES -->
 			<dependency>
