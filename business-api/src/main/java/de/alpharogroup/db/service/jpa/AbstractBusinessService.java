@@ -9,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.service.api.BusinessService;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * The Class AbstractBusinessService.
+ * The abstract class {@link AbstractBusinessService}.
  * 
  * @param <T>
  *            the type of the domain object
@@ -23,12 +26,10 @@ import de.alpharogroup.db.entity.BaseEntity;
 public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK extends Serializable, DAO extends EntityManagerDao<T, PK>>
 		implements BusinessService<T, PK> {
 
-
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The dao reference. */
+	@Getter @Setter
 	private DAO dao;
 
 	/**
@@ -84,21 +85,11 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	public T get(PK id) {
 		return getDao().get(id);
 	}
-
-	/**
-	 * Gets the dao reference.
-	 * 
-	 * @return the dao reference.
-	 */
-	public DAO getDao() {
-		return dao;
-	}
-
 	
 	/**
-	 * Gets the query.
+	 * Gets the {@link Query} from the given string.
 	 *
-	 * @param s the s
+	 * @param s the query as string
 	 * @return the query
 	 */
 	public Query getQuery(String s) {
@@ -168,13 +159,4 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 		getDao().saveOrUpdate(object);
 	}
 
-	/**
-	 * Sets the dao reference.
-	 * 
-	 * @param dao
-	 *            the new dao dao reference.
-	 */
-	public void setDao(DAO dao) {
-		this.dao = dao;
-	}
 }

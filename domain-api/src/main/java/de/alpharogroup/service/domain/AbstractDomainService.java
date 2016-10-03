@@ -1,15 +1,20 @@
 package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
-import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
+import de.alpharogroup.lang.object.CopyObjectExtensions;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The Class {@link AbstractDomainService}.
@@ -20,6 +25,7 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
  * @param <DAO> the generic type of the data transfer object
  * @param <M> the generic type of the entity mapper
  */
+@Transactional
 public abstract class AbstractDomainService<
 PK extends Serializable, 
 DO extends DomainObject<PK>, 
@@ -28,6 +34,8 @@ DAO extends EntityManagerDao<E, PK>,
 M extends EntityDOMapper<E, DO>>
  implements
 		DomainService<PK, DO> {
+
+
 	/** The dao reference. */
 	@Setter
 	@Getter
@@ -72,18 +80,34 @@ M extends EntityDOMapper<E, DO>>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(DO domainObject) {
+	public DO update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
-		ObjectExtensions.copyQuietly(entity, domainObject);
-		dao.merge(entity);
+		CopyObjectExtensions.copyQuietly(domainObject, entity);
+		entity = dao.merge(entity);
+		return domainObject;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(PK id) {
+	public DO delete(PK id) {
+		E entity = dao.get(id);
+		DO domainObject = getMapper().toDomainObject(entity);
 		dao.delete(id);
-	}	
+		return domainObject;
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DO> findAll() {
+		Collection<E> all = dao.findAll();
+		List<DO> domainObjects = new ArrayList<>();
+		for(E entity : all) {
+			domainObjects.add(getMapper().toDomainObject(entity));
+		}
+		return domainObjects;
+	}
 }

@@ -9,7 +9,9 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.type.Type;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.service.jpa.BusinessService;
+import de.alpharogroup.db.service.sessionfactory.api.SessionFactoryBusinessService;
+import lombok.Getter;
+import lombok.Setter;
 import de.alpharogroup.db.dao.sessionfactory.SessionFactoryDao;
 
 /**
@@ -23,11 +25,12 @@ import de.alpharogroup.db.dao.sessionfactory.SessionFactoryDao;
  *            the type of the data access object.
  */
 public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK extends Serializable, DAO extends SessionFactoryDao<T, PK>>
-		implements BusinessService<T, PK> {
+		implements SessionFactoryBusinessService<T, PK> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The dao reference. */
+	@Getter @Setter
 	private DAO dao;
 
 	/**
@@ -154,15 +157,6 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	public T get(final PK id) {
 		return getDao().get(id);
-	}
-
-	/**
-	 * Gets the dao reference.
-	 *
-	 * @return the dao reference.
-	 */
-	public DAO getDao() {
-		return dao;
 	}
 
 	/**
@@ -300,16 +294,6 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	public void saveOrUpdateAndFlush(final T object) {
 		getDao().saveOrUpdate(object);
 		flush();
-	}
-
-	/**
-	 * Sets the dao reference.
-	 *
-	 * @param dao
-	 *            the new dao dao reference.
-	 */
-	public void setDao(final DAO dao) {
-		this.dao = dao;
 	}
 
 	/**
