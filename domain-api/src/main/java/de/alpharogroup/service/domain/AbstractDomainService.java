@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
@@ -23,6 +25,7 @@ import lombok.Setter;
  * @param <DAO> the generic type of the data transfer object
  * @param <M> the generic type of the entity mapper
  */
+@Transactional
 public abstract class AbstractDomainService<
 PK extends Serializable, 
 DO extends DomainObject<PK>, 
@@ -77,18 +80,22 @@ M extends EntityDOMapper<E, DO>>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(DO domainObject) {
+	public DO update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
-		CopyObjectExtensions.copyQuietly(entity, domainObject);
-		dao.merge(entity);
+		CopyObjectExtensions.copyQuietly(domainObject, entity);
+		entity = dao.merge(entity);
+		return domainObject;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(PK id) {
+	public DO delete(PK id) {
+		E entity = dao.get(id);
+		DO domainObject = getMapper().toDomainObject(entity);
 		dao.delete(id);
+		return domainObject;
 	}
 
 	/**

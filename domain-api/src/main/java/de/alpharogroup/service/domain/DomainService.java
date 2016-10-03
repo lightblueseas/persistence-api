@@ -29,8 +29,9 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *
 	 * @param id
 	 *            the id
+	 * @return the deleted entity as a domain object
 	 */
-	void delete(PK id);
+	DO delete(PK id);
 
 	/**
 	 * Read an entity with the given id and maps it to a domain object that will be returned.
@@ -46,8 +47,9 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *
 	 * @param domainObject
 	 *            the domain object
+	 * @return the updated domain object
 	 */
-	void update(DO domainObject);
+	DO update(DO domainObject);
 	
 
 	/**
