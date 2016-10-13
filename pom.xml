@@ -11,7 +11,7 @@
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.18.0</version>
+	<version>3.19.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -59,10 +59,9 @@
 		<!-- DB DRIVER version -->
 		<postgresql.version>9.2-1003-jdbc4</postgresql.version>
 		<!-- NEW EXTENSIONS LIB versions -->
-		<extensions-lib.version>4.11.0</extensions-lib.version>
-		<jcommons-lang.version>4.12.0</jcommons-lang.version>
-		<xml-extensions.version>4.13.0</xml-extensions.version>
-		<silly-collections.version>4.11.0</silly-collections.version>
+		<jcommons-lang.version>4.13.0</jcommons-lang.version>
+		<xml-extensions.version>4.14.0</xml-extensions.version>
+		<silly-collections.version>4.12.0</silly-collections.version>
 		<!-- EXTERNAL LIBRARIES versions -->
 		<dozer.version>5.5.1</dozer.version>
 		<!-- REST-API versions -->
