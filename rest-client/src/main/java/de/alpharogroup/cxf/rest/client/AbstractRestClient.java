@@ -23,9 +23,8 @@ import javax.ws.rs.core.MediaType;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 import de.alpharogroup.check.Check;
+import de.alpharogroup.service.rs.providers.CustomTypeModulesRegistrationProvider;
 import lombok.Getter;
 
 /**
@@ -82,7 +81,7 @@ public abstract class AbstractRestClient
 	protected List<Object> newProviders()
 	{
 		final List<Object> providers = new ArrayList<>();
-		providers.add(new JacksonJsonProvider());
+		providers.add(new CustomTypeModulesRegistrationProvider());
 		return providers;
 	}
 

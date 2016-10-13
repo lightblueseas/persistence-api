@@ -4,14 +4,14 @@
 
 	<parent>
 		<groupId>de.alpharogroup</groupId>
-		<artifactId>mvn-java-parent</artifactId>
-		<version>2.15.0</version>
-		<relativePath></relativePath>
+		<artifactId>mvn-persistence-parent</artifactId>
+		<version>3.0.0</version>
+		<relativePath />
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.19.0</version>
+	<version>3.20.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -49,27 +49,16 @@
 	</modules>
 
 	<properties>
-		<!-- JAVAX.INJECT version -->
-		<javax.inject.version>1</javax.inject.version>
-		<!-- HIBERNATE versions -->
-		<hibernate.version>4.3.8.Final</hibernate.version>
-		<cglib.version>2.2.2</cglib.version>
-		<!-- SPRING versions -->
-		<spring.version>4.1.5.RELEASE</spring.version>
-		<!-- DB DRIVER version -->
-		<postgresql.version>9.2-1003-jdbc4</postgresql.version>
-		<!-- NEW EXTENSIONS LIB versions -->
-		<jcommons-lang.version>4.13.0</jcommons-lang.version>
-		<xml-extensions.version>4.14.0</xml-extensions.version>
-		<silly-collections.version>4.12.0</silly-collections.version>
-		<!-- EXTERNAL LIBRARIES versions -->
-		<dozer.version>5.5.1</dozer.version>
-		<!-- REST-API versions -->
-		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
-		<!-- CXF versions -->
-		<cxf.version>3.1.7</cxf.version>
-		<cxf-rt-rs-client.version>${cxf.version}</cxf-rt-rs-client.version>
-		<jackson-jaxrs-json-provider.version>2.8.3</jackson-jaxrs-json-provider.version>
+		<!-- PERSISTENCE-API versions -->
+		<persistence-api.version>3.20.0</persistence-api.version>
+		<business-api.version>${persistence-api.version}</business-api.version>
+		<domain-api.version>${persistence-api.version}</domain-api.version>
+		<data-api.version>${persistence-api.version}</data-api.version>
+		<data-usertype.version>${persistence-api.version}</data-usertype.version>
+		<data-initialization.version>${persistence-api.version}</data-initialization.version>
+		<rest-api.version>${persistence-api.version}</rest-api.version>
+		<rest-client.version>${persistence-api.version}</rest-client.version>	
+		<!-- JAVAEE-API version -->
 		<javaee-api.version>7.0</javaee-api.version>
 	</properties>
 
@@ -80,98 +69,49 @@
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-api</artifactId>
-				<version>${project.version}</version>
+				<version>${data-api.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>business-api</artifactId>
-				<version>${project.version}</version>
+				<version>${business-api.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>data-usertype</artifactId>
+				<version>${data-usertype.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>data-initialization</artifactId>
+				<version>${data-initialization.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>domain-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- HIBERNATE DEPENDENCIES -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-
-			<!-- SPRING DEPENDENCIES -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<!-- DB DRIVER DEPENDENCIES -->
-			<dependency>
-				<groupId>org.postgresql</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>${postgresql.version}</version>
-			</dependency>
-			<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>jcommons-lang</artifactId>
-				<version>${jcommons-lang.version}</version>
+				<version>${domain-api.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>silly-collections</artifactId>
-				<version>${silly-collections.version}</version>
+				<artifactId>rest-api</artifactId>
+				<version>${rest-api.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>xml-extensions</artifactId>
-				<version>${xml-extensions.version}</version>
-			</dependency>
-			<!-- DOZER DEPENDENCIES -->
-			<dependency>
-				<groupId>net.sf.dozer</groupId>
-				<artifactId>dozer</artifactId>
-				<version>${dozer.version}</version>
-			</dependency>
-			<!-- REST-API DEPENDENCIES -->
-			<dependency>
-				<groupId>javax.ws.rs</groupId>
-				<artifactId>javax.ws.rs-api</artifactId>
-				<version>${javax.ws.rs-api.version}</version>
+				<artifactId>rest-client</artifactId>
+				<version>${rest-client.version}</version>
 			</dependency>
 			<!-- JAVAEE-API DEPENDENCIES -->
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
-			</dependency>
-			<!-- CXF DEPENDENCIES -->
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-rs-client</artifactId>
-				<version>${cxf-rt-rs-client.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.fasterxml.jackson.jaxrs</groupId>
-				<artifactId>jackson-jaxrs-json-provider</artifactId>
-				<version>${jackson-jaxrs-json-provider.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.fasterxml.jackson.datatype</groupId>
-				<artifactId>jackson-datatype-jaxrs</artifactId>
-				<version>${jackson-jaxrs-json-provider.version}</version>
 			</dependency>
 
 		</dependencies>
