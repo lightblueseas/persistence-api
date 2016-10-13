@@ -11,7 +11,7 @@
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.17.0</version>
+	<version>3.18.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -166,6 +166,12 @@
 			<dependency>
 				<groupId>com.fasterxml.jackson.jaxrs</groupId>
 				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${jackson-jaxrs-json-provider.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-jaxrs</artifactId>
 				<version>${jackson-jaxrs-json-provider.version}</version>
 			</dependency>
 
