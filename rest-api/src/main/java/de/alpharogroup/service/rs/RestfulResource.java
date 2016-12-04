@@ -55,7 +55,7 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 */
 	@DELETE
 	@Path("/{id}/")
-	void delete(PK id);
+	void delete(@PathParam("id") PK id);
 
 	/**
 	 * Read an entity with the given id and maps it to a domain object that will be returned.
