@@ -57,7 +57,7 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 			String username = onValidateToken(token);
 			requestContext.setSecurityContext(newSecurityContext(username));
 		} catch (Exception e) {
-			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			requestContext.abortWith(newFaultResponse());
 		}
 
 	}
@@ -73,6 +73,31 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 *             if the token is not valid
 	 */
 	protected abstract String onValidateToken(String token) throws Exception;
+	
+	/**
+	 * Factory callback method for create a new {@link Response}.
+	 *
+	 * @return the new fault response
+	 */
+	protected Response newFaultResponse() {
+		Response faultResponse = Response
+				.status(Response.Status.UNAUTHORIZED)
+				.header("WWW-Authenticate", "Basic realm=\""
+						+ newRealmValue()
+						+ "\"")
+				.build();
+        return faultResponse;
+	}
+	
+	/**
+	 * Factory callback method for create a new realm value for the header key 'WWW-Authenticate'.
+	 * Overwrite to set specific application realm value.
+	 *
+	 * @return the new realm value.
+	 */
+	protected String newRealmValue() {
+		return "alpharogroup.de";
+	}
 
 	/**
 	 * Factory method for create a new security context with the given user
@@ -83,7 +108,11 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 * @return the security context
 	 */
 	protected SecurityContext newSecurityContext(final String username) {
-		return new SecurityContext() {
+		return 
+ /**
+  * The Class .
+  */
+ new SecurityContext() {
 
 			@Override
 			public Principal getUserPrincipal() {
