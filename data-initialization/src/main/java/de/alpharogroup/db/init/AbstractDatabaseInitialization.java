@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
@@ -42,6 +43,9 @@ import de.alpharogroup.jdbc.ConnectionsExtensions;
  */
 public abstract class AbstractDatabaseInitialization
 {
+
+	/** The logger constant. */
+	protected static final Logger LOG = Logger.getLogger(AbstractDatabaseInitialization.class.getName());
 
 	/** The Constant JDBC_DB_VENDOR_KEY for the properties key. */
 	public static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
@@ -150,16 +154,18 @@ public abstract class AbstractDatabaseInitialization
 		final StringBuilder sb = new StringBuilder();
 		final Formatter formatter = new DDLFormatterImpl();
 		final File schema = new File(sqlDir, "schema.sql");
+		final String schemaString;
+		LOG.debug("start process of creation of initializeSchema.sql file.");
+		LOG.debug("read from file schema.sql");
 		if (postgresDatabase)
 		{
-			final String result = replaceMediumblobToBytea(schema);
-			sb.append(formatter.format(result));
+			schemaString = replaceMediumblobToBytea(schema);
 		}
 		else
 		{
-			final String result = ReadFileExtensions.readFromFile(schema);
-			sb.append(formatter.format(result));
+			schemaString = ReadFileExtensions.readFromFile(schema);
 		}
+		sb.append(formatter.format(schemaString));
 		sb.append(System.getProperty("line.separator"));
 		sb.append(System.getProperty("line.separator"));
 		if (processtype.equals(DELETE_PROCESS))
@@ -167,6 +173,7 @@ public abstract class AbstractDatabaseInitialization
 			final File createEnums = new File(sqlDir, "createEnumTypes.sql");
 			if (createEnums.exists())
 			{
+				LOG.debug("read from file createEnumTypes.sql");
 				final String result = ReadFileExtensions.readFromFile(createEnums);
 				sb.append(result);
 				sb.append(System.getProperty("line.separator"));
@@ -174,6 +181,7 @@ public abstract class AbstractDatabaseInitialization
 			final File updateEnums = new File(sqlDir, "updateEnumFields.sql");
 			if (updateEnums.exists())
 			{
+				LOG.debug("read from file updateEnumFields.sql");
 				final String result = ReadFileExtensions.readFromFile(updateEnums);
 				sb.append(result);
 				sb.append(System.getProperty("line.separator"));
@@ -182,12 +190,15 @@ public abstract class AbstractDatabaseInitialization
 		final File createIndexesAndForeignKeys = new File(sqlDir, "createIndexesAndForeignKeys.sql");
 		if (createIndexesAndForeignKeys.exists())
 		{
+			LOG.debug("read from file createIndexesAndForeignKeys.sql");
 			final String result = ReadFileExtensions.readFromFile(createIndexesAndForeignKeys);
 			sb.append(result);
 		}
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
+		LOG.debug("write result to file initializeSchema.sql");
 		final boolean writen = WriteFileExtensions.writeStringToFile(initializeSchemaDdl, sb.toString(),
 			fileEncoding);
+		LOG.debug("end process of creation of initializeSchema.sql file.");
 		return writen;
 	}
 
@@ -213,7 +224,7 @@ public abstract class AbstractDatabaseInitialization
 
 		if (writen)
 		{
-			System.err.println(writen);
+			LOG.debug("write process of file initializeSchema.sql is finished");
 		}
 		createSchemaFromScript(jdbcConnection);
 	}
@@ -231,6 +242,7 @@ public abstract class AbstractDatabaseInitialization
 	protected void createSchemaFromScript(final Connection jdbcConnection) throws IOException,
 		SQLException
 	{
+		LOG.debug("creating database schema from script");
 		final File insertsDir = getInsertDir();
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
 		final String result = ReadFileExtensions.readFromFile(initializeSchemaDdl);
@@ -353,12 +365,15 @@ public abstract class AbstractDatabaseInitialization
 	 */
 	public void initializeDatabase() throws ClassNotFoundException, SQLException, IOException
 	{
+		LOG.debug("Initialize database started...");
 		final String processtype = getProcessType();
+		LOG.debug("with processtype "+processtype);
 
 		// check if database exist...
 		final boolean dbExists = ConnectionsExtensions.existsPostgreSQLDatabase(host, databaseName,
 			databaseUser, databasePassword);
 		if(!dbExists) {
+			LOG.debug("database does not exists");
 			newEmptyDatabaseWithoutTables();
 		}
 
@@ -366,19 +381,25 @@ public abstract class AbstractDatabaseInitialization
 
 			if (processtype.equals(DELETE_PROCESS))
 			{
+				LOG.debug("delete and create empty database without tables");
 				deleteAndCreateEmptyDatabaseWithoutTables();
 			}
+
+			LOG.debug("Get jdbc connection to database");
 			try ( // Get jdbc connection...
 			Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host, databaseName,
 				databaseUser, databasePassword))
 			{
 				if (processtype.equals(DROP_PROCESS))
 				{
+					LOG.debug("drop database schema");
 					// drop database schema...
 					dropTablesAndSequences(jdbcConnection);
 				}
+				LOG.debug("create database schema");
 				// create database schema...
 				createSchema(jdbcConnection, processtype);
+				LOG.debug("initialize database with some data");
 				// initialize database with some data...
 				initializeDatabase(jdbcConnection);
 				// close connection...
