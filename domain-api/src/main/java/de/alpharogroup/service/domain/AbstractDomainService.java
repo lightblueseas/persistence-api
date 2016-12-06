@@ -27,6 +27,7 @@ import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
+import de.alpharogroup.lang.object.MergeObjectExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -98,7 +99,7 @@ M extends EntityDOMapper<E, DO>>
 	@Override
 	public DO update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
-		domainObject = getMapper().toDomainObject(entity);
+		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
 		entity = dao.merge(entity);
 		return domainObject;
 	}
