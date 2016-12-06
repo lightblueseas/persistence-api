@@ -127,4 +127,24 @@ M extends EntityDOMapper<E, DO>>
 		}
 		return domainObjects;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<PK> persist(Collection<DO> domainObjects) {
+		Collection<PK> primaryKeys = new ArrayList<PK>();
+		for (DO domainObject : domainObjects) {
+			primaryKeys.add(create(domainObject).getId());
+		}
+		return primaryKeys;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean exists(PK id) {
+		return dao.exists(id);
+	}
 }
