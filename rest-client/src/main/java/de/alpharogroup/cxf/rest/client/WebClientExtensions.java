@@ -37,6 +37,7 @@ import org.apache.cxf.configuration.security.FiltersType;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
 /**
  * The class {@link WebClientExtensions} holds factory methods for server and client parameters.
@@ -78,6 +79,25 @@ public class WebClientExtensions {
 			params.setDisableCNCheck(true);
 			conduit.setTlsClientParameters(params);
 		}
+	}
+
+	/**
+	 * Sets the TLS client parameters.
+	 *
+	 * @param client the client
+	 * @param tlsClientParameters the tls client parameters
+	 */
+	public static void setTLSClientParameters(Object client, TLSClientParameters tlsClientParameters) {
+		ClientConfiguration config = WebClient.getConfig(client);
+		HTTPConduit conduit = config.getHttpConduit();
+		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+		 
+		httpClientPolicy.setConnectionTimeout(36000);
+		httpClientPolicy.setAllowChunking(false);
+		httpClientPolicy.setReceiveTimeout(32000);
+		conduit.setClient(httpClientPolicy);
+		
+		conduit.setTlsClientParameters(tlsClientParameters);
 	}
 
 	/**

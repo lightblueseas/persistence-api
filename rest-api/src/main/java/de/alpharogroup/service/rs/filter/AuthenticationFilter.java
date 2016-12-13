@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.annotation.Priority;
+import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
@@ -59,46 +60,32 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 */
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		if (isSigninRequest(requestContext)) {
-			// ignore them
-			return;
-		}
-		// check if the resource is should be protected
-		isSecuredRequest(requestContext);
-	}
-
-	/**
-	 * Checks if the current request is a is a secured request. This is the case
-	 * if the rest method is annotated with the annotation {@link Securable}.
-	 *
-	 * @param requestContext
-	 *            the request context
-	 * @return true, if is secured request
-	 */
-	protected boolean isSecuredRequest(ContainerRequestContext requestContext) {
-		boolean isSecuredRequest = false;
-		if (isSecured()) {
-			isSecuredRequest = true;
-			// Get the HTTP Authorization header from the request
-			String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
-			// Check if the HTTP Authorization header is present
-			if (authorizationHeader == null) {
-				throw new NotAuthorizedException("Authorization header must be provided");
+		// check the request url path, if it is a sign in request
+		try {
+			if (isSigninRequest(requestContext)) {
+				// ignore them
+				return;
 			}
+			// check if the resource is protected
+			if (isSecured()) {
+				// Get the HTTP Authorization header from the request
+				String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-			// Extract the token from the HTTP Authorization header
-			String token = authorizationHeader.substring("Bearer".length()).trim();
+				// Check if the HTTP Authorization header is present
+				if (authorizationHeader == null) {
+					throw new NotAuthorizedException("Authorization header must be provided");
+				}
 
-			try {
+				// Extract the token from the HTTP Authorization header
+				String token = authorizationHeader.substring("Bearer".length()).trim();
+
 				// Validate the token
 				String username = onValidateToken(token);
 				requestContext.setSecurityContext(newSecurityContext(username));
-			} catch (Exception e) {
-				requestContext.abortWith(newFaultResponse());
 			}
+		} catch (Exception e) {
+			requestContext.abortWith(newFaultResponse());
 		}
-		return isSecuredRequest;
 	}
 
 	/**
@@ -106,15 +93,16 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 *
 	 * @param requestContext
 	 *            the request context
+	 * @throws Exception
 	 */
-	protected boolean isSigninRequest(ContainerRequestContext requestContext) {
+	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception {
 		boolean isSigninRequest = false;
 		String path = info.getPath();
 		// check the request url path, if it is a sign in request
 		if (isSigninPath(path)) {
 			// check if scheme is https
 			if (!servletRequest.isSecure()) {
-				requestContext.abortWith(newFaultResponse());
+				throw new SSLException("use https scheme");
 			}
 			isSigninRequest = true;
 		}
