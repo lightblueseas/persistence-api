@@ -17,9 +17,9 @@ package de.alpharogroup.service.rs.filter;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.security.Principal;
 
 import javax.annotation.Priority;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -29,6 +29,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
 import de.alpharogroup.service.rs.Securable;
@@ -40,43 +41,104 @@ import de.alpharogroup.service.rs.Securable;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public abstract class AuthenticationFilter implements ContainerRequestFilter {
-	
-    /** The resource info. */
-    @Context
-    private ResourceInfo resourceInfo;
+
+	/** The resource info. */
+	@Context
+	private ResourceInfo resourceInfo;
+
+	/** The servlet request. */
+	@Context
+	private HttpServletRequest servletRequest;
+
+	/** The application and request URI information. */
+	@Context
+	private UriInfo info;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-        // check if the resource is should be protected
-        if (isSecured()) {
-    		// Get the HTTP Authorization header from the request
-    		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
-    		// Check if the HTTP Authorization header is present
-    		if (authorizationHeader == null) {
-    			throw new NotAuthorizedException("Authorization header must be provided");
-    		}
-
-    		// Extract the token from the HTTP Authorization header
-    		String token = authorizationHeader.substring("Bearer".length()).trim();
-
-    		try {
-    			// Validate the token
-    			String username = onValidateToken(token);
-    			requestContext.setSecurityContext(newSecurityContext(username));
-    		} catch (Exception e) {
-    			requestContext.abortWith(newFaultResponse());
-    		}
+		if (isSigninRequest(requestContext)) {
+			// ignore them
+			return;
 		}
+		// check if the resource is should be protected
+		isSecuredRequest(requestContext);
+	}
+
+	/**
+	 * Checks if the current request is a is a secured request. This is the case
+	 * if the rest method is annotated with the annotation {@link Securable}.
+	 *
+	 * @param requestContext
+	 *            the request context
+	 * @return true, if is secured request
+	 */
+	protected boolean isSecuredRequest(ContainerRequestContext requestContext) {
+		boolean isSecuredRequest = false;
+		if (isSecured()) {
+			isSecuredRequest = true;
+			// Get the HTTP Authorization header from the request
+			String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+
+			// Check if the HTTP Authorization header is present
+			if (authorizationHeader == null) {
+				throw new NotAuthorizedException("Authorization header must be provided");
+			}
+
+			// Extract the token from the HTTP Authorization header
+			String token = authorizationHeader.substring("Bearer".length()).trim();
+
+			try {
+				// Validate the token
+				String username = onValidateToken(token);
+				requestContext.setSecurityContext(newSecurityContext(username));
+			} catch (Exception e) {
+				requestContext.abortWith(newFaultResponse());
+			}
+		}
+		return isSecuredRequest;
+	}
+
+	/**
+	 * Checks if the current request is a is a sign request.
+	 *
+	 * @param requestContext
+	 *            the request context
+	 */
+	protected boolean isSigninRequest(ContainerRequestContext requestContext) {
+		boolean isSigninRequest = false;
+		String path = info.getPath();
+		// check the request url path, if it is a sign in request
+		if (isSigninPath(path)) {
+			// check if scheme is https
+			if (!servletRequest.isSecure()) {
+				requestContext.abortWith(newFaultResponse());
+			}
+			isSigninRequest = true;
+		}
+		return isSigninRequest;
+	}
+
+	/**
+	 * Checks if the given path is a sign in path. Overwrite this method to
+	 * provide specific sign in path for your application.
+	 *
+	 * @param path
+	 *            the sign in path to check.
+	 * @return true, if the given path is a sign in path otherwise false.
+	 */
+	protected boolean isSigninPath(String path) {
+		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
+		return isSigninPath;
 	}
 
 	/**
 	 * Checks if is secured.
 	 *
-	 * @param resourceClass the resource class
+	 * @param resourceClass
+	 *            the resource class
 	 * @return true, if is secured
 	 */
 	protected boolean isSecured() {
@@ -85,9 +147,9 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 		if (securable != null) {
 			return true;
 		}
-        Method method = resourceInfo.getResourceMethod();
+		Method method = resourceInfo.getResourceMethod();
 		securable = method.getAnnotation(Securable.class);
-		boolean secured = securable !=null;
+		boolean secured = securable != null;
 		return secured;
 	}
 
@@ -133,39 +195,7 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 * @return the security context
 	 */
 	protected SecurityContext newSecurityContext(final String username) {
-		return
-		/**
-		 * The Class .
-		 */
-		new SecurityContext() {
-
-			@Override
-			public Principal getUserPrincipal() {
-
-				return new Principal() {
-
-					@Override
-					public String getName() {
-						return username;
-					}
-				};
-			}
-
-			@Override
-			public boolean isUserInRole(final String role) {
-				return true;
-			}
-
-			@Override
-			public boolean isSecure() {
-				return false;
-			}
-
-			@Override
-			public String getAuthenticationScheme() {
-				return null;
-			}
-		};
+		return new AuthenticationSecurityContext(username);
 	}
 
 }
