@@ -49,7 +49,13 @@ public class WebClientExtensions {
 			".*_EXPORT_.*", 
 			".*_EXPORT1024_.*", 
 			".*_WITH_DES_.*",
-			".*_WITH_NULL_.*", 
+			".*_WITH_AES_.*",
+			".*_WITH_NULL_.*"
+		};
+	
+	/** The Constant DEFAULT_FILTERS_TYPE_EXCLUDES. */
+	public static final String[] DEFAULT_FILTERS_TYPE_EXCLUDES = 
+		{ 
 			".*_DH_anon_.*" 
 		};
 
@@ -292,21 +298,24 @@ public class WebClientExtensions {
 	 * @param includes the includes
 	 * @return the new {@link FiltersType} with the given includes set.
 	 */
-	public static FiltersType newCipherSuitesFilter(String... includes) {
+	public static FiltersType newCipherSuitesFilter(String[] includes, String[] excludes) {
 		FiltersType filtersType = new FiltersType();
 		for (String include : includes) {
 			filtersType.getInclude().add(include);
+		}
+		for(String exclude : excludes) {
+			filtersType.getExclude().add(exclude);
 		}
 		return filtersType;
 	}
 
 	/**
-	 * Factory method for create a new {@link FiltersType} with the default includes.
+	 * Factory method for create a new {@link FiltersType} with the default includes and excludes.
 	 *
 	 * @return the new {@link FiltersType} with the default includes set.
 	 */
 	public static FiltersType newCipherSuitesFilter() {
-		return newCipherSuitesFilter(DEFAULT_FILTERS_TYPE_INCLUDES);
+		return newCipherSuitesFilter(DEFAULT_FILTERS_TYPE_INCLUDES, DEFAULT_FILTERS_TYPE_EXCLUDES);
 	}
 
 }
