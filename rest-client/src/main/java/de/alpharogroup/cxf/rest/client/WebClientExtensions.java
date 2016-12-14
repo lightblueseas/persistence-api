@@ -30,10 +30,13 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.configuration.jsse.TLSServerParameters;
 import org.apache.cxf.configuration.security.ClientAuthentication;
 import org.apache.cxf.configuration.security.FiltersType;
+import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
@@ -313,9 +316,10 @@ public class WebClientExtensions {
 	}
 
 	/**
-	 * Factory method for create a new {@link FiltersType} from the given includes.
+	 * Factory method for create a new {@link FiltersType} from the given includes and excludes.
 	 *
 	 * @param includes the includes
+	 * @param excludes the excludes
 	 * @return the new {@link FiltersType} with the given includes set.
 	 */
 	public static FiltersType newCipherSuitesFilter(String[] includes, String[] excludes) {
@@ -330,6 +334,20 @@ public class WebClientExtensions {
 	}
 
 	/**
+	 * Factory method for create a new {@link ClientAuthentication} from the given parameters.
+	 *
+	 * @param want the want
+	 * @param required the required
+	 * @return the new {@link ClientAuthentication} from the given parameters.
+	 */
+	public static ClientAuthentication newClientAuthentication(boolean want, boolean required) {
+		ClientAuthentication clientAuthentication = new ClientAuthentication();
+		clientAuthentication.setWant(want);
+		clientAuthentication.setRequired(required);
+		return clientAuthentication;
+	}
+
+	/**
 	 * Factory method for create a new {@link FiltersType} with the default includes and excludes.
 	 *
 	 * @return the new {@link FiltersType} with the default includes set.
@@ -338,4 +356,21 @@ public class WebClientExtensions {
 		return newCipherSuitesFilter(DEFAULT_FILTERS_TYPE_INCLUDES, DEFAULT_FILTERS_TYPE_EXCLUDES);
 	}
 
+
+	/**
+	 * Factory method for create a new {@link JAXRSServerFactoryBean} from the given parameters.
+	 * Service and resource classes have to be added.
+	 *
+	 * @param serverConfigFile the server config file
+	 * @param baseUrl the base url
+	 * @return the new {@link JAXRSServerFactoryBean} from the given parameters.
+	 */
+	public static JAXRSServerFactoryBean newJAXRSServerFactoryBean(String serverConfigFile, String baseUrl) {
+		JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
+		SpringBusFactory bf = new SpringBusFactory();
+		Bus bus = bf.createBus(serverConfigFile);
+		bean.setBus(bus);
+		bean.setAddress(baseUrl);
+		return bean;
+	}
 }
