@@ -93,14 +93,29 @@ public class WebClientExtensions {
 	public static void setTLSClientParameters(Object client, TLSClientParameters tlsClientParameters) {
 		ClientConfiguration config = WebClient.getConfig(client);
 		HTTPConduit conduit = config.getHttpConduit();
-		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-		 
-		httpClientPolicy.setConnectionTimeout(36000);
-		httpClientPolicy.setAllowChunking(false);
-		httpClientPolicy.setReceiveTimeout(32000);
-		conduit.setClient(httpClientPolicy);
+		
+		HTTPClientPolicy httpClientPolicy = conduit.getClient();
+		if(httpClientPolicy == null) {
+			conduit.setClient(newHTTPClientPolicy(36000l, false, 32000l));			
+		}		 
 		
 		conduit.setTlsClientParameters(tlsClientParameters);
+	}
+	
+	/**
+	 * Factory method for create a new {@link HTTPClientPolicy} object from the given parameters.
+	 *
+	 * @param connectionTimeout the connection timeout
+	 * @param allowChunking the allow chunking
+	 * @param receiveTimeout the receive timeout
+	 * @return the new {@link HTTPClientPolicy}.
+	 */
+	public static HTTPClientPolicy newHTTPClientPolicy(Long connectionTimeout, boolean allowChunking, Long receiveTimeout) {
+		final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+		httpClientPolicy.setConnectionTimeout(connectionTimeout);
+		httpClientPolicy.setAllowChunking(allowChunking);
+		httpClientPolicy.setReceiveTimeout(receiveTimeout);
+		return httpClientPolicy;		
 	}
 
 	/**
