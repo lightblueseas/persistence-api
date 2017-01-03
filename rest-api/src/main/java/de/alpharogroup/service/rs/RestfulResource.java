@@ -15,8 +15,6 @@
  */
 package de.alpharogroup.service.rs;
 
-import java.io.Serializable;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,7 +32,7 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface RestfulResource<PK extends Serializable, DO extends DomainObject<PK>> {
+public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 
 	/**
 	 * Creates an entity from the given domain object and persist it to the underlying database.
