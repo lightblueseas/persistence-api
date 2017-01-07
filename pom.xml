@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>3.3.0</version>
+		<version>3.4.0</version>
 		<relativePath />
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>
-	<version>3.24.0</version>
+	<version>3.25.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -50,7 +50,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>3.24.0</persistence-api.version>
+		<persistence-api.version>3.25.0</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
