@@ -85,6 +85,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO create(DO domainObject) {
 		E entity = getMapper().toEntity(domainObject);
@@ -96,6 +97,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
@@ -107,6 +109,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO delete(PK id) {
 		E entity = dao.get(id);
@@ -131,6 +134,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public Collection<PK> persist(Collection<DO> domainObjects) {
 		Collection<PK> primaryKeys = new ArrayList<PK>();

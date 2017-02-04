@@ -20,6 +20,9 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.TypeMappingOption;
+import org.dozer.loader.api.TypeMappingOptions;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.domain.DomainObject;
@@ -85,7 +88,21 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 * @return the new {@link Mapper} for the mapping process.
 	 */
 	public Mapper newMapper(final List<String> mappingFiles) {
-		return new DozerBeanMapper(mappingFiles);
+	    DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
+	    mapper.addMapping(beanMappingBuilder());
+	    mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap, fieldMapping) ->
+        sourceFieldValue == null);
+	    return mapper;
+	}
+	
+	private BeanMappingBuilder beanMappingBuilder() {
+	    return new BeanMappingBuilder() {
+	        @Override
+	        protected void configure() {
+	            mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false), TypeMappingOptions.mapEmptyString(false));
+	        }
+
+	    };
 	}
 
 }
