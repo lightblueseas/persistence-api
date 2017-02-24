@@ -43,8 +43,8 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	/**
 	 * Persist all new domain objects in the given {@link Collection}.
 	 * 
-	 * @param objects
-	 *            the {@link Collection} to persist
+	 * @param domainObjects
+	 *            the {@link Collection} of domain objects to persist
 	 * @return the {@link Collection} with the id's of the persisted objects
 	 */
 	Collection<PK> persist(Collection<DO> domainObjects);

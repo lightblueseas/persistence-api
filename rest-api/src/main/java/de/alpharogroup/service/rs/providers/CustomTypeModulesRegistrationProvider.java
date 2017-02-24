@@ -77,6 +77,8 @@ public class CustomTypeModulesRegistrationProvider extends JacksonJsonProvider {
 	 * Factory callback method for registration of new type modules. This method is
 	 * invoked in the constructor and can be overridden so users can
 	 * add specific type modules for the specific provider.
+	 *
+	 * @return the object mapper
 	 */
 	protected ObjectMapper newTypeModulesRegistration() {
 		ObjectMapper mapper = _mapperConfig.getConfiguredMapper();

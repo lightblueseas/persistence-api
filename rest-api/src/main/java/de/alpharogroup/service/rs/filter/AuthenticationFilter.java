@@ -93,7 +93,9 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 *
 	 * @param requestContext
 	 *            the request context
+	 * @return true, if the current request is a is a sign request.
 	 * @throws Exception
+	 *             occurs if some error like the scheme is not https
 	 */
 	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception {
 		boolean isSigninRequest = false;
@@ -123,11 +125,9 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	}
 
 	/**
-	 * Checks if is secured.
+	 * Checks if is the resourceClass is annotated with the annotation {@link Securable}.
 	 *
-	 * @param resourceClass
-	 *            the resource class
-	 * @return true, if is secured
+	 * @return true, if is the resourceClass is annotated with the annotation {@link Securable}.
 	 */
 	protected boolean isSecured() {
 		Class<?> resourceClass = resourceInfo.getResourceClass();
