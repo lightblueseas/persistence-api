@@ -140,6 +140,11 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 			PGobject pg = (PGobject)object;
 			return Enum.valueOf(enumClass, pg.getValue());
 		}
+		// Try to get over the name of the enum value.
+		if(object != null && enumClass != null) {
+			String enumValueName = object.toString().trim();
+			return Enum.valueOf(enumClass, enumValueName);			
+		}
 		return null;
 	}
 
@@ -235,7 +240,6 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
 		throws HibernateException, SQLException
 	{
-		// TODO research of implementation with SessionImplementor class...
 		return nullSafeGet(rs, names, owner);
 	}
 
@@ -245,7 +249,6 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	public void nullSafeSet(PreparedStatement st, Object value, int index,
 		SessionImplementor session) throws HibernateException, SQLException
 	{
-		// TODO research of implementation with SessionImplementor class...
 		nullSafeSet(st, value, index);
 	}
 }
