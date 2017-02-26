@@ -28,13 +28,19 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
  */
 @Provider
 public class CustomTypeModulesRegistrationProvider extends JacksonJsonProvider {
+	
+	/**
+	 * Instantiation block.
+	 */
+	{
+		ObjectMapper mapper = newTypeModulesRegistration();
+		setMapper(mapper);		
+	}
 
 	/**
 	 * Instantiates a new {@link CustomTypeModulesRegistrationProvider} object.
 	 */
 	public CustomTypeModulesRegistrationProvider() {
-		super();
-		newTypeModulesRegistration();
 	}
 
 	/**
@@ -45,7 +51,6 @@ public class CustomTypeModulesRegistrationProvider extends JacksonJsonProvider {
 	 */
 	public CustomTypeModulesRegistrationProvider(Annotations... annotationsToUse) {
 		super(annotationsToUse);
-		newTypeModulesRegistration();
 	}
 
 	/**
@@ -57,7 +62,6 @@ public class CustomTypeModulesRegistrationProvider extends JacksonJsonProvider {
 	 */
 	public CustomTypeModulesRegistrationProvider(ObjectMapper mapper, Annotations[] annotationsToUse) {
 		super(mapper, annotationsToUse);
-		newTypeModulesRegistration();
 	}
 
 	/**
@@ -67,21 +71,22 @@ public class CustomTypeModulesRegistrationProvider extends JacksonJsonProvider {
 	 */
 	public CustomTypeModulesRegistrationProvider(ObjectMapper mapper) {
 		super(mapper);
-		newTypeModulesRegistration();
 	}
 
 	/**
 	 * Factory callback method for registration of new type modules. This method is
 	 * invoked in the constructor and can be overridden so users can
 	 * add specific type modules for the specific provider.
+	 *
+	 * @return the object mapper
 	 */
-	protected void newTypeModulesRegistration() {
+	protected ObjectMapper newTypeModulesRegistration() {
 		ObjectMapper mapper = _mapperConfig.getConfiguredMapper();
 		if (mapper == null) {
 			mapper = _mapperConfig.getDefaultMapper();
 		}
 		mapper.registerModule(new Jaxrs2TypesModule());
-		setMapper(mapper);
+		return mapper;
 	}
 
 }

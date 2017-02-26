@@ -27,6 +27,7 @@ import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
+import de.alpharogroup.lang.object.MergeObjectExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -84,6 +85,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO create(DO domainObject) {
 		E entity = getMapper().toEntity(domainObject);
@@ -95,10 +97,11 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO update(DO domainObject) {
 		E entity = dao.get(domainObject.getId());
-		domainObject = getMapper().toDomainObject(entity);
+		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
 		entity = dao.merge(entity);
 		return domainObject;
 	}
@@ -106,6 +109,7 @@ M extends EntityDOMapper<E, DO>>
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public DO delete(PK id) {
 		E entity = dao.get(id);
@@ -125,5 +129,26 @@ M extends EntityDOMapper<E, DO>>
 			domainObjects.add(getMapper().toDomainObject(entity));
 		}
 		return domainObjects;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	@Override
+	public Collection<PK> persist(Collection<DO> domainObjects) {
+		Collection<PK> primaryKeys = new ArrayList<PK>();
+		for (DO domainObject : domainObjects) {
+			primaryKeys.add(create(domainObject).getId());
+		}
+		return primaryKeys;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean exists(PK id) {
+		return dao.exists(id);
 	}
 }

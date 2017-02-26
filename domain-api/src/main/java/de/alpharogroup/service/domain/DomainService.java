@@ -16,6 +16,7 @@
 package de.alpharogroup.service.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import de.alpharogroup.domain.DomainObject;
@@ -37,7 +38,16 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *            the domain object
 	 * @return the domain object with the id from the entity.
 	 */
-	DO create(DO domainObject);
+	DO create(DO domainObject);	
+
+	/**
+	 * Persist all new domain objects in the given {@link Collection}.
+	 * 
+	 * @param domainObjects
+	 *            the {@link Collection} of domain objects to persist
+	 * @return the {@link Collection} with the id's of the persisted objects
+	 */
+	Collection<PK> persist(Collection<DO> domainObjects);
 
 	/**
 	 * Deletes an entity with the given id.
@@ -73,5 +83,15 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 * @return list of all domain objects
 	 */
 	List<DO> findAll();
+	
+
+	/**
+	 * Checks if an entry exists with the given id.
+	 * 
+	 * @param id
+	 *            the id to check
+	 * @return true, if an entry exists with the given id, otherwise false.
+	 */
+	boolean exists(PK id);
 
 }
