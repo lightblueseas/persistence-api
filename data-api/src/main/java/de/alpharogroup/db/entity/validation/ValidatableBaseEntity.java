@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity;
+package de.alpharogroup.db.entity.validation;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,6 +24,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

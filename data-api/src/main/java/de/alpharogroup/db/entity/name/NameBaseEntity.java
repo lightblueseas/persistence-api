@@ -24,7 +24,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.VersionableBaseEntity;
+import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
