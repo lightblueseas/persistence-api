@@ -19,6 +19,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -48,6 +51,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Autowired
 	private DataSource dataSource;
 
+	/** The entity manager. */
+	@PersistenceContext
+	@Getter
+	@Setter
+	private EntityManager entityManager;
+	
 	/** The jdbc template. */
 	@Setter
 	@Getter
