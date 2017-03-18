@@ -18,7 +18,7 @@ import lombok.Setter;
  *
  * @param <PK>
  *            the generic type of the id
- * @param <D>
+ * @param <U>
  *            the generic type of the user or account
  */
 @Entity
@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Creation<PK extends Serializable, D> extends BaseEntity<PK>
+public class Creation<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
 	/** The Constant serialVersionUID. */
@@ -36,6 +36,6 @@ public class Creation<PK extends Serializable, D> extends BaseEntity<PK>
 	private LocalDateTime created;
 
 	/** The user or account that created the entity that owns this entity. */
-	private D createdBy;
+	private U createdBy;
 
 }
