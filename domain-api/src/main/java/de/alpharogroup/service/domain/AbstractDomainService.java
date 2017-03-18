@@ -42,9 +42,9 @@ import lombok.Setter;
  */
 @Transactional
 public abstract class AbstractDomainService<
-PK extends Serializable,
-E extends BaseEntity<PK>,
-DO extends DomainObject<PK>,
+PK extends Serializable, 
+DO extends DomainObject<PK>, 
+E extends BaseEntity<PK>, 
 DAO extends EntityManagerDao<E, PK>,
 M extends EntityDOMapper<E, DO>>
  implements

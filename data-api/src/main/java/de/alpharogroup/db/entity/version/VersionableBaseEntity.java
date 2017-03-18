@@ -25,6 +25,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,6 +42,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public abstract class VersionableBaseEntity<T extends Serializable> extends BaseEntity<T>
 {
 

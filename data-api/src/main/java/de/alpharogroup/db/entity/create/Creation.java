@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * The entity class {@link Creation} is keeping the information for the creation of an entity. This
@@ -25,7 +28,10 @@ import lombok.Setter;
 @Table(name = "creation")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder=true)
 public class Creation<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
