@@ -76,8 +76,7 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 *            Defines how much rows to get from the query.
 	 * @return the result list.
 	 */
-	List<T> find(final String hqlQuery, final String[] params,
-			final Object[] paramValues, final Type[] paramTypes,
+	List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues, final Type[] paramTypes,
 			final Integer start, final Integer count);
 
 	/**
@@ -150,7 +149,6 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 */
 	T load(PK id, Session session);
 
-
 	/**
 	 * Save the given object.
 	 *
@@ -175,7 +173,8 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	/**
 	 * Sets the hibernate session.
 	 *
-	 * @param session The hibernate session to set.
+	 * @param session
+	 *            The hibernate session to set.
 	 */
 	void setSession(Session session);
 

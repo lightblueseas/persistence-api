@@ -60,7 +60,8 @@ public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializa
 	/**
 	 * Sets the entity manager.
 	 *
-	 * @param entityManager the new entity manager
+	 * @param entityManager
+	 *            the new entity manager
 	 */
 	void setEntityManager(EntityManager entityManager);
 

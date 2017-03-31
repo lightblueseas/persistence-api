@@ -89,6 +89,38 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	}
 
 	/**
+	 * Checks if is the resourceClass is annotated with the annotation
+	 * {@link Securable}.
+	 *
+	 * @return true, if is the resourceClass is annotated with the annotation
+	 *         {@link Securable}.
+	 */
+	protected boolean isSecured() {
+		Class<?> resourceClass = resourceInfo.getResourceClass();
+		Securable securable = resourceClass.getAnnotation(Securable.class);
+		if (securable != null) {
+			return true;
+		}
+		Method method = resourceInfo.getResourceMethod();
+		securable = method.getAnnotation(Securable.class);
+		boolean secured = securable != null;
+		return secured;
+	}
+
+	/**
+	 * Checks if the given path is a sign in path. Overwrite this method to
+	 * provide specific sign in path for your application.
+	 *
+	 * @param path
+	 *            the sign in path to check.
+	 * @return true, if the given path is a sign in path otherwise false.
+	 */
+	protected boolean isSigninPath(String path) {
+		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
+		return isSigninPath;
+	}
+
+	/**
 	 * Checks if the current request is a is a sign request.
 	 *
 	 * @param requestContext
@@ -110,48 +142,6 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 		}
 		return isSigninRequest;
 	}
-
-	/**
-	 * Checks if the given path is a sign in path. Overwrite this method to
-	 * provide specific sign in path for your application.
-	 *
-	 * @param path
-	 *            the sign in path to check.
-	 * @return true, if the given path is a sign in path otherwise false.
-	 */
-	protected boolean isSigninPath(String path) {
-		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
-		return isSigninPath;
-	}
-
-	/**
-	 * Checks if is the resourceClass is annotated with the annotation {@link Securable}.
-	 *
-	 * @return true, if is the resourceClass is annotated with the annotation {@link Securable}.
-	 */
-	protected boolean isSecured() {
-		Class<?> resourceClass = resourceInfo.getResourceClass();
-		Securable securable = resourceClass.getAnnotation(Securable.class);
-		if (securable != null) {
-			return true;
-		}
-		Method method = resourceInfo.getResourceMethod();
-		securable = method.getAnnotation(Securable.class);
-		boolean secured = securable != null;
-		return secured;
-	}
-
-	/**
-	 * Abstract callback method that checks if the given token is valid. For
-	 * instance if it is not expired.
-	 *
-	 * @param token
-	 *            the token
-	 * @return the string the user name
-	 * @throws Exception
-	 *             if the token is not valid
-	 */
-	protected abstract String onValidateToken(String token) throws Exception;
 
 	/**
 	 * Factory callback method for create a new {@link Response}.
@@ -185,5 +175,17 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	protected SecurityContext newSecurityContext(final String username) {
 		return new AuthenticationSecurityContext(username);
 	}
+
+	/**
+	 * Abstract callback method that checks if the given token is valid. For
+	 * instance if it is not expired.
+	 *
+	 * @param token
+	 *            the token
+	 * @return the string the user name
+	 * @throws Exception
+	 *             if the token is not valid
+	 */
+	protected abstract String onValidateToken(String token) throws Exception;
 
 }

@@ -23,11 +23,11 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.type.Type;
 
+import de.alpharogroup.db.dao.sessionfactory.SessionFactoryDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.service.sessionfactory.api.SessionFactoryBusinessService;
 import lombok.Getter;
 import lombok.Setter;
-import de.alpharogroup.db.dao.sessionfactory.SessionFactoryDao;
 
 /**
  * The Class AbstractBusinessService.
@@ -45,7 +45,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The dao reference. */
-	@Getter @Setter
+	@Getter
+	@Setter
 	private DAO dao;
 
 	/**
@@ -74,7 +75,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Delete and flush.
 	 *
-	 * @param objects the objects
+	 * @param objects
+	 *            the objects
 	 */
 	public void deleteAndFlush(final List<T> objects) {
 		delete(objects);
@@ -84,7 +86,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Delete and flush.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	public void deleteAndFlush(final PK id) {
 		delete(id);
@@ -94,7 +97,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Delete and flush.
 	 *
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 */
 	public void deleteAndFlush(final T t) {
 		delete(t);
@@ -118,18 +122,23 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Find.
 	 *
-	 * @param hqlQuery the hql query
-	 * @param params the params
-	 * @param paramValues the param values
-	 * @param paramTypes the param types
-	 * @param start the start
-	 * @param count the count
+	 * @param hqlQuery
+	 *            the hql query
+	 * @param params
+	 *            the params
+	 * @param paramValues
+	 *            the param values
+	 * @param paramTypes
+	 *            the param types
+	 * @param start
+	 *            the start
+	 * @param count
+	 *            the count
 	 * @return the list
 	 */
 	public List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues,
 			final Type[] paramTypes, final Integer start, final Integer count) {
-		return getDao().find(hqlQuery, params, paramValues, paramTypes, start,
-				count);
+		return getDao().find(hqlQuery, params, paramValues, paramTypes, start, count);
 	}
 
 	/**
@@ -142,7 +151,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Find by criteria.
 	 *
-	 * @param criterion the criterion
+	 * @param criterion
+	 *            the criterion
 	 * @return the list
 	 */
 	public List<T> findByCriteria(final Criterion... criterion) {
@@ -152,8 +162,10 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Find by example.
 	 *
-	 * @param exampleInstance the example instance
-	 * @param excludeProperty the exclude property
+	 * @param exampleInstance
+	 *            the example instance
+	 * @param excludeProperty
+	 *            the exclude property
 	 * @return the list
 	 */
 	public List<T> findByExample(final T exampleInstance, final String... excludeProperty) {
@@ -177,7 +189,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Gets the query.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return the query
 	 */
 	public Query getQuery(final String s) {
@@ -217,7 +230,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Merge and flush.
 	 *
-	 * @param object the object
+	 * @param object
+	 *            the object
 	 * @return the t
 	 */
 	public T mergeAndFlush(final T object) {
@@ -252,7 +266,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Save and flush.
 	 *
-	 * @param objects the objects
+	 * @param objects
+	 *            the objects
 	 * @return the list
 	 */
 	public List<PK> saveAndFlush(final List<T> objects) {
@@ -266,7 +281,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Save and flush.
 	 *
-	 * @param object the object
+	 * @param object
+	 *            the object
 	 * @return the pk
 	 */
 	public PK saveAndFlush(final T object) {
@@ -294,7 +310,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Save or update and flush.
 	 *
-	 * @param objects the objects
+	 * @param objects
+	 *            the objects
 	 */
 	public void saveOrUpdateAndFlush(final List<T> objects) {
 		getDao().saveOrUpdate(objects);
@@ -304,7 +321,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Save or update and flush.
 	 *
-	 * @param object the object
+	 * @param object
+	 *            the object
 	 */
 	public void saveOrUpdateAndFlush(final T object) {
 		getDao().saveOrUpdate(object);
@@ -314,9 +332,10 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/**
 	 * Sets the session.
 	 *
-	 * @param session the new session
+	 * @param session
+	 *            the new session
 	 */
-	public void setSession(final Session session){
+	public void setSession(final Session session) {
 		getDao().setSession(session);
 	}
 }

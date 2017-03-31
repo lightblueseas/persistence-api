@@ -43,20 +43,6 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	public void setParameterValues(Properties parameters) {
-		String enumClassName = parameters.getProperty("enumClassName");
-		try {
-			enumClass = (Class<Enum>) Class.forName(enumClassName);
-		} catch (ClassNotFoundException cnfe) {
-			throw new HibernateException("Enum class not found", cnfe);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Object assemble(Serializable cached, Object owner) throws HibernateException {
 		return cached;
@@ -84,6 +70,14 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	@Override
 	public boolean equals(Object one, Object another) throws HibernateException {
 		return one == another;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public Object fromXMLString(String xmlValue) {
+		return Enum.valueOf(enumClass, xmlValue);
 	}
 
 	/**
@@ -136,6 +130,14 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+			throws HibernateException, SQLException {
+		return nullSafeGet(rs, names, owner);
+	}
+
+	/**
 	 * Write an instance of the mapped class to a prepared statement. A
 	 * multi-column type should be written to parameters starting from
 	 * <tt>index</tt>.
@@ -155,12 +157,28 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException {
 		if (value == null) {
 			st.setNull(index, Types.OTHER);
-			// UPDATE: To support NULL insertion, change to: 
+			// UPDATE: To support NULL insertion, change to:
 			// st.setNull(index, 1111);
 		} else {
 			// Notice 1111 which java.sql.Type for Postgres Enum
 			st.setObject(index, ((Enum) value), Types.OTHER);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
+			throws HibernateException, SQLException {
+		nullSafeSet(st, value, index);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	public String objectToSQLString(Object value) {
+		return '\'' + ((Enum) value).name() + '\'';
 	}
 
 	/**
@@ -181,26 +199,24 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void setParameterValues(Properties parameters) {
+		String enumClassName = parameters.getProperty("enumClassName");
+		try {
+			enumClass = (Class<Enum>) Class.forName(enumClassName);
+		} catch (ClassNotFoundException cnfe) {
+			throw new HibernateException("Enum class not found", cnfe);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public int[] sqlTypes() {
-		// UPDATE: To support NULL insertion, change to: 
+		// UPDATE: To support NULL insertion, change to:
 		// return new int[] { 1111 };
 		return new int[] { Types.VARCHAR };
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	public Object fromXMLString(String xmlValue) {
-		return Enum.valueOf(enumClass, xmlValue);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("rawtypes")
-	public String objectToSQLString(Object value) {
-		return '\'' + ((Enum) value).name() + '\'';
 	}
 
 	/**
@@ -209,21 +225,5 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType {
 	@SuppressWarnings("rawtypes")
 	public String toXMLString(Object value) {
 		return ((Enum) value).name();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
-			throws HibernateException, SQLException {
-		return nullSafeGet(rs, names, owner);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
-			throws HibernateException, SQLException {
-		nullSafeSet(st, value, index);
 	}
 }

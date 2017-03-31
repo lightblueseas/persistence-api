@@ -34,22 +34,20 @@ import lombok.Setter;
 /**
  * The Class {@link AbstractDomainService}.
  *
- * @param <PK> the generic type of the primary key
- * @param <DO> the generic type of the domain object
- * @param <E> the element type of the entity
- * @param <DAO> the generic type of the data transfer object
- * @param <M> the generic type of the entity mapper
+ * @param <PK>
+ *            the generic type of the primary key
+ * @param <DO>
+ *            the generic type of the domain object
+ * @param <E>
+ *            the element type of the entity
+ * @param <DAO>
+ *            the generic type of the data transfer object
+ * @param <M>
+ *            the generic type of the entity mapper
  */
 @Transactional
-public abstract class AbstractDomainService<
-PK extends Serializable, 
-DO extends DomainObject<PK>, 
-E extends BaseEntity<PK>, 
-DAO extends EntityManagerDao<E, PK>,
-M extends EntityDOMapper<E, DO>>
- implements
-		DomainService<PK, DO> {
-
+public abstract class AbstractDomainService<PK extends Serializable, DO extends DomainObject<PK>, E extends BaseEntity<PK>, DAO extends EntityManagerDao<E, PK>, M extends EntityDOMapper<E, DO>>
+		implements DomainService<PK, DO> {
 
 	/** The dao reference. */
 	@Setter
@@ -62,25 +60,17 @@ M extends EntityDOMapper<E, DO>>
 	@Setter
 	@Getter
 	private M mapper;
-    /** The entity class. */
-    @SuppressWarnings("unchecked")
-    @Getter
-    private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 2);
+	/** The entity class. */
+	@SuppressWarnings("unchecked")
+	@Getter
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class,
+			getClass(), 2);
 
-    /** The domain object class. */
-    @SuppressWarnings("unchecked")
-    @Getter
-    private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class, getClass(), 1);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public DO read(final PK id) {
-		final E entity = dao.get(id);
-		final DO domainObject = getMapper().toDomainObject(entity);
-		return domainObject;
-	}
+	/** The domain object class. */
+	@SuppressWarnings("unchecked")
+	@Getter
+	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/**
 	 * {@inheritDoc}
@@ -91,18 +81,6 @@ M extends EntityDOMapper<E, DO>>
 		E entity = getMapper().toEntity(domainObject);
 		entity = dao.merge(entity);
 		domainObject.setId(entity.getId());
-		return domainObject;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional
-	@Override
-	public DO update(final DO domainObject) {
-		E entity = dao.get(domainObject.getId());
-		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
-		entity = dao.merge(entity);
 		return domainObject;
 	}
 
@@ -122,10 +100,18 @@ M extends EntityDOMapper<E, DO>>
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean exists(final PK id) {
+		return dao.exists(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<DO> findAll() {
 		final Collection<E> all = dao.findAll();
 		final List<DO> domainObjects = new ArrayList<>();
-		for(final E entity : all) {
+		for (final E entity : all) {
 			domainObjects.add(getMapper().toDomainObject(entity));
 		}
 		return domainObjects;
@@ -148,7 +134,21 @@ M extends EntityDOMapper<E, DO>>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean exists(final PK id) {
-		return dao.exists(id);
+	public DO read(final PK id) {
+		final E entity = dao.get(id);
+		final DO domainObject = getMapper().toDomainObject(entity);
+		return domainObject;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	@Override
+	public DO update(final DO domainObject) {
+		E entity = dao.get(domainObject.getId());
+		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
+		entity = dao.merge(entity);
+		return domainObject;
 	}
 }

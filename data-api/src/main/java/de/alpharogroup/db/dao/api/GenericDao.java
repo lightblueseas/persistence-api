@@ -29,8 +29,7 @@ import de.alpharogroup.db.entity.BaseEntity;
  *            the type of the primary key from the domain object
  * @author Asterios Raptis
  */
-public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable
-{
+public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
 
 	/**
 	 * Delete all persistent objects in the given list.
@@ -41,8 +40,8 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	void delete(final List<T> objects);
 
 	/**
-	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
-	 * obj) directly
+	 * Deletes an object of a given Id. Will load the object internally so
+	 * consider using delete (T obj) directly
 	 * 
 	 * @param id
 	 *            the id
@@ -58,6 +57,14 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	void delete(T object);
 
 	/**
+	 * Remove this instance from the session cache.
+	 * 
+	 * @param object
+	 *            the object to evict.
+	 */
+	void evict(T object);
+
+	/**
 	 * Checks if an entry exists with the given id.
 	 * 
 	 * @param id
@@ -65,14 +72,6 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	 * @return true, if an entry exists with the given id, otherwise false.
 	 */
 	boolean exists(PK id);
-
-	/**
-	 * Remove this instance from the session cache.
-	 * 
-	 * @param object
-	 *            the object to evict.
-	 */
-	void evict(T object);
 
 	/**
 	 * Returns a list of all persistent objects.
@@ -107,15 +106,6 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	T load(PK id);
 
 	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object
-	 */
-	T merge(final T object);
-
-	/**
 	 * Merges all new objects in the given list.
 	 * 
 	 * @param objects
@@ -125,9 +115,19 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	List<T> merge(List<T> objects);
 
 	/**
+	 * Merges the given object. @see Hibernate documentation.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return the object
+	 */
+	T merge(final T object);
+
+	/**
 	 * Re-read the state of the given instance from the underlying database.
 	 * 
-	 * @param object the object to re-read.
+	 * @param object
+	 *            the object to re-read.
 	 */
 	void refresh(final T object);
 

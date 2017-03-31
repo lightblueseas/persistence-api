@@ -44,8 +44,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class BaseEntity<PK extends Serializable> implements
-		Serializable {
+public abstract class BaseEntity<PK extends Serializable> implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -55,15 +54,6 @@ public abstract class BaseEntity<PK extends Serializable> implements
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private PK id;
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, newToStringStyle());
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -71,40 +61,6 @@ public abstract class BaseEntity<PK extends Serializable> implements
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return CloneObjectExtensions.cloneObjectQuietly(this);
-	}
-
-	/**
-	 * Factory callback method that can be overwritten to get another
-	 * {@link ToStringStyle} object for the {@link BaseEntity#toString()}.
-	 * Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
-	 * @return the new {@link ToStringStyle}
-	 */
-	protected ToStringStyle newToStringStyle() {
-		return ToStringStyle.SHORT_PREFIX_STYLE;
-	}
-
-	/**
-	 * Returns a xml string representation of the object.
-	 *
-	 * @return the xml string.
-	 */
-	public String toXml() {
-		Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
-		String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
-		aliases.put(lqSimpleName, getClass());
-		String xml = XmlExtensions.toXmlWithXStream(this, aliases);
-		return xml;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
 	}
 
 	/**
@@ -126,5 +82,48 @@ public abstract class BaseEntity<PK extends Serializable> implements
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/**
+	 * Factory callback method that can be overwritten to get another
+	 * {@link ToStringStyle} object for the {@link BaseEntity#toString()}.
+	 * Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
+	 * 
+	 * @return the new {@link ToStringStyle}
+	 */
+	protected ToStringStyle newToStringStyle() {
+		return ToStringStyle.SHORT_PREFIX_STYLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, newToStringStyle());
+	}
+
+	/**
+	 * Returns a xml string representation of the object.
+	 *
+	 * @return the xml string.
+	 */
+	public String toXml() {
+		Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
+		String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
+		aliases.put(lqSimpleName, getClass());
+		String xml = XmlExtensions.toXmlWithXStream(this, aliases);
+		return xml;
 	}
 }

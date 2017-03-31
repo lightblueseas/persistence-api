@@ -37,13 +37,6 @@ import de.alpharogroup.domain.DomainObject;
 public interface EntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>> {
 
 	/**
-	 * Gets the mapper.
-	 *
-	 * @return the mapper
-	 */
-	Mapper getMapper();
-
-	/**
 	 * Gets the domain object class.
 	 *
 	 * @return the domain object class
@@ -56,6 +49,53 @@ public interface EntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject
 	 * @return the entity class
 	 */
 	Class<E> getEntityClass();
+
+	/**
+	 * Gets the mapper.
+	 *
+	 * @return the mapper
+	 */
+	Mapper getMapper();
+
+	/**
+	 * Constructs new instances of destinationClass and performs mapping between
+	 * from source.
+	 *
+	 * @param <T>
+	 *            the generic type of the destinationClass
+	 * @param <S>
+	 *            the generic type of the source
+	 * @param sources
+	 *            the collection of source objects
+	 * @param destinationClass
+	 *            the destination class
+	 * @return the new instance of destinationClass mapped to source object.
+	 * @throws MappingException
+	 *             is thrown if something goes wrong with the mapping process.
+	 */
+	default <T, S> List<T> map(final Collection<S> sources, final Class<T> destinationClass) throws MappingException {
+		return MapperExtensions.map(getMapper(), sources, destinationClass);
+	};
+
+	/**
+	 * Constructs new instance of destinationClass and performs mapping between
+	 * from source.
+	 *
+	 * @param <T>
+	 *            the generic type of the destinationClass
+	 * @param <S>
+	 *            the generic type of the source
+	 * @param source
+	 *            the source
+	 * @param destinationClass
+	 *            the destination class
+	 * @return the new instance of destinationClass mapped to source object.
+	 * @throws MappingException
+	 *             is thrown if something goes wrong with the mapping process.
+	 */
+	default <T, S> T map(final S source, final Class<T> destinationClass) throws MappingException {
+		return MapperExtensions.map(getMapper(), source, destinationClass);
+	};
 
 	/**
 	 * Maps the given entity object to a domain object.
@@ -113,40 +153,10 @@ public interface EntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject
 	 * @return the entity object
 	 */
 	default E toEntity(final DO domainObject) {
-		if(domainObject != null) {
+		if (domainObject != null) {
 			return getMapper().map(domainObject, getEntityClass());
 		}
 		return null;
-	};
-
-	/**
-	 * Constructs new instance of destinationClass and performs mapping between
-	 * from source.
-	 *
-	 * @param <T>            the generic type of the destinationClass
-	 * @param <S>            the generic type of the source
-	 * @param source            the source
-	 * @param destinationClass            the destination class
-	 * @return the new instance of destinationClass mapped to source object.
-	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
-	 */
-	default <T, S> T map(final S source, final Class<T> destinationClass) throws MappingException {
-		return MapperExtensions.map(getMapper(), source, destinationClass);
-	};
-
-	/**
-	 * Constructs new instances of destinationClass and performs mapping between
-	 * from source.
-	 *
-	 * @param <T>            the generic type of the destinationClass
-	 * @param <S>            the generic type of the source
-	 * @param sources            the collection of source objects
-	 * @param destinationClass            the destination class
-	 * @return the new instance of destinationClass mapped to source object.
-	 * @throws MappingException             is thrown if something goes wrong with the mapping process.
-	 */
-	default <T, S> List<T> map(final Collection<S> sources, final Class<T> destinationClass) throws MappingException {
-		return MapperExtensions.map(getMapper(), sources, destinationClass);
 	};
 
 }

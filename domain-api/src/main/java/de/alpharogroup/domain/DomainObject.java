@@ -20,7 +20,8 @@ import java.io.Serializable;
 /**
  * Marker interface for domain objects.
  *
- * @param <K> the primary key type of the corresponding entity
+ * @param <K>
+ *            the primary key type of the corresponding entity
  */
 public interface DomainObject<K> extends Serializable {
 

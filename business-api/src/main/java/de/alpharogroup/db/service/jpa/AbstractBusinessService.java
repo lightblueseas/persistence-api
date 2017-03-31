@@ -44,7 +44,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The dao reference. */
-	@Getter @Setter
+	@Getter
+	@Setter
 	private DAO dao;
 
 	/**
@@ -100,11 +101,12 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	public T get(PK id) {
 		return getDao().get(id);
 	}
-	
+
 	/**
 	 * Gets the {@link Query} from the given string.
 	 *
-	 * @param s the query as string
+	 * @param s
+	 *            the query as string
 	 * @return the query
 	 */
 	public Query getQuery(String s) {
@@ -116,6 +118,14 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	public T load(PK id) {
 		return getDao().load(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	public List<T> merge(List<T> objects) {
+		return getDao().merge(objects);
 	}
 
 	/**
@@ -139,15 +149,7 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Transactional
 	public List<PK> save(List<T> objects) {
-		 return getDao().save(objects);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional
-	public List<T> merge(List<T> objects) {
-		return getDao().merge(objects);
+		return getDao().save(objects);
 	}
 
 	/**

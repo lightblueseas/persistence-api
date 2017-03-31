@@ -20,24 +20,32 @@ import java.security.Principal;
 import javax.ws.rs.core.SecurityContext;
 
 /**
- * The class {@link AuthenticationSecurityContext} is a simple implementation of the {@link SecurityContext} interface.
+ * The class {@link AuthenticationSecurityContext} is a simple implementation of
+ * the {@link SecurityContext} interface.
  */
 public class AuthenticationSecurityContext implements SecurityContext {
 
-
 	/** The username. */
-	private final String username; 
-	
-	
+	private final String username;
+
 	/**
 	 * Instantiates a new {@link AuthenticationSecurityContext}.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 */
 	public AuthenticationSecurityContext(String username) {
 		this.username = username;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getAuthenticationScheme() {
+		return null;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -60,14 +68,6 @@ public class AuthenticationSecurityContext implements SecurityContext {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isUserInRole(final String role) {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public boolean isSecure() {
 		return false;
 	}
@@ -76,8 +76,8 @@ public class AuthenticationSecurityContext implements SecurityContext {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getAuthenticationScheme() {
-		return null;
+	public boolean isUserInRole(final String role) {
+		return true;
 	}
 
 }

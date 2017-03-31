@@ -28,9 +28,8 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the type of the primary key from the domain object
  */
-public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends
-		Serializable {
-	
+public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
+
 	/**
 	 * Delete all persistent objects in the given list.
 	 * 
@@ -99,15 +98,6 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	T load(PK id);
 
 	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object
-	 */
-	T merge(final T object);
-
-	/**
 	 * Merges all new objects in the given list.
 	 * 
 	 * @param objects
@@ -115,6 +105,15 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * @return the list with the ids of the merged objects
 	 */
 	List<T> merge(List<T> objects);
+
+	/**
+	 * Merges the given object. @see Hibernate documentation.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return the object
+	 */
+	T merge(final T object);
 
 	/**
 	 * Re-read the state of the given instance from the underlying database.

@@ -33,8 +33,8 @@ import de.alpharogroup.db.service.api.BusinessService;
  * @param <PK>
  *            the type of the primary key from the domain object
  */
-public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends BusinessService<T, PK>
-{
+public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK extends Serializable>
+		extends BusinessService<T, PK> {
 
 	/**
 	 * Delete all persistent objects in the given list and flush.
@@ -77,8 +77,8 @@ public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK exte
 	 *            Defines how much rows to get from the query.
 	 * @return the result list.
 	 */
-	List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues,
-		final Type[] paramTypes, final Integer start, final Integer count);
+	List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues, final Type[] paramTypes,
+			final Integer start, final Integer count);
 
 	/**
 	 * Hibernate wrapper.
@@ -111,15 +111,6 @@ public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK exte
 	 * @return the hibernate session
 	 */
 	Session getSession();
-
-
-	/**
-	 * Sets the hibernate session.
-	 * 
-	 * @param session
-	 *            The hibernate session to set.
-	 */
-	void setSession(Session session);
 
 	/**
 	 * Merge and flush.
@@ -163,5 +154,13 @@ public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK exte
 	 *            the object to save or update.
 	 */
 	void saveOrUpdateAndFlush(T object);
+
+	/**
+	 * Sets the hibernate session.
+	 * 
+	 * @param session
+	 *            The hibernate session to set.
+	 */
+	void setSession(Session session);
 
 }

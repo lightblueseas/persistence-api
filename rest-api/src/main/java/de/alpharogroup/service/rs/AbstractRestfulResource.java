@@ -29,9 +29,11 @@ import lombok.Setter;
  *            the generic type of the primary key
  * @param <DO>
  *            the generic type of the domain object
- * @param <DS> the generic type of the domain service interface
+ * @param <DS>
+ *            the generic type of the domain service interface
  */
-public class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>> implements RestfulResource<PK, DO> {
+public class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>>
+		implements RestfulResource<PK, DO> {
 
 	/**
 	 * The domain service.

@@ -49,8 +49,8 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractEntityDOMapper.class,
-			this.getClass(), 0);
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 0);
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 */
 	public AbstractEntityDOMapper() {
-		this(Collections.<String> emptyList());
+		this(Collections.<String>emptyList());
 	}
 
 	/**
@@ -73,6 +73,17 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 */
 	public AbstractEntityDOMapper(final List<String> mappingFiles) {
 		mapper = newMapper(mappingFiles);
+	}
+
+	private BeanMappingBuilder beanMappingBuilder() {
+		return new BeanMappingBuilder() {
+			@Override
+			protected void configure() {
+				mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false),
+						TypeMappingOptions.mapEmptyString(false));
+			}
+
+		};
 	}
 
 	/**
@@ -87,21 +98,11 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 * @return the new {@link Mapper} for the mapping process.
 	 */
 	public Mapper newMapper(final List<String> mappingFiles) {
-	    DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
-	    mapper.addMapping(beanMappingBuilder());
-	    mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap, fieldMapping) ->
-        sourceFieldValue == null);
-	    return mapper;
-	}
-	
-	private BeanMappingBuilder beanMappingBuilder() {
-	    return new BeanMappingBuilder() {
-	        @Override
-	        protected void configure() {
-	            mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false), TypeMappingOptions.mapEmptyString(false));
-	        }
-
-	    };
+		DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
+		mapper.addMapping(beanMappingBuilder());
+		mapper.setCustomFieldMapper(
+				(source, destination, sourceFieldValue, classMap, fieldMapping) -> sourceFieldValue == null);
+		return mapper;
 	}
 
 }
