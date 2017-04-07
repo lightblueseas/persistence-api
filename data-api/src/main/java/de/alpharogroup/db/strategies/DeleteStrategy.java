@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * The Interface DeleteStrategy.
+ * The interface {@link DeleteStrategy} can interact if entities are deleted.
  *
  * @param <T>
  *            the type of the entity object
