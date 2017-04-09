@@ -31,15 +31,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.strategies.DeleteStrategy;
+import de.alpharogroup.db.strategies.MergeStrategy;
+import de.alpharogroup.db.strategies.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The abstract class {@link JpaEntityManagerDao} provides methods for create,
+ * update and delete entity objects. The create, update and delete processes can
+ * be overwritten by providing strategies for them. By default the strategies
+ * are null and the default behavior of the process will be taken.
+ *
+ * @param <T>
+ *            the generic type of the entity object
+ * @param <PK>
+ *            the generic type of the primary key
+ */
 public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends Serializable>
 		implements EntityManagerDao<T, PK> {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(JpaEntityManagerDao.class,
@@ -63,6 +79,27 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	/** The delete strategy for interact on deletion process. */
+	@Getter
+	private DeleteStrategy<T, PK> deleteStrategy;
+
+	/** The merge strategy for interact on merge process. */
+	@Getter
+	private MergeStrategy<T, PK> mergeStrategy;
+
+	/** The save or update strategy for interact on save or update process. */
+	@Getter
+	private SaveOrUpdateStrategy<T, PK> saveOrUpdateStrategy;
+
+	/**
+	 * initialization block for the strategies.
+	 */
+	{
+		newDeleteStrategy();
+		newMergeStrategy();
+		newSaveOrUpdateStrategy();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -76,8 +113,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public void delete(List<T> objects) {
-		for (T entity : objects) {
-			getEntityManager().remove(entity);
+		if (getDeleteStrategy() == null) {
+			for (T entity : objects) {
+				getEntityManager().remove(entity);
+			}
+		} else {
+			getDeleteStrategy().delete(objects);
 		}
 	}
 
@@ -86,8 +127,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public void delete(PK id) {
-		final T entity = get(id);
-		delete(entity);
+		if (getDeleteStrategy() == null) {
+			final T entity = get(id);
+			delete(entity);
+		} else {
+			getDeleteStrategy().delete(id);
+		}
 	}
 
 	/**
@@ -95,7 +140,11 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public void delete(final T entity) {
-		getEntityManager().remove(entity);
+		if (getDeleteStrategy() == null) {
+			getEntityManager().remove(entity);
+		} else {
+			getDeleteStrategy().delete(entity);
+		}
 	}
 
 	/**
@@ -159,8 +208,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Override
 	public List<T> merge(List<T> objects) {
 		List<T> mergedEntities = new ArrayList<T>();
-		for (T object : objects) {
-			mergedEntities.add(merge(object));
+		if (getMergeStrategy() == null) {
+			for (T object : objects) {
+				mergedEntities.add(merge(object));
+			}
+		} else {
+			mergedEntities.addAll(getMergeStrategy().merge(objects));
 		}
 		return mergedEntities;
 	}
@@ -170,7 +223,11 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public T merge(T object) {
-		return getEntityManager().merge(object);
+		if (getMergeStrategy() == null) {
+			return getEntityManager().merge(object);
+		} else {
+			return getMergeStrategy().merge(object);
+		}
 	}
 
 	@Override
@@ -184,8 +241,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Override
 	public List<PK> save(List<T> objects) {
 		List<PK> primaryKeys = new ArrayList<PK>();
-		for (T object : objects) {
-			primaryKeys.add(save(object));
+		if (getSaveOrUpdateStrategy() == null) {
+			for (T object : objects) {
+				primaryKeys.add(save(object));
+			}
+		} else {
+			primaryKeys.addAll(getSaveOrUpdateStrategy().save(objects));
 		}
 		return primaryKeys;
 	}
@@ -195,8 +256,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public PK save(T object) {
-		getEntityManager().persist(object);
-		return object.getId();
+		if (getSaveOrUpdateStrategy() == null) {
+			getEntityManager().persist(object);
+			return object.getId();
+		} else {
+			return getSaveOrUpdateStrategy().save(object);
+		}
 	}
 
 	/**
@@ -221,8 +286,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public void update(List<T> objects) {
-		for (T t : objects) {
-			update(t);
+		if (getSaveOrUpdateStrategy() == null) {
+			for (T t : objects) {
+				update(t);
+			}
+		} else {
+			getSaveOrUpdateStrategy().update(objects);
 		}
 	}
 
@@ -231,7 +300,50 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	@Override
 	public void update(final T entity) {
-		getEntityManager().merge(entity);
+		if (getSaveOrUpdateStrategy() == null) {
+			getEntityManager().merge(entity);
+		} else {
+			getSaveOrUpdateStrategy().update(entity);
+		}
+	}
+
+	/**
+	 * Factory method for creating a new {@link DeleteStrategy} for interact on
+	 * deletion process. This method can be overridden so users can provide
+	 * their own version of a new {@link DeleteStrategy} for the deletion
+	 * process.
+	 *
+	 * @return the new {@link DeleteStrategy} for the deletion process.
+	 */
+	public DeleteStrategy<T, PK> newDeleteStrategy() {
+		deleteStrategy = null;
+		return deleteStrategy;
+	}
+
+	/**
+	 * Factory method for creating a new {@link MergeStrategy} for interact on
+	 * merge process. This method can be overridden so users can provide their
+	 * own version of a new {@link MergeStrategy} for the merge process.
+	 *
+	 * @return the new {@link MergeStrategy} for the merge process.
+	 */
+	public MergeStrategy<T, PK> newMergeStrategy() {
+		mergeStrategy = null;
+		return mergeStrategy;
+	}
+
+	/**
+	 * Factory method for creating a new {@link SaveOrUpdateStrategy} for
+	 * interact on save or update process. This method can be overridden so
+	 * users can provide their own version of a new {@link SaveOrUpdateStrategy}
+	 * for the save or update process.
+	 *
+	 * @return the new {@link SaveOrUpdateStrategy} for the save or update
+	 *         process.
+	 */
+	public SaveOrUpdateStrategy<T, PK> newSaveOrUpdateStrategy() {
+		saveOrUpdateStrategy = null;
+		return saveOrUpdateStrategy;
 	}
 
 }
