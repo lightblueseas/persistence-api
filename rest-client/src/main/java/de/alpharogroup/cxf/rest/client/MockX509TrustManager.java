@@ -20,10 +20,11 @@ import javax.security.cert.CertificateException;
 import javax.security.cert.X509Certificate;
 
 /**
- * The class {@link MockX509TrustManager} is a mock implementation of the
- * {@link TrustManager} interface.
+ * The class {@link MockX509TrustManager} is a mock implementation of the {@link TrustManager}
+ * interface.
  */
-public class MockX509TrustManager implements TrustManager {
+public class MockX509TrustManager implements TrustManager
+{
 
 	/**
 	 * Does nothing.
@@ -35,7 +36,9 @@ public class MockX509TrustManager implements TrustManager {
 	 * @throws CertificateException
 	 *             the certificate exception
 	 */
-	public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	public void checkClientTrusted(X509Certificate[] chain, String authType)
+		throws CertificateException
+	{
 	}
 
 	/**
@@ -48,7 +51,9 @@ public class MockX509TrustManager implements TrustManager {
 	 * @throws CertificateException
 	 *             the certificate exception
 	 */
-	public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	public void checkServerTrusted(X509Certificate[] chain, String authType)
+		throws CertificateException
+	{
 	}
 
 	/**
@@ -56,7 +61,8 @@ public class MockX509TrustManager implements TrustManager {
 	 *
 	 * @return 's an empty array
 	 */
-	public X509Certificate[] getAcceptedIssuers() {
-		return new X509Certificate[] {};
+	public X509Certificate[] getAcceptedIssuers()
+	{
+		return new X509Certificate[] { };
 	}
 }

@@ -31,7 +31,10 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the generic type of the primary key
  */
-public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializable> extends GenericDao<T, PK> {
+public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		GenericDao<T, PK>
+{
 
 	/**
 	 * Persists the given entity.

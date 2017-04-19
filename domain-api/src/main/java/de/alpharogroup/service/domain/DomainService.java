@@ -29,11 +29,11 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>> {
+public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>>
+{
 
 	/**
-	 * Creates an entity from the given domain object and persist it to the
-	 * underlying database.
+	 * Creates an entity from the given domain object and persist it to the underlying database.
 	 *
 	 * @param domainObject
 	 *            the domain object
@@ -76,8 +76,7 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	Collection<PK> persist(Collection<DO> domainObjects);
 
 	/**
-	 * Read an entity with the given id and maps it to a domain object that will
-	 * be returned.
+	 * Read an entity with the given id and maps it to a domain object that will be returned.
 	 *
 	 * @param id
 	 *            the id

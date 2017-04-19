@@ -45,7 +45,9 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
  *            the generic type of the primary key from the dao object.
  */
 public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializable>
-		implements SessionFactoryDao<T, PK> {
+	implements
+		SessionFactoryDao<T, PK>
+{
 
 	/**
 	 * The serialVersionUID.
@@ -69,14 +71,16 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 
 	/** Class type. */
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(GenericHibernateDao.class,
-			this.getClass());
+	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
+		.getFirstTypeArgument(GenericHibernateDao.class, this.getClass());
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(List<T> objects) {
-		for (T object : objects) {
+	public void delete(List<T> objects)
+	{
+		for (T object : objects)
+		{
 			delete(object);
 		}
 	}
@@ -84,43 +88,50 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(final PK id) {
+	public void delete(final PK id)
+	{
 		getSession().delete(load(id));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(final PK id, final Session session) {
+	public void delete(final PK id, final Session session)
+	{
 		session.delete(load(id));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(final T object) {
+	public void delete(final T object)
+	{
 		getSession().delete(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(final T object, final Session session) {
+	public void delete(final T object, final Session session)
+	{
 		session.delete(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void evict(T object) {
+	public void evict(T object)
+	{
 		getSession().evict(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exists(final PK id) {
-		if (id != null) {
+	public boolean exists(final PK id)
+	{
+		if (id != null)
+		{
 			return null != get(id);
 		}
 		return false;
@@ -130,30 +141,43 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> find(String hqlQuery, String[] params, Object[] paramValues, Type[] paramTypes, Integer start,
-			Integer count) {
+	public List<T> find(String hqlQuery, String[] params, Object[] paramValues, Type[] paramTypes,
+		Integer start, Integer count)
+	{
 
 		final Query query = getQuery(hqlQuery);
 		final int paramsLength = (params == null ? 0 : params.length);
-		if (params != null) {
-			if (paramValues == null || paramValues.length != params.length) {
-				throw new IllegalArgumentException("ParamValues not completely specified for all params");
+		if (params != null)
+		{
+			if (paramValues == null || paramValues.length != params.length)
+			{
+				throw new IllegalArgumentException(
+					"ParamValues not completely specified for all params");
 			}
-			if (paramValues == null || paramTypes.length != params.length) {
-				throw new IllegalArgumentException("ParamTypes not completely specified for all params");
+			if (paramValues == null || paramTypes.length != params.length)
+			{
+				throw new IllegalArgumentException(
+					"ParamTypes not completely specified for all params");
 			}
 		}
-		for (int i = 0; i < paramsLength; i++) {
+		for (int i = 0; i < paramsLength; i++)
+		{
 			query.setParameter(params[i], paramValues[i], paramTypes[i]);
 		}
-		if (start == null) {
+		if (start == null)
+		{
 			query.setFirstResult(0);
-		} else {
+		}
+		else
+		{
 			query.setFirstResult(start.intValue());
 		}
-		if (count == null) {
+		if (count == null)
+		{
 			query.setMaxResults(0);
-		} else {
+		}
+		else
+		{
 			query.setMaxResults(count.intValue());
 		}
 		return query.list();
@@ -162,7 +186,8 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<T> findAll() {
+	public List<T> findAll()
+	{
 		return findByCriteria();
 	}
 
@@ -170,10 +195,12 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findByCriteria(final Criterion... criterion) {
+	public List<T> findByCriteria(final Criterion... criterion)
+	{
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 
-		for (Criterion c : criterion) {
+		for (Criterion c : criterion)
+		{
 			crit.add(c);
 		}
 		return crit.list();
@@ -183,10 +210,12 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findByExample(final T exampleInstance, final String... excludeProperty) {
+	public List<T> findByExample(final T exampleInstance, final String... excludeProperty)
+	{
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 		Example example = Example.create(exampleInstance);
-		for (String exclude : excludeProperty) {
+		for (String exclude : excludeProperty)
+		{
 			example.excludeProperty(exclude);
 		}
 		crit.add(example);
@@ -197,16 +226,18 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public T get(final PK id) {
-		return (T) getSession().get(this.type, id);
+	public T get(final PK id)
+	{
+		return (T)getSession().get(this.type, id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public T get(final PK id, final Session session) {
-		return (T) session.get(this.type, id);
+	public T get(final PK id, final Session session)
+	{
+		return (T)session.get(this.type, id);
 	}
 
 	/**
@@ -214,7 +245,8 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 *
 	 * @return the data source
 	 */
-	public DataSource getDataSource() {
+	public DataSource getDataSource()
+	{
 		return dataSource;
 	}
 
@@ -223,7 +255,8 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 *
 	 * @return the jdbc template
 	 */
-	public JdbcTemplate getJdbcTemplate() {
+	public JdbcTemplate getJdbcTemplate()
+	{
 		return jdbcTemplate;
 	}
 
@@ -232,37 +265,47 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * 
 	 * @return the persitent class.
 	 */
-	public Class<T> getPersistentClass() {
+	public Class<T> getPersistentClass()
+	{
 		return this.type;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Query getQuery(final String hqlQuery) {
+	public Query getQuery(final String hqlQuery)
+	{
 		return getSession().createQuery(hqlQuery);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Query getQuery(final String queryString, final Session session) {
+	public Query getQuery(final String queryString, final Session session)
+	{
 		return session.createQuery(queryString);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Session getSession() {
+	public Session getSession()
+	{
 		Session session = null;
-		try {
+		try
+		{
 			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			if (currentSession.get() == null) {
+		}
+		catch (HibernateException e)
+		{
+			if (currentSession.get() == null)
+			{
 				session = sessionFactory.openSession();
 				session.setFlushMode(FlushMode.ALWAYS);
 				setSession(session);
-			} else {
+			}
+			else
+			{
 				session = currentSession.get();
 			}
 		}
@@ -274,14 +317,16 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * 
 	 * @return SessionFactory Object
 	 */
-	public SessionFactory getSessionFactory() {
+	public SessionFactory getSessionFactory()
+	{
 		return sessionFactory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Class<T> getType() {
+	public Class<T> getType()
+	{
 		return type;
 	}
 
@@ -289,22 +334,26 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public T load(final PK id) {
-		return (T) getSession().load(this.type, id);
+	public T load(final PK id)
+	{
+		return (T)getSession().load(this.type, id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public T load(final PK id, final Session session) {
-		return (T) session.load(this.type, id);
+	public T load(final PK id, final Session session)
+	{
+		return (T)session.load(this.type, id);
 	}
 
 	@Override
-	public List<T> merge(List<T> objects) {
+	public List<T> merge(List<T> objects)
+	{
 		List<T> mergedEntities = new ArrayList<T>();
-		for (T object : objects) {
+		for (T object : objects)
+		{
 			mergedEntities.add(merge(object));
 		}
 		return mergedEntities;
@@ -314,23 +363,27 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public T merge(T object) {
-		return (T) getSession().merge(object);
+	public T merge(T object)
+	{
+		return (T)getSession().merge(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void refresh(final T object) {
+	public void refresh(final T object)
+	{
 		getSession().refresh(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<PK> save(List<T> objects) {
+	public List<PK> save(List<T> objects)
+	{
 		List<PK> primaryKeys = new ArrayList<PK>();
-		for (T object : objects) {
+		for (T object : objects)
+		{
 			primaryKeys.add(save(object));
 		}
 		return primaryKeys;
@@ -340,23 +393,27 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public PK save(final T object) {
-		return (PK) getSession().save(object);
+	public PK save(final T object)
+	{
+		return (PK)getSession().save(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public PK save(final T object, final Session session) {
-		return (PK) session.save(object);
+	public PK save(final T object, final Session session)
+	{
+		return (PK)session.save(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveOrUpdate(List<T> objects) {
-		for (T object : objects) {
+	public void saveOrUpdate(List<T> objects)
+	{
+		for (T object : objects)
+		{
 			saveOrUpdate(object);
 		}
 	}
@@ -364,14 +421,16 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveOrUpdate(final T object) {
+	public void saveOrUpdate(final T object)
+	{
 		getSession().saveOrUpdate(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveOrUpdate(final T object, final Session session) {
+	public void saveOrUpdate(final T object, final Session session)
+	{
 		session.saveOrUpdate(object);
 	}
 
@@ -381,7 +440,8 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * @param dataSource
 	 *            the new data source
 	 */
-	public void setDataSource(DataSource dataSource) {
+	public void setDataSource(DataSource dataSource)
+	{
 		this.dataSource = dataSource;
 	}
 
@@ -391,14 +451,16 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * @param jdbcTemplate
 	 *            the new jdbc template
 	 */
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate)
+	{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setSession(Session session) {
+	public void setSession(Session session)
+	{
 		currentSession.set(session);
 	}
 
@@ -408,15 +470,18 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	 * @param sessionFactory
 	 *            the new session factory
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
 		this.sessionFactory = sessionFactory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void update(List<T> objects) {
-		for (T object : objects) {
+	public void update(List<T> objects)
+	{
+		for (T object : objects)
+		{
 			saveOrUpdate(object);
 		}
 	}
@@ -424,14 +489,16 @@ public class GenericHibernateDao<T extends BaseEntity<PK>, PK extends Serializab
 	/**
 	 * {@inheritDoc}
 	 */
-	public void update(final T object) {
+	public void update(final T object)
+	{
 		getSession().update(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void update(final T object, final Session session) {
+	public void update(final T object, final Session session)
+	{
 		session.update(object);
 	}
 

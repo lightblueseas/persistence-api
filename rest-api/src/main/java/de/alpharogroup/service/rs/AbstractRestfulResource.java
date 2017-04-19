@@ -33,7 +33,9 @@ import lombok.Setter;
  *            the generic type of the domain service interface
  */
 public class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>>
-		implements RestfulResource<PK, DO> {
+	implements
+		RestfulResource<PK, DO>
+{
 
 	/**
 	 * The domain service.
@@ -46,7 +48,8 @@ public class AbstractRestfulResource<PK extends Serializable, DO extends DomainO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO create(final DO domainObject) {
+	public DO create(final DO domainObject)
+	{
 		final DO newDomainObject = domainService.create(domainObject);
 		return newDomainObject;
 	}
@@ -55,7 +58,8 @@ public class AbstractRestfulResource<PK extends Serializable, DO extends DomainO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(final PK id) {
+	public void delete(final PK id)
+	{
 		domainService.delete(id);
 	}
 
@@ -63,7 +67,8 @@ public class AbstractRestfulResource<PK extends Serializable, DO extends DomainO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO read(final PK id) {
+	public DO read(final PK id)
+	{
 		final DO domainObject = domainService.read(id);
 		return domainObject;
 	}
@@ -72,7 +77,8 @@ public class AbstractRestfulResource<PK extends Serializable, DO extends DomainO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(final DO domainObject) {
+	public void update(final DO domainObject)
+	{
 		domainService.update(domainObject);
 	}
 

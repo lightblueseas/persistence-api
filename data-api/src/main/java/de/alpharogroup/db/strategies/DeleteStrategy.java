@@ -28,15 +28,10 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
-	/**
-	 * Deletes the given object from persistent storage in the database.
-	 * 
-	 * @param object
-	 *            the persistent object
-	 */
-	void delete(T object);
-
+public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
+{
 	/**
 	 * Delete all persistent objects in the given list.
 	 * 
@@ -46,11 +41,19 @@ public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializabl
 	void delete(final List<T> objects);
 
 	/**
-	 * Deletes an object of a given Id. Will load the object internally so
-	 * consider using delete (T obj) directly
+	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
+	 * obj) directly
 	 * 
 	 * @param id
 	 *            the id
 	 */
 	void delete(PK id);
+
+	/**
+	 * Deletes the given object from persistent storage in the database.
+	 * 
+	 * @param object
+	 *            the persistent object
+	 */
+	void delete(T object);
 }

@@ -23,7 +23,8 @@ import java.io.Serializable;
  * @param <K>
  *            the primary key type of the corresponding entity
  */
-public interface DomainObject<K> extends Serializable {
+public interface DomainObject<K> extends Serializable
+{
 
 	/**
 	 * Gets the id.

@@ -26,7 +26,8 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-public abstract class AuthenticationEndpoint {
+public abstract class AuthenticationEndpoint
+{
 
 	/**
 	 * Authenticate against your user-management-system.
@@ -50,8 +51,11 @@ public abstract class AuthenticationEndpoint {
 	 * @return the response
 	 */
 	@POST
-	public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
-		try {
+	public Response authenticateUser(@FormParam("username") String username,
+		@FormParam("password") String password)
+	{
+		try
+		{
 
 			// Authenticate the given user
 			authenticate(username, password);
@@ -62,7 +66,9 @@ public abstract class AuthenticationEndpoint {
 			// Set the token on the response and return it
 			return Response.ok(token).build();
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 	}

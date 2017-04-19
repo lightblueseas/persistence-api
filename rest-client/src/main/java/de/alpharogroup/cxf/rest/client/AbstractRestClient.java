@@ -30,12 +30,14 @@ import lombok.Getter;
 /**
  * The class {@link AbstractRestClient}.
  */
-public abstract class AbstractRestClient {
+public abstract class AbstractRestClient
+{
 
 	/**
 	 * The enum Scheme.
 	 */
-	enum Scheme {
+	enum Scheme
+	{
 		http, https
 	};
 
@@ -55,10 +57,12 @@ public abstract class AbstractRestClient {
 	public static final String BASE_HTTPS_URL_PREFIX = Scheme.https.name() + "://" + DEFAULT_HOST;
 
 	/** The Constant DEFAULT_BASE_URL. */
-	public static final String DEFAULT_BASE_HTTP_URL = BASE_HTTP_URL_PREFIX + ":" + DEFAULT_HTTP_PORT;
+	public static final String DEFAULT_BASE_HTTP_URL = BASE_HTTP_URL_PREFIX + ":"
+		+ DEFAULT_HTTP_PORT;
 
 	/** The Constant DEFAULT_BASE_URL. */
-	public static final String DEFAULT_BASE_HTTPS_URL = BASE_HTTPS_URL_PREFIX + ":" + DEFAULT_HTTPS_PORT;
+	public static final String DEFAULT_BASE_HTTPS_URL = BASE_HTTPS_URL_PREFIX + ":"
+		+ DEFAULT_HTTPS_PORT;
 
 	/** The base url. */
 	@Getter
@@ -71,7 +75,8 @@ public abstract class AbstractRestClient {
 	/**
 	 * Instantiates a new {@link AbstractRestClient} with the default base url.
 	 */
-	public AbstractRestClient() {
+	public AbstractRestClient()
+	{
 		this(DEFAULT_BASE_HTTP_URL);
 	}
 
@@ -81,20 +86,21 @@ public abstract class AbstractRestClient {
 	 * @param baseUrl
 	 *            the base url
 	 */
-	public AbstractRestClient(final String baseUrl) {
+	public AbstractRestClient(final String baseUrl)
+	{
 		Check.get().notEmpty(baseUrl, "baseUrl");
 		this.baseUrl = baseUrl;
 		this.providers = newProviders();
 	}
 
 	/**
-	 * Factory callback method for the list of providers. This method is invoked
-	 * in the constructor and can be overridden so users can add specific
-	 * providers for the rest client.
+	 * Factory callback method for the list of providers. This method is invoked in the constructor
+	 * and can be overridden so users can add specific providers for the rest client.
 	 *
 	 * @return the list
 	 */
-	protected List<Object> newProviders() {
+	protected List<Object> newProviders()
+	{
 		final List<Object> providers = new ArrayList<>();
 		providers.add(new CustomTypeModulesRegistrationProvider());
 		return providers;
@@ -109,7 +115,8 @@ public abstract class AbstractRestClient {
 	 *            the resource class
 	 * @return the t
 	 */
-	protected <T> T newResource(final Class<T> resourceClass) {
+	protected <T> T newResource(final Class<T> resourceClass)
+	{
 		final T resource = JAXRSClientFactory.create(getBaseUrl(), resourceClass, getProviders());
 		WebClient.client(resource).accept(MediaType.APPLICATION_JSON);
 		WebClient.client(resource).type(MediaType.APPLICATION_JSON);

@@ -28,7 +28,10 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
+public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
+{
 
 	/**
 	 * Merges all new objects in the given list.
@@ -47,5 +50,5 @@ public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable
 	 * @return the object
 	 */
 	T merge(final T object);
-	
+
 }

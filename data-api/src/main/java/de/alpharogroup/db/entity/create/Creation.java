@@ -30,9 +30,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The entity class {@link Creation} is keeping the information for the creation
- * of an entity. This entity can be attached to the parent entity for keep
- * information when the parent entity was created.
+ * The entity class {@link Creation} is keeping the information for the creation of an entity. This
+ * entity can be attached to the parent entity for keep information when the parent entity was
+ * created.
  *
  * @param <PK>
  *            the generic type of the id
@@ -47,7 +47,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Creation<PK extends Serializable, U> extends BaseEntity<PK> {
+public class Creation<PK extends Serializable, U> extends BaseEntity<PK>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

@@ -47,7 +47,9 @@ import lombok.Setter;
  */
 @Transactional
 public abstract class AbstractDomainService<PK extends Serializable, DO extends DomainObject<PK>, E extends BaseEntity<PK>, DAO extends EntityManagerDao<E, PK>, M extends EntityDOMapper<E, DO>>
-		implements DomainService<PK, DO> {
+	implements
+		DomainService<PK, DO>
+{
 
 	/** The dao reference. */
 	@Setter
@@ -63,21 +65,22 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class,
-			getClass(), 2);
+	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractDomainService.class, getClass(), 2);
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
-			.getTypeArgument(AbstractDomainService.class, getClass(), 1);
+	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional
 	@Override
-	public DO create(final DO domainObject) {
+	public DO create(final DO domainObject)
+	{
 		E entity = getMapper().toEntity(domainObject);
 		entity = dao.merge(entity);
 		domainObject.setId(entity.getId());
@@ -89,7 +92,8 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public DO delete(final PK id) {
+	public DO delete(final PK id)
+	{
 		final E entity = dao.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
 		dao.delete(id);
@@ -100,7 +104,8 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean exists(final PK id) {
+	public boolean exists(final PK id)
+	{
 		return dao.exists(id);
 	}
 
@@ -108,10 +113,12 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DO> findAll() {
+	public List<DO> findAll()
+	{
 		final Collection<E> all = dao.findAll();
 		final List<DO> domainObjects = new ArrayList<>();
-		for (final E entity : all) {
+		for (final E entity : all)
+		{
 			domainObjects.add(getMapper().toDomainObject(entity));
 		}
 		return domainObjects;
@@ -122,9 +129,11 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public Collection<PK> persist(final Collection<DO> domainObjects) {
+	public Collection<PK> persist(final Collection<DO> domainObjects)
+	{
 		final Collection<PK> primaryKeys = new ArrayList<>();
-		for (final DO domainObject : domainObjects) {
+		for (final DO domainObject : domainObjects)
+		{
 			primaryKeys.add(create(domainObject).getId());
 		}
 		return primaryKeys;
@@ -134,7 +143,8 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO read(final PK id) {
+	public DO read(final PK id)
+	{
 		final E entity = dao.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
 		return domainObject;
@@ -145,7 +155,8 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public DO update(final DO domainObject) {
+	public DO update(final DO domainObject)
+	{
 		E entity = dao.get(domainObject.getId());
 		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
 		entity = dao.merge(entity);

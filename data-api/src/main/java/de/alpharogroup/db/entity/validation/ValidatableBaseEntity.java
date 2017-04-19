@@ -31,9 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ValidatableBaseEntity} is a base entity and has a validFrom
- * property and a validTill property for restricting an entity in a range in
- * which it is valid.
+ * The class {@link ValidatableBaseEntity} is a base entity and has a validFrom property and a
+ * validTill property for restricting an entity in a range in which it is valid.
  *
  * @param <T>
  *            the generic type of the id
@@ -45,7 +44,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ValidatableBaseEntity<T extends Serializable> extends VersionableBaseEntity<T> {
+public class ValidatableBaseEntity<T extends Serializable> extends VersionableBaseEntity<T>
+{
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

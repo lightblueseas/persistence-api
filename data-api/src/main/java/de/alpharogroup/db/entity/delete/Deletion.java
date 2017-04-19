@@ -30,16 +30,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The entity class {@link Deletion} is keeping the information for the deletion
- * of an parent entity. The intent of this entity is that a parent entity will
- * not really deleted. The initial value of the parent entity the reference to
- * this entity will be null that signals that it is not deleted. So this entity
- * will only be created if the parent entity references to this entity and is
- * intended to be deleted. This can be done for instance in a deletion strategy.
+ * The entity class {@link Deletion} is keeping the information for the deletion of an parent
+ * entity. The intent of this entity is that a parent entity will not really deleted. The initial
+ * value of the parent entity the reference to this entity will be null that signals that it is not
+ * deleted. So this entity will only be created if the parent entity references to this entity and
+ * is intended to be deleted. This can be done for instance in a deletion strategy.
  * 
- * Note: There is no need of a delete flag in this entity because this entity is
- * the flag. So if the parent entity is not any more 'deleted' the reference of
- * this entity will be set to null back.
+ * Note: There is no need of a delete flag in this entity because this entity is the flag. So if the
+ * parent entity is not any more 'deleted' the reference of this entity will be set to null back.
  *
  * @param <PK>
  *            the generic type of the id
@@ -54,7 +52,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Deletion<PK extends Serializable, U> extends BaseEntity<PK> {
+public class Deletion<PK extends Serializable, U> extends BaseEntity<PK>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

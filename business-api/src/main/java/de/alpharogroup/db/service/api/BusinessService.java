@@ -28,7 +28,10 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the type of the primary key from the domain object
  */
-public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
+public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
+{
 
 	/**
 	 * Delete all persistent objects in the given list.
@@ -39,8 +42,8 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	void delete(final List<T> objects);
 
 	/**
-	 * Deletes an object of a given Id. Will load the object internally so
-	 * consider using delete (T obj) directly
+	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
+	 * obj) directly
 	 * 
 	 * @param id
 	 *            the id

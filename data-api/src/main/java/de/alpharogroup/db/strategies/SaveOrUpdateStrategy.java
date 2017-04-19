@@ -21,15 +21,17 @@ import java.util.List;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The interface {@link SaveOrUpdateStrategy} can interact if entities are saved
- * or updated.
+ * The interface {@link SaveOrUpdateStrategy} can interact if entities are saved or updated.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
+public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
+{
 
 	/**
 	 * Save all new objects in the given list.

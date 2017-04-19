@@ -43,31 +43,30 @@ import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
 /**
- * The class {@link WebClientExtensions} holds factory methods for server and
- * client parameters.
+ * The class {@link WebClientExtensions} holds factory methods for server and client parameters.
  */
-public class WebClientExtensions {
+public class WebClientExtensions
+{
 
 	/** The Constant DEFAULT_FILTERS_TYPE_INCLUDES. */
-	public static final String[] DEFAULT_FILTERS_TYPE_INCLUDES = { ".*_EXPORT_.*", ".*_EXPORT1024_.*", ".*_WITH_DES_.*",
-			".*_WITH_AES_.*", ".*_WITH_NULL_.*" };
+	public static final String[] DEFAULT_FILTERS_TYPE_INCLUDES = { ".*_EXPORT_.*",
+			".*_EXPORT1024_.*", ".*_WITH_DES_.*", ".*_WITH_AES_.*", ".*_WITH_NULL_.*" };
 
 	/** The Constant DEFAULT_FILTERS_TYPE_EXCLUDES. */
 	public static final String[] DEFAULT_FILTERS_TYPE_EXCLUDES = { ".*_DH_anon_.*" };
 
 	/**
-	 * Factory method for create a new {@link FiltersType} with the default
-	 * includes and excludes.
+	 * Factory method for create a new {@link FiltersType} with the default includes and excludes.
 	 *
 	 * @return the new {@link FiltersType} with the default includes set.
 	 */
-	public static FiltersType newCipherSuitesFilter() {
+	public static FiltersType newCipherSuitesFilter()
+	{
 		return newCipherSuitesFilter(DEFAULT_FILTERS_TYPE_INCLUDES, DEFAULT_FILTERS_TYPE_EXCLUDES);
 	}
 
 	/**
-	 * Factory method for create a new {@link FiltersType} from the given
-	 * includes and excludes.
+	 * Factory method for create a new {@link FiltersType} from the given includes and excludes.
 	 *
 	 * @param includes
 	 *            the includes
@@ -75,20 +74,22 @@ public class WebClientExtensions {
 	 *            the excludes
 	 * @return the new {@link FiltersType} with the given includes set.
 	 */
-	public static FiltersType newCipherSuitesFilter(String[] includes, String[] excludes) {
+	public static FiltersType newCipherSuitesFilter(String[] includes, String[] excludes)
+	{
 		FiltersType filtersType = new FiltersType();
-		for (String include : includes) {
+		for (String include : includes)
+		{
 			filtersType.getInclude().add(include);
 		}
-		for (String exclude : excludes) {
+		for (String exclude : excludes)
+		{
 			filtersType.getExclude().add(exclude);
 		}
 		return filtersType;
 	}
 
 	/**
-	 * Factory method for create a new {@link ClientAuthentication} from the
-	 * given parameters.
+	 * Factory method for create a new {@link ClientAuthentication} from the given parameters.
 	 *
 	 * @param want
 	 *            the want
@@ -96,7 +97,8 @@ public class WebClientExtensions {
 	 *            the required
 	 * @return the new {@link ClientAuthentication} from the given parameters.
 	 */
-	public static ClientAuthentication newClientAuthentication(boolean want, boolean required) {
+	public static ClientAuthentication newClientAuthentication(boolean want, boolean required)
+	{
 		ClientAuthentication clientAuthentication = new ClientAuthentication();
 		clientAuthentication.setWant(want);
 		clientAuthentication.setRequired(required);
@@ -104,8 +106,7 @@ public class WebClientExtensions {
 	}
 
 	/**
-	 * Factory method for create a new {@link HTTPClientPolicy} object from the
-	 * given parameters.
+	 * Factory method for create a new {@link HTTPClientPolicy} object from the given parameters.
 	 *
 	 * @param connectionTimeout
 	 *            the connection timeout
@@ -115,8 +116,9 @@ public class WebClientExtensions {
 	 *            the receive timeout
 	 * @return the new {@link HTTPClientPolicy}.
 	 */
-	public static HTTPClientPolicy newHTTPClientPolicy(Long connectionTimeout, boolean allowChunking,
-			Long receiveTimeout) {
+	public static HTTPClientPolicy newHTTPClientPolicy(Long connectionTimeout,
+		boolean allowChunking, Long receiveTimeout)
+	{
 		final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
 		httpClientPolicy.setConnectionTimeout(connectionTimeout);
 		httpClientPolicy.setAllowChunking(allowChunking);
@@ -125,8 +127,8 @@ public class WebClientExtensions {
 	}
 
 	/**
-	 * Factory method for create a new {@link JAXRSServerFactoryBean} from the
-	 * given parameters. Service and resource classes have to be added.
+	 * Factory method for create a new {@link JAXRSServerFactoryBean} from the given parameters.
+	 * Service and resource classes have to be added.
 	 *
 	 * @param serverConfigFile
 	 *            the server config file
@@ -134,7 +136,9 @@ public class WebClientExtensions {
 	 *            the base url
 	 * @return the new {@link JAXRSServerFactoryBean} from the given parameters.
 	 */
-	public static JAXRSServerFactoryBean newJAXRSServerFactoryBean(String serverConfigFile, String baseUrl) {
+	public static JAXRSServerFactoryBean newJAXRSServerFactoryBean(String serverConfigFile,
+		String baseUrl)
+	{
 		JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
 		SpringBusFactory bf = new SpringBusFactory();
 		Bus bus = bf.createBus(serverConfigFile);
@@ -165,17 +169,17 @@ public class WebClientExtensions {
 	 *             the key store exception
 	 * @deprecated use instead KeyTrustExtensions
 	 */
-	public static KeyStore newKeyStore(final String type, final String password, final File keystoreFile)
-			throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
-			KeyStoreException {
+	public static KeyStore newKeyStore(final String type, final String password,
+		final File keystoreFile) throws NoSuchAlgorithmException, CertificateException,
+		FileNotFoundException, IOException, KeyStoreException
+	{
 		final KeyStore keyStore = KeyStore.getInstance(type);
 		keyStore.load(new FileInputStream(keystoreFile), password.toCharArray());
 		return keyStore;
 	}
 
 	/**
-	 * Factory method for create a new {@link TLSServerParameters} from the
-	 * given parameters.
+	 * Factory method for create a new {@link TLSServerParameters} from the given parameters.
 	 *
 	 * @param keystoreDir
 	 *            the keystore dir
@@ -199,9 +203,11 @@ public class WebClientExtensions {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static TLSClientParameters newTLSClientParameters(File keystoreDir, String keystoreFilename,
-			String keystoreType, String keystorePassword) throws UnrecoverableKeyException, NoSuchAlgorithmException,
-			CertificateException, FileNotFoundException, KeyStoreException, IOException {
+	public static TLSClientParameters newTLSClientParameters(File keystoreDir,
+		String keystoreFilename, String keystoreType, String keystorePassword)
+		throws UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException,
+		FileNotFoundException, KeyStoreException, IOException
+	{
 		File keystoreFile = new File(keystoreDir, keystoreFilename);
 		File trustManagersKeystoreFile = keystoreFile;
 		String trustManagerAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
@@ -213,16 +219,16 @@ public class WebClientExtensions {
 		String keyManagersKeystoreType = keystoreType;
 		String keyManagersKeystorePassword = keystorePassword;
 		FiltersType cipherSuitesFilter = WebClientExtensions.newCipherSuitesFilter();
-		TLSClientParameters tlsClientParameters = WebClientExtensions.newTLSClientParameters(trustManagersKeystoreFile,
-				trustManagerAlgorithm, trustManagersKeystoreType, trustManagersKeystorePassword,
-				keyManagersKeystoreFile, keyManagerAlgorithm, keyManagersKeystoreType, keyManagersKeystorePassword,
-				cipherSuitesFilter, disableCNCheck);
+		TLSClientParameters tlsClientParameters = WebClientExtensions.newTLSClientParameters(
+			trustManagersKeystoreFile, trustManagerAlgorithm, trustManagersKeystoreType,
+			trustManagersKeystorePassword, keyManagersKeystoreFile, keyManagerAlgorithm,
+			keyManagersKeystoreType, keyManagersKeystorePassword, cipherSuitesFilter,
+			disableCNCheck);
 		return tlsClientParameters;
 	}
 
 	/**
-	 * Factory method for create a new {@link TLSClientParameters} from the
-	 * given parameters.
+	 * Factory method for create a new {@link TLSClientParameters} from the given parameters.
 	 *
 	 * @param trustManagersKeystoreFile
 	 *            the trust managers keystore file
@@ -259,26 +265,27 @@ public class WebClientExtensions {
 	 *             the unrecoverable key exception
 	 */
 	public static TLSClientParameters newTLSClientParameters(File trustManagersKeystoreFile,
-			String trustManagerAlgorithm, String trustManagersKeystoreType, String trustManagersKeystorePassword,
-			File keyManagersKeystoreFile, String keyManagerAlgorithm, String keyManagersKeystoreType,
-			String keyManagersKeystorePassword, FiltersType cipherSuitesFilter, boolean disableCNCheck)
-			throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
-			KeyStoreException, UnrecoverableKeyException {
+		String trustManagerAlgorithm, String trustManagersKeystoreType,
+		String trustManagersKeystorePassword, File keyManagersKeystoreFile,
+		String keyManagerAlgorithm, String keyManagersKeystoreType,
+		String keyManagersKeystorePassword, FiltersType cipherSuitesFilter, boolean disableCNCheck)
+		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
+		KeyStoreException, UnrecoverableKeyException
+	{
 		TLSClientParameters tlsClientParameters = new TLSClientParameters();
 		tlsClientParameters.setDisableCNCheck(disableCNCheck);
-		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType, trustManagersKeystorePassword,
-				trustManagersKeystoreFile, trustManagerAlgorithm);
+		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType,
+			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsClientParameters.setTrustManagers(tm);
 		KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
-				keyManagersKeystoreFile, keyManagerAlgorithm);
+			keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsClientParameters.setKeyManagers(km);
 		tlsClientParameters.setCipherSuitesFilter(cipherSuitesFilter);
 		return tlsClientParameters;
 	}
 
 	/**
-	 * Factory method for create a new {@link TLSServerParameters} from the
-	 * given parameters.
+	 * Factory method for create a new {@link TLSServerParameters} from the given parameters.
 	 *
 	 * @param trustManagersKeystoreFile
 	 *            the trust managers keystore file
@@ -315,17 +322,20 @@ public class WebClientExtensions {
 	 *             the unrecoverable key exception
 	 */
 	public static TLSServerParameters newTLSServerParameters(File trustManagersKeystoreFile,
-			String trustManagerAlgorithm, String trustManagersKeystoreType, String trustManagersKeystorePassword,
-			File keyManagersKeystoreFile, String keyManagerAlgorithm, String keyManagersKeystoreType,
-			String keyManagersKeystorePassword, FiltersType cipherSuitesFilter,
-			ClientAuthentication clientAuthentication) throws KeyStoreException, NoSuchAlgorithmException,
-			CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException {
+		String trustManagerAlgorithm, String trustManagersKeystoreType,
+		String trustManagersKeystorePassword, File keyManagersKeystoreFile,
+		String keyManagerAlgorithm, String keyManagersKeystoreType,
+		String keyManagersKeystorePassword, FiltersType cipherSuitesFilter,
+		ClientAuthentication clientAuthentication)
+		throws KeyStoreException, NoSuchAlgorithmException, CertificateException,
+		FileNotFoundException, IOException, UnrecoverableKeyException
+	{
 		TLSServerParameters tlsServerParameters = new TLSServerParameters();
-		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType, trustManagersKeystorePassword,
-				trustManagersKeystoreFile, trustManagerAlgorithm);
+		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType,
+			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsServerParameters.setTrustManagers(tm);
 		KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
-				keyManagersKeystoreFile, keyManagerAlgorithm);
+			keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsServerParameters.setKeyManagers(km);
 		tlsServerParameters.setCipherSuitesFilter(cipherSuitesFilter);
 		tlsServerParameters.setClientAuthentication(clientAuthentication);
@@ -333,8 +343,8 @@ public class WebClientExtensions {
 	}
 
 	/**
-	 * Resolve the {@link KeyManager} array from the keystore that is resolved
-	 * from the given parameters.
+	 * Resolve the {@link KeyManager} array from the keystore that is resolved from the given
+	 * parameters.
 	 *
 	 * @param type
 	 *            the type
@@ -358,9 +368,11 @@ public class WebClientExtensions {
 	 * @throws UnrecoverableKeyException
 	 *             the unrecoverable key exception
 	 */
-	public static KeyManager[] resolveKeyManagers(final String type, final String password, final File keystoreFile,
-			final String keyManagerAlgorithm) throws NoSuchAlgorithmException, CertificateException,
-			FileNotFoundException, IOException, KeyStoreException, UnrecoverableKeyException {
+	public static KeyManager[] resolveKeyManagers(final String type, final String password,
+		final File keystoreFile, final String keyManagerAlgorithm)
+		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
+		KeyStoreException, UnrecoverableKeyException
+	{
 		final KeyStore keyStore = newKeyStore(type, password, keystoreFile);
 		final KeyManagerFactory keyFactory = KeyManagerFactory.getInstance(keyManagerAlgorithm);
 		keyFactory.init(keyStore, password.toCharArray());
@@ -369,8 +381,8 @@ public class WebClientExtensions {
 	}
 
 	/**
-	 * Resolve the {@link TrustManager} array from the keystore that is resolved
-	 * from the given parameters.
+	 * Resolve the {@link TrustManager} array from the keystore that is resolved from the given
+	 * parameters.
 	 *
 	 * @param type
 	 *            the type
@@ -392,11 +404,14 @@ public class WebClientExtensions {
 	 * @throws KeyStoreException
 	 *             the key store exception
 	 */
-	public static TrustManager[] resolveTrustManagers(final String type, final String password, final File keystoreFile,
-			final String trustManagerAlgorithm) throws NoSuchAlgorithmException, CertificateException,
-			FileNotFoundException, IOException, KeyStoreException {
+	public static TrustManager[] resolveTrustManagers(final String type, final String password,
+		final File keystoreFile, final String trustManagerAlgorithm)
+		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
+		KeyStoreException
+	{
 		final KeyStore keyStore = newKeyStore(type, password, keystoreFile);
-		final TrustManagerFactory trustFactory = TrustManagerFactory.getInstance(trustManagerAlgorithm);
+		final TrustManagerFactory trustFactory = TrustManagerFactory
+			.getInstance(trustManagerAlgorithm);
 		trustFactory.init(keyStore);
 		final TrustManager[] trustManagers = trustFactory.getTrustManagers();
 		return trustManagers;
@@ -441,18 +456,21 @@ public class WebClientExtensions {
 	 *             the unrecoverable key exception
 	 */
 	public static void setClientConfiguration(Object client, File trustManagersKeystoreFile,
-			String trustManagerAlgorithm, String trustManagersKeystoreType, String trustManagersKeystorePassword,
-			File keyManagersKeystoreFile, String keyManagerAlgorithm, String keyManagersKeystoreType,
-			String keyManagersKeystorePassword, FiltersType cipherSuitesFilter, boolean disableCNCheck)
-			throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
-			KeyStoreException, UnrecoverableKeyException {
+		String trustManagerAlgorithm, String trustManagersKeystoreType,
+		String trustManagersKeystorePassword, File keyManagersKeystoreFile,
+		String keyManagerAlgorithm, String keyManagersKeystoreType,
+		String keyManagersKeystorePassword, FiltersType cipherSuitesFilter, boolean disableCNCheck)
+		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
+		KeyStoreException, UnrecoverableKeyException
+	{
 
 		ClientConfiguration config = WebClient.getConfig(client);
 		HTTPConduit httpConduit = config.getHttpConduit();
 
-		TLSClientParameters tlsParams = newTLSClientParameters(trustManagersKeystoreFile, trustManagerAlgorithm,
-				trustManagersKeystoreType, trustManagersKeystorePassword, keyManagersKeystoreFile, keyManagerAlgorithm,
-				keyManagersKeystoreType, keyManagersKeystorePassword, cipherSuitesFilter, disableCNCheck);
+		TLSClientParameters tlsParams = newTLSClientParameters(trustManagersKeystoreFile,
+			trustManagerAlgorithm, trustManagersKeystoreType, trustManagersKeystorePassword,
+			keyManagersKeystoreFile, keyManagerAlgorithm, keyManagersKeystoreType,
+			keyManagersKeystorePassword, cipherSuitesFilter, disableCNCheck);
 		new TLSClientParameters();
 
 		httpConduit.setTlsClientParameters(tlsParams);
@@ -464,14 +482,16 @@ public class WebClientExtensions {
 	 * @param client
 	 *            the new mock client authentication
 	 */
-	public static void setMockClientAuthentication(Object client) {
+	public static void setMockClientAuthentication(Object client)
+	{
 		ClientConfiguration config = WebClient.getConfig(client);
 		// trust all certs...
 		HTTPConduit conduit = config.getHttpConduit();
 
 		TLSClientParameters params = conduit.getTlsClientParameters();
 
-		if (params == null) {
+		if (params == null)
+		{
 			params = new TLSClientParameters();
 
 			params.setTrustManagers(new TrustManager[] { new MockX509TrustManager() });
@@ -488,12 +508,15 @@ public class WebClientExtensions {
 	 * @param tlsClientParameters
 	 *            the tls client parameters
 	 */
-	public static void setTLSClientParameters(Object client, TLSClientParameters tlsClientParameters) {
+	public static void setTLSClientParameters(Object client,
+		TLSClientParameters tlsClientParameters)
+	{
 		ClientConfiguration config = WebClient.getConfig(client);
 		HTTPConduit conduit = config.getHttpConduit();
 
 		HTTPClientPolicy httpClientPolicy = conduit.getClient();
-		if (httpClientPolicy == null) {
+		if (httpClientPolicy == null)
+		{
 			conduit.setClient(newHTTPClientPolicy(36000l, false, 32000l));
 		}
 

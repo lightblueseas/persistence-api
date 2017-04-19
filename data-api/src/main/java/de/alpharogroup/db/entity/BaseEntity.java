@@ -44,7 +44,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class BaseEntity<PK extends Serializable> implements Serializable {
+public abstract class BaseEntity<PK extends Serializable> implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -59,7 +60,8 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException
+	{
 		return CloneObjectExtensions.cloneObjectQuietly(this);
 	}
 
@@ -67,7 +69,8 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -75,11 +78,13 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 		if (getClass() != obj.getClass())
 			return false;
 		@SuppressWarnings("rawtypes")
-		BaseEntity other = (BaseEntity) obj;
-		if (id == null) {
+		BaseEntity other = (BaseEntity)obj;
+		if (id == null)
+		{
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -88,7 +93,8 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -96,13 +102,13 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	}
 
 	/**
-	 * Factory callback method that can be overwritten to get another
-	 * {@link ToStringStyle} object for the {@link BaseEntity#toString()}.
-	 * Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
+	 * Factory callback method that can be overwritten to get another {@link ToStringStyle} object
+	 * for the {@link BaseEntity#toString()}. Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
 	 * 
 	 * @return the new {@link ToStringStyle}
 	 */
-	protected ToStringStyle newToStringStyle() {
+	protected ToStringStyle newToStringStyle()
+	{
 		return ToStringStyle.SHORT_PREFIX_STYLE;
 	}
 
@@ -110,7 +116,8 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return ToStringBuilder.reflectionToString(this, newToStringStyle());
 	}
 
@@ -119,7 +126,8 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 *
 	 * @return the xml string.
 	 */
-	public String toXml() {
+	public String toXml()
+	{
 		Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
 		String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
 		aliases.put(lqSimpleName, getClass());

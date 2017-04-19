@@ -32,11 +32,11 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface RestfulResource<PK, DO extends DomainObject<PK>> {
+public interface RestfulResource<PK, DO extends DomainObject<PK>>
+{
 
 	/**
-	 * Creates an entity from the given domain object and persist it to the
-	 * underlying database.
+	 * Creates an entity from the given domain object and persist it to the underlying database.
 	 *
 	 * @param domainObject
 	 *            the domain object
@@ -57,8 +57,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 	void delete(@PathParam("id") PK id);
 
 	/**
-	 * Read an entity with the given id and maps it to a domain object that will
-	 * be returned.
+	 * Read an entity with the given id and maps it to a domain object that will be returned.
 	 *
 	 * @param id
 	 *            the id
