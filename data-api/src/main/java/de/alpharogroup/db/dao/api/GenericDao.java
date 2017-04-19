@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.db.dao.api;
 
 import java.io.Serializable;
@@ -43,6 +58,14 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	void delete(T object);
 
 	/**
+	 * Remove this instance from the session cache.
+	 * 
+	 * @param object
+	 *            the object to evict.
+	 */
+	void evict(T object);
+
+	/**
 	 * Checks if an entry exists with the given id.
 	 * 
 	 * @param id
@@ -50,14 +73,6 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	 * @return true, if an entry exists with the given id, otherwise false.
 	 */
 	boolean exists(PK id);
-
-	/**
-	 * Remove this instance from the session cache.
-	 * 
-	 * @param object
-	 *            the object to evict.
-	 */
-	void evict(T object);
 
 	/**
 	 * Returns a list of all persistent objects.
@@ -92,15 +107,6 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	T load(PK id);
 
 	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object
-	 */
-	T merge(final T object);
-
-	/**
 	 * Merges all new objects in the given list.
 	 * 
 	 * @param objects
@@ -110,9 +116,19 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	List<T> merge(List<T> objects);
 
 	/**
+	 * Merges the given object. @see Hibernate documentation.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return the object
+	 */
+	T merge(final T object);
+
+	/**
 	 * Re-read the state of the given instance from the underlying database.
 	 * 
-	 * @param object the object to re-read.
+	 * @param object
+	 *            the object to re-read.
 	 */
 	void refresh(final T object);
 

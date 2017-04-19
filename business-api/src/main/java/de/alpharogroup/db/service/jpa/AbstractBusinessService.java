@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.db.service.jpa;
 
 import java.io.Serializable;
@@ -9,9 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.service.api.BusinessService;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * The Class AbstractBusinessService.
+ * The abstract class {@link AbstractBusinessService}.
  * 
  * @param <T>
  *            the type of the domain object
@@ -21,22 +39,25 @@ import de.alpharogroup.db.entity.BaseEntity;
  *            the type of the data access object.
  */
 public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK extends Serializable, DAO extends EntityManagerDao<T, PK>>
-		implements BusinessService<T, PK> {
+	implements
+		BusinessService<T, PK>
+{
 
-
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The dao reference. */
+	@Getter
+	@Setter
 	private DAO dao;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public void delete(List<T> objects) {
-		for (T t : objects) {
+	public void delete(List<T> objects)
+	{
+		for (T t : objects)
+		{
 			delete(t.getId());
 		}
 	}
@@ -45,7 +66,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public void delete(PK id) {
+	public void delete(PK id)
+	{
 		getDao().delete(id);
 	}
 
@@ -53,62 +75,60 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public void delete(T id) {
+	public void delete(T id)
+	{
 		getDao().delete(id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void evict(T object) {
+	public void evict(T object)
+	{
 		getDao().evict(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exists(PK id) {
+	public boolean exists(PK id)
+	{
 		return getDao().exists(id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<T> findAll() {
+	public List<T> findAll()
+	{
 		return getDao().findAll();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public T get(PK id) {
+	public T get(PK id)
+	{
 		return getDao().get(id);
 	}
 
 	/**
-	 * Gets the dao reference.
-	 * 
-	 * @return the dao reference.
-	 */
-	public DAO getDao() {
-		return dao;
-	}
-
-	
-	/**
-	 * Gets the query.
+	 * Gets the {@link Query} from the given string.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the query as string
 	 * @return the query
 	 */
-	public Query getQuery(String s) {
+	public Query getQuery(String s)
+	{
 		return getDao().getQuery(s);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public T load(PK id) {
+	public T load(PK id)
+	{
 		return getDao().load(id);
 	}
 
@@ -116,31 +136,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public T merge(T object) {
-		return (T) getDao().merge(object);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional
-	public void refresh(T object) {
-		getDao().refresh(object);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional
-	public List<PK> save(List<T> objects) {
-		 return getDao().save(objects);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional
-	public List<T> merge(List<T> objects) {
+	public List<T> merge(List<T> objects)
+	{
 		return getDao().merge(objects);
 	}
 
@@ -148,7 +145,35 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public PK save(T newInstance) {
+	public T merge(T object)
+	{
+		return (T)getDao().merge(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	public void refresh(T object)
+	{
+		getDao().refresh(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	public List<PK> save(List<T> objects)
+	{
+		return getDao().save(objects);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	public PK save(T newInstance)
+	{
 		return getDao().save(newInstance);
 	}
 
@@ -156,7 +181,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public void saveOrUpdate(List<T> objects) {
+	public void saveOrUpdate(List<T> objects)
+	{
 		getDao().saveOrUpdate(objects);
 	}
 
@@ -164,17 +190,9 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Transactional
-	public void saveOrUpdate(T object) {
+	public void saveOrUpdate(T object)
+	{
 		getDao().saveOrUpdate(object);
 	}
 
-	/**
-	 * Sets the dao reference.
-	 * 
-	 * @param dao
-	 *            the new dao dao reference.
-	 */
-	public void setDao(DAO dao) {
-		this.dao = dao;
-	}
 }

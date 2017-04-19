@@ -1,6 +1,19 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.service.rs;
-
-import java.io.Serializable;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +32,8 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface RestfulResource<PK extends Serializable, DO extends DomainObject<PK>> {
+public interface RestfulResource<PK, DO extends DomainObject<PK>>
+{
 
 	/**
 	 * Creates an entity from the given domain object and persist it to the underlying database.
@@ -40,7 +54,7 @@ public interface RestfulResource<PK extends Serializable, DO extends DomainObjec
 	 */
 	@DELETE
 	@Path("/{id}/")
-	void delete(PK id);
+	void delete(@PathParam("id") PK id);
 
 	/**
 	 * Read an entity with the given id and maps it to a domain object that will be returned.
