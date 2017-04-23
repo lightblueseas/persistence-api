@@ -41,7 +41,7 @@ The rest-client module project provides an abstract rest client for test rest se
 The source code comes under the liberal Apache License V2.0, making persistence-api great for all types of back end applications.
 
 
-# Build status and latest maven version
+# Build status
 [![Build Status](https://travis-ci.org/lightblueseas/persistence-api.svg?branch=master)](https://travis-ci.org/lightblueseas/persistence-api)
 
 ## Maven Central
