@@ -186,7 +186,5 @@ If you like this library, please consider a donation through
 
 Here is a list of awesome projects for persistence:
 
-https://github.com/sosandstrom/mardao
-
 * [mardao](https://github.com/sosandstrom/mardao) Mardao Architect's Java DAO generator.
  
