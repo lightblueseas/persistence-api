@@ -33,7 +33,9 @@ import de.alpharogroup.db.service.api.BusinessService;
  * @param <PK>
  *            the type of the primary key from the domain object
  */
-public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK extends Serializable> extends BusinessService<T, PK>
+public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		BusinessService<T, PK>
 {
 
 	/**
@@ -112,15 +114,6 @@ public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK exte
 	 */
 	Session getSession();
 
-
-	/**
-	 * Sets the hibernate session.
-	 * 
-	 * @param session
-	 *            The hibernate session to set.
-	 */
-	void setSession(Session session);
-
 	/**
 	 * Merge and flush.
 	 * 
@@ -163,5 +156,13 @@ public interface SessionFactoryBusinessService<T extends BaseEntity<PK>, PK exte
 	 *            the object to save or update.
 	 */
 	void saveOrUpdateAndFlush(T object);
+
+	/**
+	 * Sets the hibernate session.
+	 * 
+	 * @param session
+	 *            The hibernate session to set.
+	 */
+	void setSession(Session session);
 
 }

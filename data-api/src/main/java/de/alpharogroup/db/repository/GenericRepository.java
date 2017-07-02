@@ -13,28 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.dao.api;
+package de.alpharogroup.db.repository;
 
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * Generic DAO class.
- * 
+ * The interface {@link GenericRepository} provide an API for database operations like insert,
+ * delete, update and selections.
+ *
  * @param <T>
- *            the type of the domain object
+ *            the type of the entity object
  * @param <PK>
- *            the type of the primary key from the domain object
+ *            the type of the primary key from the entity object
  * @author Asterios Raptis
  */
-public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable
+public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
 {
 
 	/**
+	 * Persists the given entity.
+	 *
+	 * @param entity
+	 *            the entity
+	 */
+	void create(T entity);
+
+	/**
 	 * Delete all persistent objects in the given list.
-	 * 
+	 *
 	 * @param objects
 	 *            the list with the persistent objects to delete
 	 */
@@ -43,7 +57,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	/**
 	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
 	 * obj) directly
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 */
@@ -51,7 +65,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Deletes the given object from persistent storage in the database.
-	 * 
+	 *
 	 * @param object
 	 *            the persistent object
 	 */
@@ -59,7 +73,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Remove this instance from the session cache.
-	 * 
+	 *
 	 * @param object
 	 *            the object to evict.
 	 */
@@ -67,7 +81,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Checks if an entry exists with the given id.
-	 * 
+	 *
 	 * @param id
 	 *            the id to check
 	 * @return true, if an entry exists with the given id, otherwise false.
@@ -76,14 +90,14 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Returns a list of all persistent objects.
-	 * 
+	 *
 	 * @return list of all persistent objects
 	 */
 	List<T> findAll();
 
 	/**
 	 * Retrieve a persisted object with a given id from the database.
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @return An object of type T
@@ -91,15 +105,31 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	T get(PK id);
 
 	/**
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
+	 */
+	EntityManager getEntityManager();
+
+	/**
+	 * Gets a {@link Query} from the given hql query.
+	 *
+	 * @param hqlQuery
+	 *            the hql query
+	 * @return the {@link Query}
+	 */
+	Query getQuery(String hqlQuery);
+
+	/**
 	 * Gets the class type.
-	 * 
+	 *
 	 * @return the class type
 	 */
 	Class<T> getType();
 
 	/**
 	 * Retrieve a persisted object with a given id from the database.
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @return An object of type T
@@ -108,7 +138,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Merges all new objects in the given list.
-	 * 
+	 *
 	 * @param objects
 	 *            the list to save
 	 * @return the list with the ids of the merged objects
@@ -117,7 +147,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Merges the given object. @see Hibernate documentation.
-	 * 
+	 *
 	 * @param object
 	 *            the object
 	 * @return the object
@@ -126,7 +156,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Re-read the state of the given instance from the underlying database.
-	 * 
+	 *
 	 * @param object
 	 *            the object to re-read.
 	 */
@@ -134,7 +164,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Save all new objects in the given list.
-	 * 
+	 *
 	 * @param objects
 	 *            the list to save
 	 * @return the list with the ids of the saved objects
@@ -143,7 +173,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Persist the given object into database.
-	 * 
+	 *
 	 * @param object
 	 *            the new instance to save.
 	 * @return the id of the saved object
@@ -152,7 +182,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Save or update all transient objects in the given list.
-	 * 
+	 *
 	 * @param objects
 	 *            the transient objects
 	 */
@@ -160,15 +190,23 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Save or update the given persistent object.
-	 * 
+	 *
 	 * @param object
 	 *            the transient object to save or update.
 	 */
 	void saveOrUpdate(T object);
 
 	/**
+	 * Sets the entity manager.
+	 *
+	 * @param entityManager
+	 *            the new entity manager
+	 */
+	void setEntityManager(EntityManager entityManager);
+
+	/**
 	 * Update all transient objects in the given list.
-	 * 
+	 *
 	 * @param objects
 	 *            the transient objects to update.
 	 */
@@ -176,7 +214,7 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 
 	/**
 	 * Update changes made to the given object.
-	 * 
+	 *
 	 * @param object
 	 *            the transient object to update.
 	 */

@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
 import org.hibernate.engine.jdbc.internal.Formatter;
 
@@ -45,7 +45,8 @@ public abstract class AbstractDatabaseInitialization
 {
 
 	/** The logger constant. */
-	protected static final Logger LOG = Logger.getLogger(AbstractDatabaseInitialization.class.getName());
+	protected static final Logger LOG = Logger
+		.getLogger(AbstractDatabaseInitialization.class.getName());
 
 	/** The Constant JDBC_DB_VENDOR_KEY for the properties key. */
 	public static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
@@ -187,7 +188,8 @@ public abstract class AbstractDatabaseInitialization
 				sb.append(System.getProperty("line.separator"));
 			}
 		}
-		final File createIndexesAndForeignKeys = new File(sqlDir, "createIndexesAndForeignKeys.sql");
+		final File createIndexesAndForeignKeys = new File(sqlDir,
+			"createIndexesAndForeignKeys.sql");
 		if (createIndexesAndForeignKeys.exists())
 		{
 			LOG.debug("read from file createIndexesAndForeignKeys.sql");
@@ -196,8 +198,8 @@ public abstract class AbstractDatabaseInitialization
 		}
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
 		LOG.debug("write result to file initializeSchema.sql");
-		final boolean writen = WriteFileExtensions.writeStringToFile(initializeSchemaDdl, sb.toString(),
-			fileEncoding);
+		final boolean writen = WriteFileExtensions.writeStringToFile(initializeSchemaDdl,
+			sb.toString(), fileEncoding);
 		LOG.debug("end process of creation of initializeSchema.sql file.");
 		return writen;
 	}
@@ -239,8 +241,8 @@ public abstract class AbstractDatabaseInitialization
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void createSchemaFromScript(final Connection jdbcConnection) throws IOException,
-		SQLException
+	protected void createSchemaFromScript(final Connection jdbcConnection)
+		throws IOException, SQLException
 	{
 		LOG.debug("creating database schema from script");
 		final File insertsDir = getInsertDir();
@@ -257,10 +259,11 @@ public abstract class AbstractDatabaseInitialization
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void deleteAndCreateEmptyDatabaseWithoutTables() throws ClassNotFoundException,
-		SQLException
+	protected void deleteAndCreateEmptyDatabaseWithoutTables()
+		throws ClassNotFoundException, SQLException
 	{
-		ConnectionsExtensions.dropPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword);
+		ConnectionsExtensions.dropPostgreSQLDatabase(host, databaseName, databaseUser,
+			databasePassword);
 		newEmptyDatabaseWithoutTables();
 	}
 
@@ -274,8 +277,8 @@ public abstract class AbstractDatabaseInitialization
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void dropTablesAndSequences(final Connection jdbcConnection) throws IOException,
-		SQLException
+	protected void dropTablesAndSequences(final Connection jdbcConnection)
+		throws IOException, SQLException
 	{
 		final File projectDir = PathFinder.getProjectDirectory();
 		final File dropSchemaSqlFile = PathFinder.getRelativePathTo(projectDir, "/",
@@ -321,9 +324,7 @@ public abstract class AbstractDatabaseInitialization
 		if (initializationProcess != null)
 		{
 			final String arg = initializationProcess;
-			if (arg.equals(DELETE_PROCESS)
-				|| arg.equals(DROP_PROCESS)
-				|| arg.equals(CREATE_PROCESS)
+			if (arg.equals(DELETE_PROCESS) || arg.equals(DROP_PROCESS) || arg.equals(CREATE_PROCESS)
 				|| arg.equals(CREATE_EMPTY_PROCESS))
 			{
 				processtype = arg;
@@ -367,17 +368,19 @@ public abstract class AbstractDatabaseInitialization
 	{
 		LOG.debug("Initialize database started...");
 		final String processtype = getProcessType();
-		LOG.debug("with processtype "+processtype);
+		LOG.debug("with processtype " + processtype);
 
 		// check if database exist...
 		final boolean dbExists = ConnectionsExtensions.existsPostgreSQLDatabase(host, databaseName,
 			databaseUser, databasePassword);
-		if(!dbExists) {
+		if (!dbExists)
+		{
 			LOG.debug("database does not exists");
 			newEmptyDatabaseWithoutTables();
 		}
 
-		if(!processtype.equals(CREATE_EMPTY_PROCESS)) {
+		if (!processtype.equals(CREATE_EMPTY_PROCESS))
+		{
 
 			if (processtype.equals(DELETE_PROCESS))
 			{
@@ -387,8 +390,8 @@ public abstract class AbstractDatabaseInitialization
 
 			LOG.debug("Get jdbc connection to database");
 			try ( // Get jdbc connection...
-			Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host, databaseName,
-				databaseUser, databasePassword))
+				Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host,
+					databaseName, databaseUser, databasePassword))
 			{
 				if (processtype.equals(DROP_PROCESS))
 				{
@@ -418,8 +421,8 @@ public abstract class AbstractDatabaseInitialization
 	 * @throws SQLException
 	 *             Signals that an sql error has occurred.
 	 */
-	protected void initializeDatabase(final Connection jdbcConnection) throws IOException,
-		SQLException
+	protected void initializeDatabase(final Connection jdbcConnection)
+		throws IOException, SQLException
 	{
 		final List<File> scriptFiles = getScriptFiles();
 		final int size = scriptFiles.size();
@@ -442,8 +445,8 @@ public abstract class AbstractDatabaseInitialization
 	protected void initializeScriptFiles() throws FileNotFoundException, IOException
 	{
 		final File projectDir = PathFinder.getProjectDirectory();
-		final File schemaDllDir = PathFinder.getRelativePathTo(projectDir, "/", "target/hibernate3/sql",
-			"schema.ddl");
+		final File schemaDllDir = PathFinder.getRelativePathTo(projectDir, "/",
+			"target/hibernate3/sql", "schema.ddl");
 		if (schemaDllDir.exists())
 		{
 			final File schemaSqlDir = PathFinder.getRelativePathTo(projectDir, "/",
@@ -496,8 +499,8 @@ public abstract class AbstractDatabaseInitialization
 	 */
 	protected void newEmptyDatabaseWithoutTables() throws ClassNotFoundException, SQLException
 	{
-		ConnectionsExtensions.newPostgreSQLDatabase(host, databaseName, databaseUser, databasePassword,
-			null, null);
+		ConnectionsExtensions.newPostgreSQLDatabase(host, databaseName, databaseUser,
+			databasePassword, null, null);
 	}
 
 	/**

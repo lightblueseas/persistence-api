@@ -29,7 +29,8 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>> {
+public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>>
+{
 
 	/**
 	 * Creates an entity from the given domain object and persist it to the underlying database.
@@ -38,16 +39,7 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *            the domain object
 	 * @return the domain object with the id from the entity.
 	 */
-	DO create(DO domainObject);	
-
-	/**
-	 * Persist all new domain objects in the given {@link Collection}.
-	 * 
-	 * @param domainObjects
-	 *            the {@link Collection} of domain objects to persist
-	 * @return the {@link Collection} with the id's of the persisted objects
-	 */
-	Collection<PK> persist(Collection<DO> domainObjects);
+	DO create(DO domainObject);
 
 	/**
 	 * Deletes an entity with the given id.
@@ -57,6 +49,31 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 * @return the deleted entity as a domain object
 	 */
 	DO delete(PK id);
+
+	/**
+	 * Checks if an entry exists with the given id.
+	 * 
+	 * @param id
+	 *            the id to check
+	 * @return true, if an entry exists with the given id, otherwise false.
+	 */
+	boolean exists(PK id);
+
+	/**
+	 * Returns a list of all domain objects.
+	 * 
+	 * @return list of all domain objects
+	 */
+	List<DO> findAll();
+
+	/**
+	 * Persist all new domain objects in the given {@link Collection}.
+	 * 
+	 * @param domainObjects
+	 *            the {@link Collection} of domain objects to persist
+	 * @return the {@link Collection} with the id's of the persisted objects
+	 */
+	Collection<PK> persist(Collection<DO> domainObjects);
 
 	/**
 	 * Read an entity with the given id and maps it to a domain object that will be returned.
@@ -75,23 +92,5 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 * @return the updated domain object
 	 */
 	DO update(DO domainObject);
-	
-
-	/**
-	 * Returns a list of all domain objects.
-	 * 
-	 * @return list of all domain objects
-	 */
-	List<DO> findAll();
-	
-
-	/**
-	 * Checks if an entry exists with the given id.
-	 * 
-	 * @param id
-	 *            the id to check
-	 * @return true, if an entry exists with the given id, otherwise false.
-	 */
-	boolean exists(PK id);
 
 }

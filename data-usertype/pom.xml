@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>3.27.0</version>
+		<version>3.29.0</version>
 	</parent>
 
 	<artifactId>data-usertype</artifactId>

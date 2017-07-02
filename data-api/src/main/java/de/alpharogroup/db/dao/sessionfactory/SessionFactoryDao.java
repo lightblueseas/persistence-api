@@ -34,12 +34,14 @@ import de.alpharogroup.db.entity.BaseEntity;
  * @param <PK>
  *            the generic type of the primary key
  */
-public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializable> extends GenericDao<T, PK> {
+public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		GenericDao<T, PK>
+{
 
 	/**
-	 * Deletes an object of a given Id with the given session object. Note: Will
-	 * load the object internally so consider using delete(T persistentObject)
-	 * directly
+	 * Deletes an object of a given Id with the given session object. Note: Will load the object
+	 * internally so consider using delete(T persistentObject) directly
 	 *
 	 * @param id
 	 *            the id
@@ -49,8 +51,8 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	void delete(PK id, Session session);
 
 	/**
-	 * Deletes the given object from persistent storage in the database with the
-	 * given session object.
+	 * Deletes the given object from persistent storage in the database with the given session
+	 * object.
 	 *
 	 * @param object
 	 *            the persistent object
@@ -76,9 +78,8 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 *            Defines how much rows to get from the query.
 	 * @return the result list.
 	 */
-	List<T> find(final String hqlQuery, final String[] params,
-			final Object[] paramValues, final Type[] paramTypes,
-			final Integer start, final Integer count);
+	List<T> find(final String hqlQuery, final String[] params, final Object[] paramValues,
+		final Type[] paramTypes, final Integer start, final Integer count);
 
 	/**
 	 * Hibernate wrapper.
@@ -139,8 +140,7 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	Session getSession();
 
 	/**
-	 * Retrieve a persisted object with a given id from the database with the
-	 * given session object.
+	 * Retrieve a persisted object with a given id from the database with the given session object.
 	 *
 	 * @param id
 	 *            the id
@@ -149,7 +149,6 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 * @return an object of type T
 	 */
 	T load(PK id, Session session);
-
 
 	/**
 	 * Save the given object.
@@ -175,7 +174,8 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	/**
 	 * Sets the hibernate session.
 	 *
-	 * @param session The hibernate session to set.
+	 * @param session
+	 *            The hibernate session to set.
 	 */
 	void setSession(Session session);
 

@@ -26,48 +26,59 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-public abstract class AuthenticationEndpoint {
+public abstract class AuthenticationEndpoint
+{
 
-    /**
-     * Authenticate user.
-     *
-     * @param username the username
-     * @param password the password
-     * @return the response
-     */
-    @POST
-    public Response authenticateUser(@FormParam("username") String username, 
-                                     @FormParam("password") String password) {
-        try {
+	/**
+	 * Authenticate against your user-management-system.
+	 *
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * @throws Exception
+	 *             is thrown if the credentials are not valid
+	 */
+	protected abstract void authenticate(String username, String password) throws Exception;
 
-            // Authenticate the given user 
-            authenticate(username, password);
+	/**
+	 * Authenticate user.
+	 *
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * @return the response
+	 */
+	@POST
+	public Response authenticateUser(@FormParam("username") String username,
+		@FormParam("password") String password)
+	{
+		try
+		{
 
-            // Create a new token for the given user
-            String token = newToken(username);
+			// Authenticate the given user
+			authenticate(username, password);
 
-            // Set the token on the response and return it
-            return Response.ok(token).build();
+			// Create a new token for the given user
+			String token = newToken(username);
 
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }      
-    }
+			// Set the token on the response and return it
+			return Response.ok(token).build();
 
-    /**
-     * Authenticate against your user-management-system.
-     *
-     * @param username the username
-     * @param password the password
-     * @throws Exception is thrown if the credentials are not valid
-     */
-    protected abstract void authenticate(String username, String password) throws Exception;
+		}
+		catch (Exception e)
+		{
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+	}
 
-    /**
-     * Create a new token that is associated with the given username.
-     *
-     * @param username the username
-     * @return the new token that is associated with the given username.
-     */
-    protected abstract String newToken(String username);
+	/**
+	 * Create a new token that is associated with the given username.
+	 *
+	 * @param username
+	 *            the username
+	 * @return the new token that is associated with the given username.
+	 */
+	protected abstract String newToken(String username);
 }
