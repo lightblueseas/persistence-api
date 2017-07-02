@@ -24,7 +24,8 @@ import javax.persistence.Query;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The interface {@link GenericRepository} provide an API for database operations like insert, delete, update and selections.
+ * The interface {@link GenericRepository} provide an API for database operations like insert,
+ * delete, update and selections.
  *
  * @param <T>
  *            the type of the entity object
@@ -32,8 +33,18 @@ import de.alpharogroup.db.entity.BaseEntity;
  *            the type of the primary key from the entity object
  * @author Asterios Raptis
  */
-public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable
+public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
 {
+
+	/**
+	 * Persists the given entity.
+	 *
+	 * @param entity
+	 *            the entity
+	 */
+	void create(T entity);
 
 	/**
 	 * Delete all persistent objects in the given list.
@@ -61,6 +72,14 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	void delete(T object);
 
 	/**
+	 * Remove this instance from the session cache.
+	 *
+	 * @param object
+	 *            the object to evict.
+	 */
+	void evict(T object);
+
+	/**
 	 * Checks if an entry exists with the given id.
 	 *
 	 * @param id
@@ -68,14 +87,6 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	 * @return true, if an entry exists with the given id, otherwise false.
 	 */
 	boolean exists(PK id);
-
-	/**
-	 * Remove this instance from the session cache.
-	 *
-	 * @param object
-	 *            the object to evict.
-	 */
-	void evict(T object);
 
 	/**
 	 * Returns a list of all persistent objects.
@@ -94,6 +105,22 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	T get(PK id);
 
 	/**
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
+	 */
+	EntityManager getEntityManager();
+
+	/**
+	 * Gets a {@link Query} from the given hql query.
+	 *
+	 * @param hqlQuery
+	 *            the hql query
+	 * @return the {@link Query}
+	 */
+	Query getQuery(String hqlQuery);
+
+	/**
 	 * Gets the class type.
 	 *
 	 * @return the class type
@@ -110,15 +137,6 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	T load(PK id);
 
 	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 *
-	 * @param object
-	 *            the object
-	 * @return the object
-	 */
-	T merge(final T object);
-
-	/**
 	 * Merges all new objects in the given list.
 	 *
 	 * @param objects
@@ -128,9 +146,19 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	List<T> merge(List<T> objects);
 
 	/**
+	 * Merges the given object. @see Hibernate documentation.
+	 *
+	 * @param object
+	 *            the object
+	 * @return the object
+	 */
+	T merge(final T object);
+
+	/**
 	 * Re-read the state of the given instance from the underlying database.
 	 *
-	 * @param object the object to re-read.
+	 * @param object
+	 *            the object to re-read.
 	 */
 	void refresh(final T object);
 
@@ -169,6 +197,14 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	void saveOrUpdate(T object);
 
 	/**
+	 * Sets the entity manager.
+	 *
+	 * @param entityManager
+	 *            the new entity manager
+	 */
+	void setEntityManager(EntityManager entityManager);
+
+	/**
 	 * Update all transient objects in the given list.
 	 *
 	 * @param objects
@@ -183,36 +219,5 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	 *            the transient object to update.
 	 */
 	void update(T object);
-
-	/**
-	 * Persists the given entity.
-	 *
-	 * @param entity
-	 *            the entity
-	 */
-	void create(T entity);
-
-	/**
-	 * Gets the entity manager.
-	 *
-	 * @return the entity manager
-	 */
-	EntityManager getEntityManager();
-
-	/**
-	 * Gets a {@link Query} from the given hql query.
-	 *
-	 * @param hqlQuery
-	 *            the hql query
-	 * @return the {@link Query}
-	 */
-	Query getQuery(String hqlQuery);
-
-	/**
-	 * Sets the entity manager.
-	 *
-	 * @param entityManager the new entity manager
-	 */
-	void setEntityManager(EntityManager entityManager);
 
 }

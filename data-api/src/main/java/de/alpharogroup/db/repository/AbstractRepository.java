@@ -29,7 +29,8 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
 /**
- * The class {@link AbstractRepository} provides methods for database operations like insert, delete, update and selections.
+ * The class {@link AbstractRepository} provides methods for database operations like insert,
+ * delete, update and selections.
  *
  * @param <T>
  *            the type of the entity object
@@ -62,24 +63,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(final T entity)
-	{
-		getEntityManager().merge(entity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(final T entity)
-	{
-		getEntityManager().remove(entity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void delete(final List<T> objects)
 	{
 		for (final T entity : objects)
@@ -96,6 +79,24 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	{
 		final T entity = get(id);
 		delete(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(final T entity)
+	{
+		getEntityManager().remove(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void evict(final T object)
+	{
+		getEntityManager().detach(object);
 	}
 
 	/**
@@ -137,9 +138,33 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Query getQuery(final String hqlQuery)
+	{
+		return getEntityManager().createQuery(hqlQuery);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public T load(final PK id)
 	{
 		return get(id);
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<T> merge(final List<T> objects)
+	{
+		final List<T> mergedEntities = new ArrayList<>();
+		for (final T object : objects)
+		{
+			mergedEntities.add(merge(object));
+		}
+		return mergedEntities;
 	}
 
 	/**
@@ -150,7 +175,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	{
 		return getEntityManager().merge(object);
 	}
-
 
 	@Override
 	public void refresh(final T object)
@@ -170,20 +194,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 			primaryKeys.add(save(object));
 		}
 		return primaryKeys;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<T> merge(final List<T> objects)
-	{
-		final List<T> mergedEntities = new ArrayList<>();
-		for (final T object : objects)
-		{
-			mergedEntities.add(merge(object));
-		}
-		return mergedEntities;
 	}
 
 	/**
@@ -227,23 +237,14 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void evict(final T object)
-	{
-		getEntityManager().detach(object);
-	}
-
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Query getQuery(final String hqlQuery)
+	public void update(final T entity)
 	{
-		return getEntityManager().createQuery(hqlQuery);
+		getEntityManager().merge(entity);
 	}
 
 }
