@@ -32,32 +32,37 @@ import lombok.Getter;
  */
 public abstract class AbstractRestClient
 {
-	
+
 	/**
 	 * The enum Scheme.
 	 */
-	enum Scheme {http, https};
+	enum Scheme
+	{
+		http, https
+	};
 
 	/** The Constant DEFAULT_HTTP_PORT. */
 	public static final int DEFAULT_HTTP_PORT = 8080;
-	
+
 	/** The Constant DEFAULT_HTTPS_PORT. */
 	public static final int DEFAULT_HTTPS_PORT = 8443;
-	
+
 	/** The Constant DEFAULT_HOST. */
-	public static final String DEFAULT_HOST = "localhost";	
+	public static final String DEFAULT_HOST = "localhost";
 
 	/** The Constant BASE_HTTP_URL_PREFIX. */
-	public static final String BASE_HTTP_URL_PREFIX = Scheme.http.name()+"://"+ DEFAULT_HOST;
+	public static final String BASE_HTTP_URL_PREFIX = Scheme.http.name() + "://" + DEFAULT_HOST;
 
 	/** The Constant BASE_HTTPS_URL_PREFIX. */
-	public static final String BASE_HTTPS_URL_PREFIX = Scheme.https.name()+"://"+ DEFAULT_HOST;
+	public static final String BASE_HTTPS_URL_PREFIX = Scheme.https.name() + "://" + DEFAULT_HOST;
 
 	/** The Constant DEFAULT_BASE_URL. */
-	public static final String DEFAULT_BASE_HTTP_URL = BASE_HTTP_URL_PREFIX + ":" + DEFAULT_HTTP_PORT;
-	
+	public static final String DEFAULT_BASE_HTTP_URL = BASE_HTTP_URL_PREFIX + ":"
+		+ DEFAULT_HTTP_PORT;
+
 	/** The Constant DEFAULT_BASE_URL. */
-	public static final String DEFAULT_BASE_HTTPS_URL = BASE_HTTPS_URL_PREFIX + ":" + DEFAULT_HTTPS_PORT;
+	public static final String DEFAULT_BASE_HTTPS_URL = BASE_HTTPS_URL_PREFIX + ":"
+		+ DEFAULT_HTTPS_PORT;
 
 	/** The base url. */
 	@Getter
@@ -89,9 +94,8 @@ public abstract class AbstractRestClient
 	}
 
 	/**
-	 * Factory callback method for the list of providers. This method is
-	 * invoked in the constructor and can be overridden so users can
-	 * add specific providers for the rest client.
+	 * Factory callback method for the list of providers. This method is invoked in the constructor
+	 * and can be overridden so users can add specific providers for the rest client.
 	 *
 	 * @return the list
 	 */
@@ -102,12 +106,13 @@ public abstract class AbstractRestClient
 		return providers;
 	}
 
-
 	/**
 	 * Generic factory method for create new rest resource for the rest client.
 	 *
-	 * @param <T> the generic type
-	 * @param resourceClass the resource class
+	 * @param <T>
+	 *            the generic type
+	 * @param resourceClass
+	 *            the resource class
 	 * @return the t
 	 */
 	protected <T> T newResource(final Class<T> resourceClass)

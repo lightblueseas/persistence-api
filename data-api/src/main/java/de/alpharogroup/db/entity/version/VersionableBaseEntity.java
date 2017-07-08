@@ -13,25 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity;
+package de.alpharogroup.db.entity.version;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ValidatableBaseEntity} is a base entity and has a validFrom property and a validTill property for restricting an entity in a range in which it is valid.
+ * The class {@link VersionableBaseEntity} has a version property for the optimistic lock value.
  *
- * @param <T> the generic type of the id
+ * @param <T>
+ *            the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -39,15 +42,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ValidatableBaseEntity<T extends Serializable> extends VersionableBaseEntity<T>
+@AllArgsConstructor
+public abstract class VersionableBaseEntity<T extends Serializable> extends BaseEntity<T>
 {
 
-	/**  The serial Version UID. */
+	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The valid from date for validation. */
-	private LocalDateTime validFrom;
+	/**
+	 * The version property for the optimistic lock value.
+	 **/
+	@Version
+	private Integer version;
 
-    /** The valid till date for validation. */
-    private LocalDateTime validTill;
 }

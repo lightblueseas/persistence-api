@@ -13,45 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.name;
+package de.alpharogroup.db.entity.create;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * The class {@link ExtraSmallNameBaseEntity} is a base entity for a table with a single value.
+ * The entity class {@link Creation} is keeping the information for the creation of an entity. This
+ * entity can be attached to the parent entity for keep information when the parent entity was
+ * created.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
+ * @param <U>
+ *            the generic type of the user or account
  */
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Access(AccessType.FIELD)
+@Entity
+@Table(name = "creation")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraSmallNameBaseEntity<T extends Serializable>
-	extends
-		VersionableBaseEntity<T>
+@Builder(toBuilder = true)
+public class Creation<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
-	/** The serial Version UID. */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The name. */
-	@Column(unique = false, name = "name", length = 64)
-	private String name;
+	/** The date and time when the entity that owns this entity was created. */
+	private LocalDateTime created;
+
+	/** The user or account that created the entity that owns this entity. */
+	private U createdBy;
+
 }

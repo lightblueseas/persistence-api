@@ -29,29 +29,6 @@ public final class MapperExtensions
 {
 
 	/**
-	 * Constructs new instance of destinationClass and performs mapping between from source.
-	 *
-	 * @param <T>
-	 *            the generic type of the destinationClass
-	 * @param <S>
-	 *            the generic type of the source
-	 * @param mapper
-	 *            the dozer mapper object
-	 * @param source
-	 *            the source
-	 * @param destinationClass
-	 *            the destination class
-	 * @return the new instance of destinationClass mapped to source object.
-	 * @throws MappingException
-	 *             is thrown if something goes wrong with the mapping process.
-	 */
-	public static <T, S> T map(final Mapper mapper, final S source, final Class<T> destinationClass)
-		throws MappingException
-	{
-		return mapper.map(source, destinationClass);
-	}
-
-	/**
 	 * Constructs new instances of destinationClass and performs mapping between from source.
 	 *
 	 * @param <T>
@@ -80,6 +57,29 @@ public final class MapperExtensions
 			}
 		}
 		return destination;
+	}
+
+	/**
+	 * Constructs new instance of destinationClass and performs mapping between from source.
+	 *
+	 * @param <T>
+	 *            the generic type of the destinationClass
+	 * @param <S>
+	 *            the generic type of the source
+	 * @param mapper
+	 *            the dozer mapper object
+	 * @param source
+	 *            the source
+	 * @param destinationClass
+	 *            the destination class
+	 * @return the new instance of destinationClass mapped to source object.
+	 * @throws MappingException
+	 *             is thrown if something goes wrong with the mapping process.
+	 */
+	public static <T, S> T map(final Mapper mapper, final S source, final Class<T> destinationClass)
+		throws MappingException
+	{
+		return mapper.map(source, destinationClass);
 	}
 
 }

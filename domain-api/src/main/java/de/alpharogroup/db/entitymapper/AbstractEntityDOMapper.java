@@ -21,7 +21,6 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
-import org.dozer.loader.api.TypeMappingOption;
 import org.dozer.loader.api.TypeMappingOptions;
 
 import de.alpharogroup.db.entity.BaseEntity;
@@ -30,8 +29,8 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
 /**
- * The abstract class {@link AbstractEntityDOMapper} provides an base
- * implementation for mapping entities to domain objects and back.
+ * The abstract class {@link AbstractEntityDOMapper} provides an base implementation for mapping
+ * entities to domain objects and back.
  *
  * @param <E>
  *            the element type
@@ -39,7 +38,9 @@ import lombok.Getter;
  *            the generic type
  */
 public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>>
-		implements EntityDOMapper<E, DO> {
+	implements
+		EntityDOMapper<E, DO>
+{
 
 	/**
 	 * The mapper instance.
@@ -50,19 +51,20 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractEntityDOMapper.class,
-			this.getClass(), 0);
+	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 0);
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
-			.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
+	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
 
 	/**
 	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 */
-	public AbstractEntityDOMapper() {
+	public AbstractEntityDOMapper()
+	{
 		this(Collections.<String> emptyList());
 	}
 
@@ -72,37 +74,42 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 * @param mappingFiles
 	 *            the mapping files
 	 */
-	public AbstractEntityDOMapper(final List<String> mappingFiles) {
+	public AbstractEntityDOMapper(final List<String> mappingFiles)
+	{
 		mapper = newMapper(mappingFiles);
 	}
 
+	private BeanMappingBuilder beanMappingBuilder()
+	{
+		return new BeanMappingBuilder()
+		{
+			@Override
+			protected void configure()
+			{
+				mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false),
+					TypeMappingOptions.mapEmptyString(false));
+			}
+
+		};
+	}
+
 	/**
-	 * Factory method for creating the new {@link Mapper} for the mapping
-	 * process with the given mapping files list. This method is invoked in the
-	 * constructor and can be overridden so users can provide their own mapping
-	 * process.
+	 * Factory method for creating the new {@link Mapper} for the mapping process with the given
+	 * mapping files list. This method is invoked in the constructor and can be overridden so users
+	 * can provide their own mapping process.
 	 * 
 	 * @param mappingFiles
 	 *            the mapping files
 	 *
 	 * @return the new {@link Mapper} for the mapping process.
 	 */
-	public Mapper newMapper(final List<String> mappingFiles) {
-	    DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
-	    mapper.addMapping(beanMappingBuilder());
-	    mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap, fieldMapping) ->
-        sourceFieldValue == null);
-	    return mapper;
-	}
-	
-	private BeanMappingBuilder beanMappingBuilder() {
-	    return new BeanMappingBuilder() {
-	        @Override
-	        protected void configure() {
-	            mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false), TypeMappingOptions.mapEmptyString(false));
-	        }
-
-	    };
+	public Mapper newMapper(final List<String> mappingFiles)
+	{
+		DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
+		mapper.addMapping(beanMappingBuilder());
+		mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap,
+			fieldMapping) -> sourceFieldValue == null);
+		return mapper;
 	}
 
 }

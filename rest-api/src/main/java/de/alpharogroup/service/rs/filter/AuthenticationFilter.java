@@ -41,7 +41,8 @@ import de.alpharogroup.service.rs.Securable;
 @Securable
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public abstract class AuthenticationFilter implements ContainerRequestFilter {
+public abstract class AuthenticationFilter implements ContainerRequestFilter
+{
 
 	/** The resource info. */
 	@Context
@@ -59,20 +60,26 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
+	public void filter(ContainerRequestContext requestContext) throws IOException
+	{
 		// check the request url path, if it is a sign in request
-		try {
-			if (isSigninRequest(requestContext)) {
+		try
+		{
+			if (isSigninRequest(requestContext))
+			{
 				// ignore them
 				return;
 			}
 			// check if the resource is protected
-			if (isSecured()) {
+			if (isSecured())
+			{
 				// Get the HTTP Authorization header from the request
-				String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+				String authorizationHeader = requestContext
+					.getHeaderString(HttpHeaders.AUTHORIZATION);
 
 				// Check if the HTTP Authorization header is present
-				if (authorizationHeader == null) {
+				if (authorizationHeader == null)
+				{
 					throw new NotAuthorizedException("Authorization header must be provided");
 				}
 
@@ -83,56 +90,24 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 				String username = onValidateToken(token);
 				requestContext.setSecurityContext(newSecurityContext(username));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			requestContext.abortWith(newFaultResponse());
 		}
 	}
 
 	/**
-	 * Checks if the current request is a is a sign request.
+	 * Checks if is the resourceClass is annotated with the annotation {@link Securable}.
 	 *
-	 * @param requestContext
-	 *            the request context
-	 * @throws Exception
+	 * @return true, if is the resourceClass is annotated with the annotation {@link Securable}.
 	 */
-	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception {
-		boolean isSigninRequest = false;
-		String path = info.getPath();
-		// check the request url path, if it is a sign in request
-		if (isSigninPath(path)) {
-			// check if scheme is https
-			if (!servletRequest.isSecure()) {
-				throw new SSLException("use https scheme");
-			}
-			isSigninRequest = true;
-		}
-		return isSigninRequest;
-	}
-
-	/**
-	 * Checks if the given path is a sign in path. Overwrite this method to
-	 * provide specific sign in path for your application.
-	 *
-	 * @param path
-	 *            the sign in path to check.
-	 * @return true, if the given path is a sign in path otherwise false.
-	 */
-	protected boolean isSigninPath(String path) {
-		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
-		return isSigninPath;
-	}
-
-	/**
-	 * Checks if is secured.
-	 *
-	 * @param resourceClass
-	 *            the resource class
-	 * @return true, if is secured
-	 */
-	protected boolean isSecured() {
+	protected boolean isSecured()
+	{
 		Class<?> resourceClass = resourceInfo.getResourceClass();
 		Securable securable = resourceClass.getAnnotation(Securable.class);
-		if (securable != null) {
+		if (securable != null)
+		{
 			return true;
 		}
 		Method method = resourceInfo.getResourceMethod();
@@ -142,8 +117,83 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	}
 
 	/**
-	 * Abstract callback method that checks if the given token is valid. For
-	 * instance if it is not expired.
+	 * Checks if the given path is a sign in path. Overwrite this method to provide specific sign in
+	 * path for your application.
+	 *
+	 * @param path
+	 *            the sign in path to check.
+	 * @return true, if the given path is a sign in path otherwise false.
+	 */
+	protected boolean isSigninPath(String path)
+	{
+		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
+		return isSigninPath;
+	}
+
+	/**
+	 * Checks if the current request is a is a sign request.
+	 *
+	 * @param requestContext
+	 *            the request context
+	 * @return true, if the current request is a is a sign request.
+	 * @throws Exception
+	 *             occurs if some error like the scheme is not https
+	 */
+	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception
+	{
+		boolean isSigninRequest = false;
+		String path = info.getPath();
+		// check the request url path, if it is a sign in request
+		if (isSigninPath(path))
+		{
+			// check if scheme is https
+			if (!servletRequest.isSecure())
+			{
+				throw new SSLException("use https scheme");
+			}
+			isSigninRequest = true;
+		}
+		return isSigninRequest;
+	}
+
+	/**
+	 * Factory callback method for create a new {@link Response}.
+	 *
+	 * @return the new fault response
+	 */
+	protected Response newFaultResponse()
+	{
+		Response faultResponse = Response.status(Response.Status.UNAUTHORIZED)
+			.header("WWW-Authenticate", "Basic realm=\"" + newRealmValue() + "\"").build();
+		return faultResponse;
+	}
+
+	/**
+	 * Factory callback method for create a new realm value for the header key 'WWW-Authenticate'.
+	 * Overwrite to set specific application realm value.
+	 *
+	 * @return the new realm value.
+	 */
+	protected String newRealmValue()
+	{
+		return "alpharogroup.de";
+	}
+
+	/**
+	 * Factory method for create a new security context with the given user name.
+	 *
+	 * @param username
+	 *            the user name
+	 * @return the security context
+	 */
+	protected SecurityContext newSecurityContext(final String username)
+	{
+		return new AuthenticationSecurityContext(username);
+	}
+
+	/**
+	 * Abstract callback method that checks if the given token is valid. For instance if it is not
+	 * expired.
 	 *
 	 * @param token
 	 *            the token
@@ -152,38 +202,5 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter {
 	 *             if the token is not valid
 	 */
 	protected abstract String onValidateToken(String token) throws Exception;
-
-	/**
-	 * Factory callback method for create a new {@link Response}.
-	 *
-	 * @return the new fault response
-	 */
-	protected Response newFaultResponse() {
-		Response faultResponse = Response.status(Response.Status.UNAUTHORIZED)
-				.header("WWW-Authenticate", "Basic realm=\"" + newRealmValue() + "\"").build();
-		return faultResponse;
-	}
-
-	/**
-	 * Factory callback method for create a new realm value for the header key
-	 * 'WWW-Authenticate'. Overwrite to set specific application realm value.
-	 *
-	 * @return the new realm value.
-	 */
-	protected String newRealmValue() {
-		return "alpharogroup.de";
-	}
-
-	/**
-	 * Factory method for create a new security context with the given user
-	 * name.
-	 *
-	 * @param username
-	 *            the user name
-	 * @return the security context
-	 */
-	protected SecurityContext newSecurityContext(final String username) {
-		return new AuthenticationSecurityContext(username);
-	}
 
 }
