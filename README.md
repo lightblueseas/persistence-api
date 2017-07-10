@@ -1,3 +1,6 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/be62e9b55fb444818a70be678a5a1fb8)](https://www.codacy.com/app/tatjana19/persistence-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lightblueseas/persistence-api&amp;utm_campaign=Badge_Grade)
+
+
 persistence-api
 ====================
 
