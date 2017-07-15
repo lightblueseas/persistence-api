@@ -10,9 +10,9 @@
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
-	<packaging>pom</packaging>
+	<packaging>pom</packaging>	
+	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} in the properties section ON SAME VERSION. -->
 	<version>3.32.0</version>
-	<!-- Note: on version change don't forget to change ${persistence-api.version} too. -->
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
