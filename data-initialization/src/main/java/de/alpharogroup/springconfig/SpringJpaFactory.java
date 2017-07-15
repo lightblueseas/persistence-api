@@ -35,23 +35,6 @@ public class SpringJpaFactory
 {
 
 	/**
-	 * Factory method for create the new {@link JpaVendorAdapter} object from the given
-	 * {@link Database} object.
-	 *
-	 * @param db
-	 *            the {@link Database} object
-	 * @return the new {@link JpaVendorAdapter}
-	 */
-	public static JpaVendorAdapter newJpaVendorAdapter(Database db)
-	{
-		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		hibernateJpaVendorAdapter.setShowSql(false);
-		hibernateJpaVendorAdapter.setGenerateDdl(true);
-		hibernateJpaVendorAdapter.setDatabase(db);
-		return hibernateJpaVendorAdapter;
-	}
-
-	/**
 	 * Factory method for create the new {@link DataSource} object from the given
 	 * {@link DataSourceBean} object.
 	 *
@@ -67,37 +50,6 @@ public class SpringJpaFactory
 		dataSource.setUsername(dataSourceBean.getUsername());
 		dataSource.setPassword(dataSourceBean.getPassword());
 		return dataSource;
-	}
-
-	/**
-	 * Factory method for create the new {@link JdbcTemplate} object from the given
-	 * {@link DataSource} object.
-	 *
-	 * @param dataSource
-	 *            the {@link DataSource} object
-	 * @return the new {@link JdbcTemplate}
-	 */
-	public static JdbcTemplate newJdbcTemplate(DataSource dataSource)
-	{
-		JdbcTemplate jdbcTemplate;
-		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate;
-	}
-
-	/**
-	 * Factory method for create the new {@link JpaTransactionManager} object from the given
-	 * {@link EntityManagerFactory} object.
-	 *
-	 * @param entityManagerFactory
-	 *            {@link EntityManagerFactory} object
-	 * @return the new {@link JpaTransactionManager}
-	 */
-	public static JpaTransactionManager newTransactionManager(
-		EntityManagerFactory entityManagerFactory)
-	{
-		final JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactory);
-		return transactionManager;
 	}
 
 	/**
@@ -128,6 +80,54 @@ public class SpringJpaFactory
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 		entityManagerFactoryBean.afterPropertiesSet();
 		return entityManagerFactoryBean;
+	}
+
+	/**
+	 * Factory method for create the new {@link JdbcTemplate} object from the given
+	 * {@link DataSource} object.
+	 *
+	 * @param dataSource
+	 *            the {@link DataSource} object
+	 * @return the new {@link JdbcTemplate}
+	 */
+	public static JdbcTemplate newJdbcTemplate(DataSource dataSource)
+	{
+		JdbcTemplate jdbcTemplate;
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		return jdbcTemplate;
+	}
+
+	/**
+	 * Factory method for create the new {@link JpaVendorAdapter} object from the given
+	 * {@link Database} object.
+	 *
+	 * @param db
+	 *            the {@link Database} object
+	 * @return the new {@link JpaVendorAdapter}
+	 */
+	public static JpaVendorAdapter newJpaVendorAdapter(Database db)
+	{
+		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+		hibernateJpaVendorAdapter.setShowSql(false);
+		hibernateJpaVendorAdapter.setGenerateDdl(true);
+		hibernateJpaVendorAdapter.setDatabase(db);
+		return hibernateJpaVendorAdapter;
+	}
+
+	/**
+	 * Factory method for create the new {@link JpaTransactionManager} object from the given
+	 * {@link EntityManagerFactory} object.
+	 *
+	 * @param entityManagerFactory
+	 *            {@link EntityManagerFactory} object
+	 * @return the new {@link JpaTransactionManager}
+	 */
+	public static JpaTransactionManager newTransactionManager(
+		EntityManagerFactory entityManagerFactory)
+	{
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+		return transactionManager;
 	}
 
 }

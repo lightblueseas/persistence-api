@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package de.alpharogroup.springconfig;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -36,12 +37,8 @@ public class DataSourceBean
 {
 
 	/** The default h2 builder as start point to build a new DataSourceBean. */
-	public static final DataSourceBean DEFAULT_H2_BUILDER = DataSourceBean
-		.builder()
-		.driverClassName("org.h2.Driver")
-		.username("sa")
-		.password("")
-		.build();
+	public static final DataSourceBean DEFAULT_H2_BUILDER = DataSourceBean.builder()
+		.driverClassName("org.h2.Driver").username("sa").password("").build();
 
 	/** The driver class name. */
 	private String driverClassName;
