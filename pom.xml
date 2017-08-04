@@ -11,9 +11,25 @@
 
 	<artifactId>persistence-api</artifactId>
 	<packaging>pom</packaging>	
-	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} in the properties section ON SAME VERSION. -->
-	<version>3.33.0</version>
 	<inceptionYear>2015</inceptionYear>
+	<!-- NOTE: on version change DO NOT FORGET
+	 to change ${persistence-api.version} 
+	 in the properties section ON SAME VERSION. -->
+	<version>3.34.0-SNAPSHOT</version>
+
+	<properties>
+		<!-- PERSISTENCE-API versions -->
+		<persistence-api.version>3.33.0</persistence-api.version>
+		<business-api.version>${persistence-api.version}</business-api.version>
+		<domain-api.version>${persistence-api.version}</domain-api.version>
+		<data-api.version>${persistence-api.version}</data-api.version>
+		<data-usertype.version>${persistence-api.version}</data-usertype.version>
+		<data-initialization.version>${persistence-api.version}</data-initialization.version>
+		<rest-api.version>${persistence-api.version}</rest-api.version>
+		<rest-client.version>${persistence-api.version}</rest-client.version>	
+		<!-- JAVAEE-API version -->
+		<javaee-api.version>7.0</javaee-api.version>
+	</properties>
 
 	<name>${project.artifactId}</name>
 
@@ -48,20 +64,6 @@
 		<module>rest-api</module>
 		<module>rest-client</module>
 	</modules>
-
-	<properties>
-		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>3.33.0</persistence-api.version>
-		<business-api.version>${persistence-api.version}</business-api.version>
-		<domain-api.version>${persistence-api.version}</domain-api.version>
-		<data-api.version>${persistence-api.version}</data-api.version>
-		<data-usertype.version>${persistence-api.version}</data-usertype.version>
-		<data-initialization.version>${persistence-api.version}</data-initialization.version>
-		<rest-api.version>${persistence-api.version}</rest-api.version>
-		<rest-client.version>${persistence-api.version}</rest-client.version>	
-		<!-- JAVAEE-API version -->
-		<javaee-api.version>7.0</javaee-api.version>
-	</properties>
 
 	<dependencyManagement>
 
