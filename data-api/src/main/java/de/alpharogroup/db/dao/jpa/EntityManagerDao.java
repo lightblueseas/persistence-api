@@ -18,6 +18,7 @@ package de.alpharogroup.db.dao.jpa;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.Query;
 
 import de.alpharogroup.db.dao.api.GenericDao;
@@ -67,5 +68,18 @@ public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializa
 	 *            the new entity manager
 	 */
 	void setEntityManager(EntityManager entityManager);
+	
+	
+	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name
+	 * and the given type.
+	 *
+	 * @param name
+	 *            the name
+	 * @param resultClass
+	 *            the result class
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedQuery(String name, Class<T> resultClass);
 
 }
