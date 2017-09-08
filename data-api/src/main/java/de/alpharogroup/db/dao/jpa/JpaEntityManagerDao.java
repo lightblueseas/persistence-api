@@ -216,7 +216,16 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	{
 		return getEntityManager().createQuery(hqlQuery);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedTypedQuery(String name)
+	{
+		return createNamedQuery(name, getType());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
