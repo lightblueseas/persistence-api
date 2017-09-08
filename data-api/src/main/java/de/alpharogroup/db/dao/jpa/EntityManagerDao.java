@@ -82,4 +82,14 @@ public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializa
 	 */
 	TypedQuery<T> createNamedQuery(String name, Class<T> resultClass);
 
+	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name
+	 * and the type of the generic entity.
+	 *
+	 * @param name
+	 *            the name
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedTypedQuery(String name);
+	
 }
