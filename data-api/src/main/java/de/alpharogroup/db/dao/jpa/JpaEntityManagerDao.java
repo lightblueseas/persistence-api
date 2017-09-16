@@ -116,6 +116,24 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
+	public TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
+	{
+		return getEntityManager().createNamedQuery(name, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedTypedQuery(String name)
+	{
+		return createNamedQuery(name, getType());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void delete(List<T> objects)
 	{
 		if (getDeleteStrategy() == null)
@@ -215,24 +233,6 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	public Query getQuery(final String hqlQuery)
 	{
 		return getEntityManager().createQuery(hqlQuery);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TypedQuery<T> createNamedTypedQuery(String name)
-	{
-		return createNamedQuery(name, getType());
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
-	{
-		return getEntityManager().createNamedQuery(name, resultClass);
 	}
 
 	/**
