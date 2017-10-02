@@ -17,7 +17,7 @@ package de.alpharogroup.springconfig;
 
 import java.util.List;
 
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
