@@ -27,8 +27,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import de.alpharogroup.lang.object.CloneObjectExtensions;
 import de.alpharogroup.xml.XmlExtensions;
@@ -78,7 +78,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 		if (getClass() != obj.getClass())
 			return false;
 		@SuppressWarnings("rawtypes")
-		BaseEntity other = (BaseEntity)obj;
+		final BaseEntity other = (BaseEntity)obj;
 		if (id == null)
 		{
 			if (other.id != null)
@@ -104,7 +104,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	/**
 	 * Factory callback method that can be overwritten to get another {@link ToStringStyle} object
 	 * for the {@link BaseEntity#toString()}. Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
-	 * 
+	 *
 	 * @return the new {@link ToStringStyle}
 	 */
 	protected ToStringStyle newToStringStyle()
@@ -128,10 +128,10 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 */
 	public String toXml()
 	{
-		Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
-		String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
+		final Map<String, Class<?>> aliases = new HashMap<>();
+		final String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
 		aliases.put(lqSimpleName, getClass());
-		String xml = XmlExtensions.toXmlWithXStream(this, aliases);
+		final String xml = XmlExtensions.toXmlWithXStream(this, aliases);
 		return xml;
 	}
 }

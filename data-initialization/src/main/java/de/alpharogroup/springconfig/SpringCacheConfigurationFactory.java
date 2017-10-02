@@ -29,7 +29,7 @@ import org.springframework.cache.interceptor.SimpleKeyGenerator;
 import org.springframework.cache.support.CompositeCacheManager;
 import org.springframework.core.io.ClassPathResource;
 
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import lombok.experimental.UtilityClass;
 
 /**
