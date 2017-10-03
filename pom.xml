@@ -15,11 +15,11 @@
 	<!-- NOTE: on version change DO NOT FORGET
 	 to change ${persistence-api.version} 
 	 in the properties section ON SAME VERSION. -->
-	<version>3.35.1</version>
+	<version>3.36.0-SNAPSHOT</version>
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>3.35.1</persistence-api.version>
+		<persistence-api.version>3.36.0-SNAPSHOT</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
