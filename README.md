@@ -42,6 +42,7 @@ The source code comes under the liberal Apache License V2.0, making persistence-
 
 
 # Build status
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/be62e9b55fb444818a70be678a5a1fb8)](https://www.codacy.com/app/tatjana19/persistence-api?utm_source=github.com&utm_medium=referral&utm_content=lightblueseas/persistence-api&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/lightblueseas/persistence-api.svg?branch=master)](https://travis-ci.org/lightblueseas/persistence-api)
 
 ## Maven Central
@@ -60,7 +61,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- persistence-api version -->
-		<persistence-api.version>3.32.0</persistence-api.version>
+		<persistence-api.version>3.35.1</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>

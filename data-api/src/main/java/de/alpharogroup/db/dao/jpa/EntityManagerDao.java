@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import de.alpharogroup.db.dao.api.GenericDao;
 import de.alpharogroup.db.entity.BaseEntity;
@@ -45,11 +46,33 @@ public interface EntityManagerDao<T extends BaseEntity<PK>, PK extends Serializa
 	void create(T entity);
 
 	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name and the given type.
+	 *
+	 * @param name
+	 *            the name
+	 * @param resultClass
+	 *            the result class
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedQuery(String name, Class<T> resultClass);
+
+	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name and the type of the
+	 * generic entity.
+	 *
+	 * @param name
+	 *            the name
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedTypedQuery(String name);
+
+	/**
 	 * Gets the entity manager.
 	 *
 	 * @return the entity manager
 	 */
 	EntityManager getEntityManager();
+
 
 	/**
 	 * Gets a {@link Query} from the given hql query.

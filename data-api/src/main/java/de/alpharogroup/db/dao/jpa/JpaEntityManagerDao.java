@@ -22,6 +22,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -109,6 +110,24 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	public void create(final T entity)
 	{
 		getEntityManager().persist(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
+	{
+		return getEntityManager().createNamedQuery(name, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedTypedQuery(String name)
+	{
+		return createNamedQuery(name, getType());
 	}
 
 	/**
