@@ -138,9 +138,13 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	{
 		if (getDeleteStrategy() == null)
 		{
-			for (T entity : objects)
+			for (final T entity : objects)
 			{
-				getEntityManager().remove(entity);
+				if(getEntityManager().contains(entity)) {
+					getEntityManager().remove(entity);
+				} else {
+					getEntityManager().remove(getEntityManager().merge(entity));
+				}
 			}
 		}
 		else
@@ -174,7 +178,11 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	{
 		if (getDeleteStrategy() == null)
 		{
-			getEntityManager().remove(entity);
+			if(getEntityManager().contains(entity)) {
+				getEntityManager().remove(entity);
+			} else {
+				getEntityManager().remove(getEntityManager().merge(entity));
+			}
 		}
 		else
 		{
@@ -206,9 +214,9 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Override
 	public List<T> findAll()
 	{
-		CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<T> cq = builder.createQuery(getType());
-		Root<T> root = cq.from(getType());
+		final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+		final CriteriaQuery<T> cq = builder.createQuery(getType());
+		final Root<T> root = cq.from(getType());
 		cq.select(root);
 		return getEntityManager().createQuery(cq).getResultList();
 	}
@@ -250,10 +258,10 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Override
 	public List<T> merge(List<T> objects)
 	{
-		List<T> mergedEntities = new ArrayList<T>();
+		final List<T> mergedEntities = new ArrayList<>();
 		if (getMergeStrategy() == null)
 		{
-			for (T object : objects)
+			for (final T object : objects)
 			{
 				mergedEntities.add(merge(object));
 			}
@@ -332,10 +340,10 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	@Override
 	public List<PK> save(List<T> objects)
 	{
-		List<PK> primaryKeys = new ArrayList<PK>();
+		final List<PK> primaryKeys = new ArrayList<>();
 		if (getSaveOrUpdateStrategy() == null)
 		{
-			for (T object : objects)
+			for (final T object : objects)
 			{
 				primaryKeys.add(save(object));
 			}
@@ -391,7 +399,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	{
 		if (getSaveOrUpdateStrategy() == null)
 		{
-			for (T t : objects)
+			for (final T t : objects)
 			{
 				update(t);
 			}
