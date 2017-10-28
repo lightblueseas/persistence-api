@@ -16,102 +16,87 @@
 package de.alpharogroup.db.strategies;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.api.DeleteStrategy;
+import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDeleteStrategy} is a default implementation of the
- * {@link DeleteStrategy}.
+ * The class {@link DefaultMergeStrategy} is a default implementation of the {@link MergeStrategy}.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
-		DeleteStrategy<T, PK>
+		MergeStrategy<T, PK>
 {
+
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultMergeStrategy.class, this.getClass());
 
 	/** The repository. */
 	@NonNull
 	private final EntityManagerDao<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultDeleteStrategy}.
+	 * Instantiates a new {@link DefaultMergeStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDeleteStrategy(EntityManagerDao<T, PK> repository)
+	public DefaultMergeStrategy(EntityManagerDao<T, PK> repository)
 	{
 		this.repository = repository;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
 	 */
-	@Override
-	public void delete(List<T> objects)
-	{
-		for (final T entity : objects)
-		{
-			if (getEntityManager().contains(entity))
-			{
-				getEntityManager().remove(entity);
-			}
-			else
-			{
-				getEntityManager().remove(getEntityManager().merge(entity));
-			}
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(PK id)
-	{
-		final T entity = getEntityManager().find(type, id);
-		delete(entity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(T entity)
-	{
-		if (getEntityManager().contains(entity))
-		{
-			getEntityManager().remove(entity);
-		}
-		else
-		{
-			getEntityManager().remove(getEntityManager().merge(entity));
-		}
-	}
-
 	private EntityManager getEntityManager()
 	{
 		return this.repository.getEntityManager();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<T> merge(List<T> objects)
+	{
+		final List<T> mergedEntities = new ArrayList<>();
+		for (final T object : objects)
+		{
+			mergedEntities.add(merge(object));
+		}
+		return mergedEntities;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T merge(T entity)
+	{
+		return getEntityManager().merge(entity);
 	}
 
 }

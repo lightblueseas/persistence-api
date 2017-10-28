@@ -27,7 +27,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import de.alpharogroup.lang.object.CloneObjectExtensions;
@@ -110,15 +109,6 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	protected ToStringStyle newToStringStyle()
 	{
 		return ToStringStyle.SHORT_PREFIX_STYLE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString()
-	{
-		return ToStringBuilder.reflectionToString(this, newToStringStyle());
 	}
 
 	/**

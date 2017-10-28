@@ -32,21 +32,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.DeleteStrategy;
-import de.alpharogroup.db.strategies.MergeStrategy;
-import de.alpharogroup.db.strategies.SaveOrUpdateStrategy;
+import de.alpharogroup.db.strategies.api.DeleteStrategy;
+import de.alpharogroup.db.strategies.api.MergeStrategy;
+import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * The abstract class {@link JpaEntityManagerDao} provides methods for create, update and delete
- * entity objects. The create, update and delete processes can be overwritten by providing
+ * entity entities. The create, update and delete processes can be overwritten by providing
  * strategies for them. By default the strategies are null and the default behavior of the process
  * will be taken.
  *
  * @param <T>
- *            the generic type of the entity object
+ *            the generic type of the entity entity
  * @param <PK>
  *            the generic type of the primary key
  */
@@ -134,22 +134,25 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(List<T> objects)
+	public void delete(List<T> entities)
 	{
 		if (getDeleteStrategy() == null)
 		{
-			for (final T entity : objects)
+			for (final T entity : entities)
 			{
-				if(getEntityManager().contains(entity)) {
+				if (getEntityManager().contains(entity))
+				{
 					getEntityManager().remove(entity);
-				} else {
+				}
+				else
+				{
 					getEntityManager().remove(getEntityManager().merge(entity));
 				}
 			}
 		}
 		else
 		{
-			getDeleteStrategy().delete(objects);
+			getDeleteStrategy().delete(entities);
 		}
 	}
 
@@ -178,9 +181,12 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	{
 		if (getDeleteStrategy() == null)
 		{
-			if(getEntityManager().contains(entity)) {
+			if (getEntityManager().contains(entity))
+			{
 				getEntityManager().remove(entity);
-			} else {
+			}
+			else
+			{
 				getEntityManager().remove(getEntityManager().merge(entity));
 			}
 		}
@@ -194,9 +200,9 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void evict(T object)
+	public void evict(T entity)
 	{
-		getEntityManager().detach(object);
+		getEntityManager().detach(entity);
 	}
 
 	/**
@@ -256,19 +262,19 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<T> merge(List<T> objects)
+	public List<T> merge(List<T> entities)
 	{
 		final List<T> mergedEntities = new ArrayList<>();
 		if (getMergeStrategy() == null)
 		{
-			for (final T object : objects)
+			for (final T entity : entities)
 			{
-				mergedEntities.add(merge(object));
+				mergedEntities.add(merge(entity));
 			}
 		}
 		else
 		{
-			mergedEntities.addAll(getMergeStrategy().merge(objects));
+			mergedEntities.addAll(getMergeStrategy().merge(entities));
 		}
 		return mergedEntities;
 	}
@@ -277,15 +283,15 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T merge(T object)
+	public T merge(T entity)
 	{
 		if (getMergeStrategy() == null)
 		{
-			return getEntityManager().merge(object);
+			return getEntityManager().merge(entity);
 		}
 		else
 		{
-			return getMergeStrategy().merge(object);
+			return getMergeStrategy().merge(entity);
 		}
 	}
 
@@ -329,28 +335,28 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	}
 
 	@Override
-	public void refresh(T object)
+	public void refresh(T entity)
 	{
-		getEntityManager().refresh(object);
+		getEntityManager().refresh(entity);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PK> save(List<T> objects)
+	public List<PK> save(List<T> entities)
 	{
 		final List<PK> primaryKeys = new ArrayList<>();
 		if (getSaveOrUpdateStrategy() == null)
 		{
-			for (final T object : objects)
+			for (final T entity : entities)
 			{
-				primaryKeys.add(save(object));
+				primaryKeys.add(save(entity));
 			}
 		}
 		else
 		{
-			primaryKeys.addAll(getSaveOrUpdateStrategy().save(objects));
+			primaryKeys.addAll(getSaveOrUpdateStrategy().save(entities));
 		}
 		return primaryKeys;
 	}
@@ -359,16 +365,16 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PK save(T object)
+	public PK save(T entity)
 	{
 		if (getSaveOrUpdateStrategy() == null)
 		{
-			getEntityManager().persist(object);
-			return object.getId();
+			getEntityManager().persist(entity);
+			return entity.getId();
 		}
 		else
 		{
-			return getSaveOrUpdateStrategy().save(object);
+			return getSaveOrUpdateStrategy().save(entity);
 		}
 	}
 
@@ -376,18 +382,18 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(List<T> objects)
+	public void saveOrUpdate(List<T> entities)
 	{
-		save(objects);
+		save(entities);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(T object)
+	public void saveOrUpdate(T entity)
 	{
-		save(object);
+		save(entity);
 
 	}
 
@@ -395,18 +401,18 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(List<T> objects)
+	public void update(List<T> entities)
 	{
 		if (getSaveOrUpdateStrategy() == null)
 		{
-			for (final T t : objects)
+			for (final T entity : entities)
 			{
-				update(t);
+				update(entity);
 			}
 		}
 		else
 		{
-			getSaveOrUpdateStrategy().update(objects);
+			getSaveOrUpdateStrategy().update(entities);
 		}
 	}
 

@@ -16,102 +16,138 @@
 package de.alpharogroup.db.strategies;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.api.DeleteStrategy;
+import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDeleteStrategy} is a default implementation of the
- * {@link DeleteStrategy}.
+ * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of the
+ * {@link SaveOrUpdateStrategy}.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
-		DeleteStrategy<T, PK>
+		SaveOrUpdateStrategy<T, PK>
 {
+
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
 
 	/** The repository. */
 	@NonNull
 	private final EntityManagerDao<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultDeleteStrategy}.
+	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDeleteStrategy(EntityManagerDao<T, PK> repository)
+	public DefaultSaveOrUpdateStrategy(EntityManagerDao<T, PK> repository)
 	{
 		this.repository = repository;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
 	 */
-	@Override
-	public void delete(List<T> objects)
-	{
-		for (final T entity : objects)
-		{
-			if (getEntityManager().contains(entity))
-			{
-				getEntityManager().remove(entity);
-			}
-			else
-			{
-				getEntityManager().remove(getEntityManager().merge(entity));
-			}
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(PK id)
-	{
-		final T entity = getEntityManager().find(type, id);
-		delete(entity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(T entity)
-	{
-		if (getEntityManager().contains(entity))
-		{
-			getEntityManager().remove(entity);
-		}
-		else
-		{
-			getEntityManager().remove(getEntityManager().merge(entity));
-		}
-	}
-
 	private EntityManager getEntityManager()
 	{
 		return this.repository.getEntityManager();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<PK> save(List<T> entities)
+	{
+		final List<PK> primaryKeys = new ArrayList<>();
+		for (final T entity : entities)
+		{
+			primaryKeys.add(save(entity));
+		}
+		return primaryKeys;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PK save(T entity)
+	{
+		getEntityManager().persist(entity);
+		return entity.getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveOrUpdate(List<T> entities)
+	{
+		for (final T entity : entities)
+		{
+			saveOrUpdate(entity);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveOrUpdate(T entity)
+	{
+		if (entity.getId() == null)
+		{
+			save(entity);
+		}
+		else
+		{
+			update(entity);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void update(List<T> entities)
+	{
+		for (final T entity : entities)
+		{
+			update(entity);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void update(T entity)
+	{
+		getEntityManager().merge(entity);
 	}
 
 }

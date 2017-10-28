@@ -13,25 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.dao.api;
+package de.alpharogroup.db.repository.api;
 
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The interface {@link GenericDao} provide an API for database operations like insert, delete,
- * update and selections.
+ * The interface {@link GenericRepository} provide an API for database operations like insert,
+ * delete, update and selections.
  *
  * @param <T>
- *            the type of the domain entity
+ *            the type of the entity entity
  * @param <PK>
- *            the type of the primary key from the domain entity
+ *            the type of the primary key from the entity entity
  * @author Asterios Raptis
  */
-public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable
+public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializable>
+	extends
+		Serializable
 {
+
+	/**
+	 * Persists the given entity.
+	 *
+	 * @param entity
+	 *            the entity
+	 */
+	void create(T entity);
+
+	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name and the given type.
+	 *
+	 * @param name
+	 *            the name
+	 * @param resultClass
+	 *            the result class
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedQuery(String name, Class<T> resultClass);
+
+	/**
+	 * Factory method for create a new {@link TypedQuery} from the given name and the type of the
+	 * generic entity.
+	 *
+	 * @param name
+	 *            the name
+	 * @return the new {@link TypedQuery}
+	 */
+	TypedQuery<T> createNamedTypedQuery(String name);
 
 	/**
 	 * Delete all persistent entities in the given list.
@@ -90,6 +125,22 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	 * @return An entity of type T
 	 */
 	T get(PK id);
+
+	/**
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
+	 */
+	EntityManager getEntityManager();
+
+	/**
+	 * Gets a {@link Query} from the given hql query.
+	 *
+	 * @param hqlQuery
+	 *            the hql query
+	 * @return the {@link Query}
+	 */
+	Query getQuery(String hqlQuery);
 
 	/**
 	 * Gets the class type.
@@ -166,6 +217,14 @@ public interface GenericDao<T extends BaseEntity<PK>, PK extends Serializable> e
 	 *            the transient entity to save or update.
 	 */
 	void saveOrUpdate(T entity);
+
+	/**
+	 * Sets the entity manager.
+	 *
+	 * @param entityManager
+	 *            the new entity manager
+	 */
+	void setEntityManager(EntityManager entityManager);
 
 	/**
 	 * Update all transient entities in the given list.

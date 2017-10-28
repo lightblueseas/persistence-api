@@ -20,11 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.repository.api.GenericRepository;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
@@ -57,6 +59,24 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	public void create(final T entity)
 	{
 		getEntityManager().persist(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
+	{
+		return getEntityManager().createNamedQuery(name, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedTypedQuery(String name)
+	{
+		return createNamedQuery(name, getType());
 	}
 
 	/**
@@ -134,6 +154,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		return null;
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -151,7 +172,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	{
 		return get(id);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -215,6 +235,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		save(objects);
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -236,7 +257,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 			update(t);
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}

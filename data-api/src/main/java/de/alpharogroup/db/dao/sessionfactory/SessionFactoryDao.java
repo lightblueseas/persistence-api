@@ -30,7 +30,7 @@ import de.alpharogroup.db.entity.BaseEntity;
  * The Interface {@link SessionFactoryDao}.
  *
  * @param <T>
- *            the generic type of the entity object
+ *            the generic type of the entity entity
  * @param <PK>
  *            the generic type of the primary key
  */
@@ -40,7 +40,7 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 {
 
 	/**
-	 * Deletes an object of a given Id with the given session object. Note: Will load the object
+	 * Deletes an entity of a given Id with the given session entity. Note: Will load the entity
 	 * internally so consider using delete(T persistentObject) directly
 	 *
 	 * @param id
@@ -51,15 +51,15 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	void delete(PK id, Session session);
 
 	/**
-	 * Deletes the given object from persistent storage in the database with the given session
-	 * object.
+	 * Deletes the given entity from persistent storage in the database with the given session
+	 * entity.
 	 *
-	 * @param object
-	 *            the persistent object
+	 * @param entity
+	 *            the persistent entity
 	 * @param session
 	 *            the session to use for the operation.
 	 */
-	void delete(T object, Session session);
+	void delete(T entity, Session session);
 
 	/**
 	 * Returns a list from the result from the given hqlquery.
@@ -86,7 +86,7 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 *
 	 * @param criterion
 	 *            the criterion
-	 * @return list of objects
+	 * @return list of entities
 	 */
 	List<T> findByCriteria(Criterion... criterion);
 
@@ -97,38 +97,38 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	 *            the example instance
 	 * @param excludeProperty
 	 *            the exclude property
-	 * @return A list of objects
+	 * @return A list of entities
 	 */
 	List<T> findByExample(T exampleInstance, String... excludeProperty);
 
 	/**
-	 * Loads the given Object with the given session object.
+	 * Loads the given Object with the given session entity.
 	 *
 	 * @param id
 	 *            Id to load
 	 * @param session
 	 *            the session to use for the operation.
-	 * @return An object of type T
+	 * @return An entity of type T
 	 */
 	T get(PK id, Session session);
 
 	/**
-	 * Gets a query object from the given String.
+	 * Gets a query entity from the given String.
 	 *
 	 * @param queryString
 	 *            the hql query as String
-	 * @return A query object
+	 * @return A query entity
 	 */
 	Query getQuery(String queryString);
 
 	/**
-	 * Gets a query object from the given String with the given session object.
+	 * Gets a query entity from the given String with the given session entity.
 	 *
 	 * @param queryString
 	 *            the hql query as String
 	 * @param session
 	 *            the session to use for the operation.
-	 * @return Query object
+	 * @return Query entity
 	 */
 	Query getQuery(String queryString, Session session);
 
@@ -140,36 +140,36 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	Session getSession();
 
 	/**
-	 * Retrieve a persisted object with a given id from the database with the given session object.
+	 * Retrieve a persisted entity with a given id from the database with the given session entity.
 	 *
 	 * @param id
 	 *            the id
 	 * @param session
 	 *            the session to use for the operation.
-	 * @return an object of type T
+	 * @return an entity of type T
 	 */
 	T load(PK id, Session session);
 
 	/**
-	 * Save the given object.
+	 * Save the given entity.
 	 *
-	 * @param object
+	 * @param entity
 	 *            the new instance to save.
 	 * @param session
 	 *            the session to use for the operation.
-	 * @return the id of the saved object
+	 * @return the id of the saved entity
 	 */
-	PK save(T object, Session session);
+	PK save(T entity, Session session);
 
 	/**
-	 * Save or update the given transient object.
+	 * Save or update the given transient entity.
 	 *
-	 * @param object
-	 *            the transient object to save or update.
+	 * @param entity
+	 *            the transient entity to save or update.
 	 * @param session
 	 *            the session to use for the operation.
 	 */
-	void saveOrUpdate(T object, Session session);
+	void saveOrUpdate(T entity, Session session);
 
 	/**
 	 * Sets the hibernate session.
@@ -180,13 +180,13 @@ public interface SessionFactoryDao<T extends BaseEntity<PK>, PK extends Serializ
 	void setSession(Session session);
 
 	/**
-	 * Updates the given object with the given session object.
+	 * Updates the given entity with the given session entity.
 	 *
-	 * @param object
-	 *            the transient object to save or update.
+	 * @param entity
+	 *            the transient entity to save or update.
 	 * @param session
 	 *            the session to use for the operation.
 	 */
-	void update(T object, Session session);
+	void update(T entity, Session session);
 
 }
