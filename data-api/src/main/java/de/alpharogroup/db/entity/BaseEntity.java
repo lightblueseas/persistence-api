@@ -29,7 +29,7 @@ import javax.persistence.MappedSuperclass;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import de.alpharogroup.lang.object.CloneObjectExtensions;
+import de.alpharogroup.clone.object.CloneObjectExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
