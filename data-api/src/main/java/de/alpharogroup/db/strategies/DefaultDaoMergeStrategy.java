@@ -58,8 +58,8 @@ public class DefaultDaoMergeStrategy<T extends BaseEntity<PK>, PK extends Serial
 	/**
 	 * Instantiates a new {@link DefaultDaoMergeStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param dao
+	 *            the dao
 	 */
 	public DefaultDaoMergeStrategy(EntityManagerDao<T, PK> dao)
 	{

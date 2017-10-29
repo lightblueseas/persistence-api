@@ -56,8 +56,8 @@ public class DefaultDaoDeleteStrategy<T extends BaseEntity<PK>, PK extends Seria
 	/**
 	 * Instantiates a new {@link DefaultDaoDeleteStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param dao
+	 *            the dao
 	 */
 	public DefaultDaoDeleteStrategy(EntityManagerDao<T, PK> dao)
 	{

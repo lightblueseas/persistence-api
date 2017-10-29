@@ -59,8 +59,8 @@ public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends
 	/**
 	 * Instantiates a new {@link DefaultDaoSaveOrUpdateStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param dao
+	 *            the dao
 	 */
 	public DefaultDaoSaveOrUpdateStrategy(EntityManagerDao<T, PK> dao)
 	{
