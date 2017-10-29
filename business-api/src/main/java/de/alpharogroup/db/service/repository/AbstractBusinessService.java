@@ -30,7 +30,7 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	/** The dao reference. */
+	/** The repository reference. */
 	@Getter
 	@Setter
 	private REPOSITORY repository;
