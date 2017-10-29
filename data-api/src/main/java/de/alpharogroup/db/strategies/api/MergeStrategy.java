@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.strategies;
+package de.alpharogroup.db.strategies.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,21 +34,21 @@ public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable
 {
 
 	/**
-	 * Merges all new objects in the given list.
-	 * 
-	 * @param objects
+	 * Merges all new entities in the given list.
+	 *
+	 * @param entities
 	 *            the list to save
-	 * @return the list with the ids of the merged objects
+	 * @return the list with the ids of the merged entities
 	 */
-	List<T> merge(List<T> objects);
+	List<T> merge(List<T> entities);
 
 	/**
-	 * Merges the given object. @see Hibernate documentation.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object
+	 * Merges the given entity. @see Hibernate documentation.
+	 *
+	 * @param entity
+	 *            the entity
+	 * @return the entity
 	 */
-	T merge(final T object);
+	T merge(final T entity);
 
 }

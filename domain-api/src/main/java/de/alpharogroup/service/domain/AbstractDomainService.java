@@ -27,7 +27,7 @@ import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
-import de.alpharogroup.lang.object.MergeObjectExtensions;
+import de.alpharogroup.merge.object.MergeObjectExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
