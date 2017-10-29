@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entitymapper.EntityDOMapper;
+import de.alpharogroup.db.repository.api.GenericRepository;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import de.alpharogroup.merge.object.MergeObjectExtensions;
@@ -40,21 +40,21 @@ import lombok.Setter;
  *            the generic type of the domain object
  * @param <E>
  *            the element type of the entity
- * @param <DAO>
+ * @param <REPOSITORY>
  *            the generic type of the data transfer object
  * @param <M>
  *            the generic type of the entity mapper
  */
 @Transactional
-public abstract class AbstractDomainService<PK extends Serializable, DO extends DomainObject<PK>, E extends BaseEntity<PK>, DAO extends EntityManagerDao<E, PK>, M extends EntityDOMapper<E, DO>>
+public abstract class AbstractDomainService<PK extends Serializable, DO extends DomainObject<PK>, E extends BaseEntity<PK>, REPOSITORY extends GenericRepository<E, PK>, M extends EntityDOMapper<E, DO>>
 	implements
 		DomainService<PK, DO>
 {
 
-	/** The dao reference. */
+	/** The repository reference. */
 	@Setter
 	@Getter
-	private DAO dao;
+	private REPOSITORY repository;
 
 	/**
 	 * The mapper.
@@ -82,7 +82,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	public DO create(final DO domainObject)
 	{
 		E entity = getMapper().toEntity(domainObject);
-		entity = dao.merge(entity);
+		entity = repository.merge(entity);
 		domainObject.setId(entity.getId());
 		return domainObject;
 	}
@@ -94,9 +94,9 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public DO delete(final PK id)
 	{
-		final E entity = dao.get(id);
+		final E entity = repository.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
-		dao.delete(id);
+		repository.delete(id);
 		return domainObject;
 	}
 
@@ -106,7 +106,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public boolean exists(final PK id)
 	{
-		return dao.exists(id);
+		return repository.exists(id);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public List<DO> findAll()
 	{
-		final Collection<E> all = dao.findAll();
+		final Collection<E> all = repository.findAll();
 		final List<DO> domainObjects = new ArrayList<>();
 		for (final E entity : all)
 		{
@@ -145,7 +145,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public DO read(final PK id)
 	{
-		final E entity = dao.get(id);
+		final E entity = repository.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
 		return domainObject;
 	}
@@ -157,9 +157,9 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public DO update(final DO domainObject)
 	{
-		E entity = dao.get(domainObject.getId());
+		E entity = repository.get(domainObject.getId());
 		MergeObjectExtensions.mergeOrCopyQuietly(entity, domainObject);
-		entity = dao.merge(entity);
+		entity = repository.merge(entity);
 		return domainObject;
 	}
 }
