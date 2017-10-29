@@ -28,7 +28,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDeleteStrategy} is a default implementation of the
+ * The class {@link DefaultDaoDeleteStrategy} is a default implementation of the
  * {@link DeleteStrategy}.
  *
  * @param <T>
@@ -36,7 +36,7 @@ import lombok.NonNull;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultDaoDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
 		DeleteStrategy<T, PK>
 {
@@ -47,21 +47,21 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultDaoDeleteStrategy.class, this.getClass());
 
-	/** The repository. */
+	/** The dao. */
 	@NonNull
-	private final EntityManagerDao<T, PK> repository;
+	private final EntityManagerDao<T, PK> dao;
 
 	/**
-	 * Instantiates a new {@link DefaultDeleteStrategy}.
+	 * Instantiates a new {@link DefaultDaoDeleteStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDeleteStrategy(EntityManagerDao<T, PK> repository)
+	public DefaultDaoDeleteStrategy(EntityManagerDao<T, PK> dao)
 	{
-		this.repository = repository;
+		this.dao = dao;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 
 	private EntityManager getEntityManager()
 	{
-		return this.repository.getEntityManager();
+		return this.dao.getEntityManager();
 	}
 
 }

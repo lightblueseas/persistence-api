@@ -32,9 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.DefaultDeleteStrategy;
-import de.alpharogroup.db.strategies.DefaultMergeStrategy;
-import de.alpharogroup.db.strategies.DefaultSaveOrUpdateStrategy;
+import de.alpharogroup.db.strategies.DefaultDaoDeleteStrategy;
+import de.alpharogroup.db.strategies.DefaultDaoMergeStrategy;
+import de.alpharogroup.db.strategies.DefaultDaoSaveOrUpdateStrategy;
 import de.alpharogroup.db.strategies.api.DeleteStrategy;
 import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
@@ -308,7 +308,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	public DeleteStrategy<T, PK> newDeleteStrategy()
 	{
-		deleteStrategy = new DefaultDeleteStrategy<>(this);
+		deleteStrategy = new DefaultDaoDeleteStrategy<>(this);
 		return deleteStrategy;
 	}
 
@@ -321,7 +321,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	public MergeStrategy<T, PK> newMergeStrategy()
 	{
-		mergeStrategy = new DefaultMergeStrategy<>(this);
+		mergeStrategy = new DefaultDaoMergeStrategy<>(this);
 		return mergeStrategy;
 	}
 
@@ -334,7 +334,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 */
 	public SaveOrUpdateStrategy<T, PK> newSaveOrUpdateStrategy()
 	{
-		saveOrUpdateStrategy = new DefaultSaveOrUpdateStrategy<>(this);
+		saveOrUpdateStrategy = new DefaultDaoSaveOrUpdateStrategy<>(this);
 		return saveOrUpdateStrategy;
 	}
 

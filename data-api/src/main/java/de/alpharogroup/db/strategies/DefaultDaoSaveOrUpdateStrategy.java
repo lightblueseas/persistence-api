@@ -29,7 +29,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of the
+ * The class {@link DefaultDaoSaveOrUpdateStrategy} is a default implementation of the
  * {@link SaveOrUpdateStrategy}.
  *
  * @param <T>
@@ -37,7 +37,7 @@ import lombok.NonNull;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
 		SaveOrUpdateStrategy<T, PK>
 {
@@ -50,19 +50,19 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultDaoSaveOrUpdateStrategy.class, this.getClass());
 
 	/** The repository. */
 	@NonNull
 	private final EntityManagerDao<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
+	 * Instantiates a new {@link DefaultDaoSaveOrUpdateStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultSaveOrUpdateStrategy(EntityManagerDao<T, PK> repository)
+	public DefaultDaoSaveOrUpdateStrategy(EntityManagerDao<T, PK> repository)
 	{
 		this.repository = repository;
 	}
