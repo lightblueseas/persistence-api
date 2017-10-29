@@ -21,15 +21,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of the
+ * The class {@link DefaultDaoSaveOrUpdateStrategy} is a default implementation of the
  * {@link SaveOrUpdateStrategy}.
  *
  * @param <T>
@@ -37,7 +37,7 @@ import lombok.NonNull;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
 		SaveOrUpdateStrategy<T, PK>
 {
@@ -50,21 +50,21 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultDaoSaveOrUpdateStrategy.class, this.getClass());
 
-	/** The repository. */
+	/** The dao. */
 	@NonNull
-	private final AbstractRepository<T, PK> repository;
+	private final EntityManagerDao<T, PK> dao;
 
 	/**
-	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
+	 * Instantiates a new {@link DefaultDaoSaveOrUpdateStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param dao
+	 *            the dao
 	 */
-	public DefaultSaveOrUpdateStrategy(AbstractRepository<T, PK> repository)
+	public DefaultDaoSaveOrUpdateStrategy(EntityManagerDao<T, PK> dao)
 	{
-		this.repository = repository;
+		this.dao = dao;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 */
 	private EntityManager getEntityManager()
 	{
-		return this.repository.getEntityManager();
+		return this.dao.getEntityManager();
 	}
 
 	/**

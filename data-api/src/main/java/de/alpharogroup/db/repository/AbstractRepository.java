@@ -19,19 +19,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.api.GenericRepository;
+import de.alpharogroup.db.strategies.DefaultDeleteStrategy;
+import de.alpharogroup.db.strategies.DefaultMergeStrategy;
+import de.alpharogroup.db.strategies.DefaultSaveOrUpdateStrategy;
 import de.alpharogroup.db.strategies.api.DeleteStrategy;
 import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The abstract class {@link AbstractRepository} provides methods for database operations like
@@ -58,6 +68,24 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
 		.getFirstTypeArgument(AbstractRepository.class, this.getClass());
+
+	/** The data source. */
+	@Setter
+	@Getter
+	@Autowired
+	private DataSource dataSource;
+
+	/** The entity manager. */
+	@PersistenceContext
+	@Getter
+	@Setter
+	private EntityManager entityManager;
+
+	/** The jdbc template. */
+	@Setter
+	@Getter
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	/** The delete strategy for interact on deletion process. */
 	@Getter
@@ -281,7 +309,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public DeleteStrategy<T, PK> newDeleteStrategy()
 	{
-		deleteStrategy = null;
+		deleteStrategy = new DefaultDeleteStrategy<>(this);
 		return deleteStrategy;
 	}
 
@@ -294,7 +322,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public MergeStrategy<T, PK> newMergeStrategy()
 	{
-		mergeStrategy = null;
+		mergeStrategy = new DefaultMergeStrategy<>(this);
 		return mergeStrategy;
 	}
 
@@ -307,7 +335,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public SaveOrUpdateStrategy<T, PK> newSaveOrUpdateStrategy()
 	{
-		saveOrUpdateStrategy = null;
+		saveOrUpdateStrategy = new DefaultSaveOrUpdateStrategy<>(this);
 		return saveOrUpdateStrategy;
 	}
 

@@ -21,22 +21,22 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultMergeStrategy} is a default implementation of the {@link MergeStrategy}.
+ * The class {@link DefaultDaoMergeStrategy} is a default implementation of the {@link MergeStrategy}.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultDaoMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
 		MergeStrategy<T, PK>
 {
@@ -49,21 +49,21 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultMergeStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultDaoMergeStrategy.class, this.getClass());
 
-	/** The repository. */
+	/** The dao. */
 	@NonNull
-	private final AbstractRepository<T, PK> repository;
+	private final EntityManagerDao<T, PK> dao;
 
 	/**
-	 * Instantiates a new {@link DefaultMergeStrategy}.
+	 * Instantiates a new {@link DefaultDaoMergeStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param dao
+	 *            the dao
 	 */
-	public DefaultMergeStrategy(AbstractRepository<T, PK> repository)
+	public DefaultDaoMergeStrategy(EntityManagerDao<T, PK> dao)
 	{
-		this.repository = repository;
+		this.dao = dao;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	 */
 	private EntityManager getEntityManager()
 	{
-		return this.repository.getEntityManager();
+		return this.dao.getEntityManager();
 	}
 
 	/**
