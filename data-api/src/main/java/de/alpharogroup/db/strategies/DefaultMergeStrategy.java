@@ -21,25 +21,24 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
+import de.alpharogroup.db.repository.AbstractRepository;
+import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDaoSaveOrUpdateStrategy} is a default implementation of the
- * {@link SaveOrUpdateStrategy}.
+ * The class {@link DefaultMergeStrategy} is a default implementation of the {@link MergeStrategy}.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
-		SaveOrUpdateStrategy<T, PK>
+		MergeStrategy<T, PK>
 {
 
 
@@ -50,21 +49,21 @@ public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDaoSaveOrUpdateStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultMergeStrategy.class, this.getClass());
 
-	/** The dao. */
+	/** The repository. */
 	@NonNull
-	private final EntityManagerDao<T, PK> dao;
+	private final AbstractRepository<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultDaoSaveOrUpdateStrategy}.
+	 * Instantiates a new {@link DefaultMergeStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDaoSaveOrUpdateStrategy(EntityManagerDao<T, PK> dao)
+	public DefaultMergeStrategy(AbstractRepository<T, PK> repository)
 	{
-		this.dao = dao;
+		this.repository = repository;
 	}
 
 	/**
@@ -74,80 +73,30 @@ public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends
 	 */
 	private EntityManager getEntityManager()
 	{
-		return this.dao.getEntityManager();
+		return this.repository.getEntityManager();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PK> save(List<T> entities)
+	public List<T> merge(List<T> objects)
 	{
-		final List<PK> primaryKeys = new ArrayList<>();
-		for (final T entity : entities)
+		final List<T> mergedEntities = new ArrayList<>();
+		for (final T object : objects)
 		{
-			primaryKeys.add(save(entity));
+			mergedEntities.add(merge(object));
 		}
-		return primaryKeys;
+		return mergedEntities;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PK save(T entity)
+	public T merge(T entity)
 	{
-		getEntityManager().persist(entity);
-		return entity.getId();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void saveOrUpdate(List<T> entities)
-	{
-		for (final T entity : entities)
-		{
-			saveOrUpdate(entity);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void saveOrUpdate(T entity)
-	{
-		if (entity.getId() == null)
-		{
-			save(entity);
-		}
-		else
-		{
-			update(entity);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(List<T> entities)
-	{
-		for (final T entity : entities)
-		{
-			update(entity);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(T entity)
-	{
-		getEntityManager().merge(entity);
+		return getEntityManager().merge(entity);
 	}
 
 }

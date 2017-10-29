@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -75,7 +74,6 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	private DataSource dataSource;
 
 	/** The entity manager. */
-	@PersistenceContext
 	@Getter
 	@Setter
 	private EntityManager entityManager;

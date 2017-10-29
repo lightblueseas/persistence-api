@@ -33,6 +33,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.api.GenericRepository;
+import de.alpharogroup.db.strategies.DefaultDeleteStrategy;
+import de.alpharogroup.db.strategies.DefaultMergeStrategy;
+import de.alpharogroup.db.strategies.DefaultSaveOrUpdateStrategy;
 import de.alpharogroup.db.strategies.api.DeleteStrategy;
 import de.alpharogroup.db.strategies.api.MergeStrategy;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
@@ -306,7 +309,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public DeleteStrategy<T, PK> newDeleteStrategy()
 	{
-		deleteStrategy = null;
+		deleteStrategy = new DefaultDeleteStrategy<>(this);
 		return deleteStrategy;
 	}
 
@@ -319,7 +322,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public MergeStrategy<T, PK> newMergeStrategy()
 	{
-		mergeStrategy = null;
+		mergeStrategy = new DefaultMergeStrategy<>(this);
 		return mergeStrategy;
 	}
 
@@ -332,7 +335,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 */
 	public SaveOrUpdateStrategy<T, PK> newSaveOrUpdateStrategy()
 	{
-		saveOrUpdateStrategy = null;
+		saveOrUpdateStrategy = new DefaultSaveOrUpdateStrategy<>(this);
 		return saveOrUpdateStrategy;
 	}
 

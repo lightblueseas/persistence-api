@@ -21,15 +21,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDaoSaveOrUpdateStrategy} is a default implementation of the
+ * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of the
  * {@link SaveOrUpdateStrategy}.
  *
  * @param <T>
@@ -37,7 +37,7 @@ import lombok.NonNull;
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
 		SaveOrUpdateStrategy<T, PK>
 {
@@ -50,21 +50,21 @@ public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDaoSaveOrUpdateStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
 
-	/** The dao. */
+	/** The repository. */
 	@NonNull
-	private final EntityManagerDao<T, PK> dao;
+	private final AbstractRepository<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultDaoSaveOrUpdateStrategy}.
+	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDaoSaveOrUpdateStrategy(EntityManagerDao<T, PK> dao)
+	public DefaultSaveOrUpdateStrategy(AbstractRepository<T, PK> repository)
 	{
-		this.dao = dao;
+		this.repository = repository;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class DefaultDaoSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends
 	 */
 	private EntityManager getEntityManager()
 	{
-		return this.dao.getEntityManager();
+		return this.repository.getEntityManager();
 	}
 
 	/**

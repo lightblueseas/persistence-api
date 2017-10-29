@@ -16,54 +16,97 @@
 package de.alpharogroup.db.strategies;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import de.alpharogroup.db.dao.jpa.EntityManagerDao;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.strategies.api.MergeStrategy;
+import de.alpharogroup.db.repository.AbstractRepository;
+import de.alpharogroup.db.strategies.api.DeleteStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultDaoMergeStrategy} is a default implementation of the {@link MergeStrategy}.
+ * The class {@link DefaultDeleteStrategy} is a default implementation of the
+ * {@link DeleteStrategy}.
  *
  * @param <T>
  *            the type of the entity object
  * @param <PK>
  *            the type of the primary key from the entity object
  */
-public class DefaultDaoMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
-		MergeStrategy<T, PK>
+		DeleteStrategy<T, PK>
 {
-
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultDaoMergeStrategy.class, this.getClass());
+		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
 
-	/** The dao. */
+	/** The repository. */
 	@NonNull
-	private final EntityManagerDao<T, PK> dao;
+	private final AbstractRepository<T, PK> repository;
 
 	/**
-	 * Instantiates a new {@link DefaultDaoMergeStrategy}.
+	 * Instantiates a new {@link DefaultDeleteStrategy}.
 	 *
 	 * @param repository
 	 *            the repository
 	 */
-	public DefaultDaoMergeStrategy(EntityManagerDao<T, PK> dao)
+	public DefaultDeleteStrategy(AbstractRepository<T, PK> repository)
 	{
-		this.dao = dao;
+		this.repository = repository;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(List<T> objects)
+	{
+		for (final T entity : objects)
+		{
+			if (getEntityManager().contains(entity))
+			{
+				getEntityManager().remove(entity);
+			}
+			else
+			{
+				getEntityManager().remove(getEntityManager().merge(entity));
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(PK id)
+	{
+		final T entity = getEntityManager().find(type, id);
+		delete(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(T entity)
+	{
+		if (getEntityManager().contains(entity))
+		{
+			getEntityManager().remove(entity);
+		}
+		else
+		{
+			getEntityManager().remove(getEntityManager().merge(entity));
+		}
 	}
 
 	/**
@@ -73,30 +116,7 @@ public class DefaultDaoMergeStrategy<T extends BaseEntity<PK>, PK extends Serial
 	 */
 	private EntityManager getEntityManager()
 	{
-		return this.dao.getEntityManager();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<T> merge(List<T> objects)
-	{
-		final List<T> mergedEntities = new ArrayList<>();
-		for (final T object : objects)
-		{
-			mergedEntities.add(merge(object));
-		}
-		return mergedEntities;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public T merge(T entity)
-	{
-		return getEntityManager().merge(entity);
+		return this.repository.getEntityManager();
 	}
 
 }
