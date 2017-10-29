@@ -49,9 +49,10 @@ import lombok.Setter;
  * will be taken.
  *
  * @param <T>
- *            the generic type of the entity entity
+ *            the generic type of the domain entity
  * @param <PK>
- *            the generic type of the primary key
+ *            the generic type of the primary key from the domain entity
+ * @author Asterios Raptis
  */
 public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends Serializable>
 	implements
@@ -137,7 +138,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(List<T> entities)
+	public void delete(final List<T> entities)
 	{
 		if (getDeleteStrategy() != null)
 		{
@@ -163,7 +164,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(PK id)
+	public void delete(final PK id)
 	{
 		if (getDeleteStrategy() != null)
 		{
@@ -203,7 +204,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void evict(T entity)
+	public void evict(final T entity)
 	{
 		getEntityManager().detach(entity);
 	}
@@ -212,7 +213,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean exists(PK id)
+	public boolean exists(final PK id)
 	{
 		return get(id) != null;
 	}
@@ -234,7 +235,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T get(PK id)
+	public T get(final PK id)
 	{
 		if (id != null)
 		{
@@ -256,7 +257,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T load(PK id)
+	public T load(final PK id)
 	{
 		return get(id);
 	}
@@ -265,7 +266,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<T> merge(List<T> entities)
+	public List<T> merge(final List<T> entities)
 	{
 		final List<T> mergedEntities = new ArrayList<>();
 		if (getMergeStrategy() != null)
@@ -286,7 +287,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T merge(T entity)
+	public T merge(final T entity)
 	{
 		if (getMergeStrategy() != null)
 		{
@@ -337,11 +338,8 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 		return saveOrUpdateStrategy;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void refresh(T entity)
+	public void refresh(final T entity)
 	{
 		getEntityManager().refresh(entity);
 	}
@@ -350,7 +348,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PK> save(List<T> entities)
+	public List<PK> save(final List<T> entities)
 	{
 		final List<PK> primaryKeys = new ArrayList<>();
 		if (getSaveOrUpdateStrategy() != null)
@@ -371,7 +369,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PK save(T entity)
+	public PK save(final T entity)
 	{
 		if (getSaveOrUpdateStrategy() != null)
 		{
@@ -388,9 +386,8 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(List<T> entities)
+	public void saveOrUpdate(final List<T> entities)
 	{
-
 		if (getSaveOrUpdateStrategy() != null)
 		{
 			getSaveOrUpdateStrategy().saveOrUpdate(entities);
@@ -408,15 +405,22 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(T entity)
+	public void saveOrUpdate(final T entity)
 	{
-		if (entity.getId() == null)
+		if (getSaveOrUpdateStrategy() != null)
 		{
-			save(entity);
+			getSaveOrUpdateStrategy().saveOrUpdate(entity);
 		}
 		else
 		{
-			update(entity);
+			if (entity.getId() == null)
+			{
+				save(entity);
+			}
+			else
+			{
+				update(entity);
+			}
 		}
 	}
 
@@ -424,7 +428,7 @@ public abstract class JpaEntityManagerDao<T extends BaseEntity<PK>, PK extends S
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(List<T> entities)
+	public void update(final List<T> entities)
 	{
 		if (getSaveOrUpdateStrategy() != null)
 		{

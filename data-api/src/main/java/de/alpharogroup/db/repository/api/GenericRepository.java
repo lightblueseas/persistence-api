@@ -29,9 +29,9 @@ import de.alpharogroup.db.entity.BaseEntity;
  * delete, update and selections.
  *
  * @param <T>
- *            the type of the entity entity
+ *            the type of the domain entity
  * @param <PK>
- *            the type of the primary key from the entity entity
+ *            the type of the primary key from the domain entity
  * @author Asterios Raptis
  */
 public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializable>
