@@ -24,6 +24,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import de.alpharogroup.db.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,12 +33,17 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * The entity class {@link KeyValueOwnerEntity} holds a key value pair with his owner.
+ * The abstract entity class {@link KeyValueOwnerEntity} holds a generic key value pair with his
+ * owner which can be also the parent if it is from the same type.
  *
- * @param <PK> the generic type of the technical primary key
- * @param <K> the key type
- * @param <V> the value type
- * @param <O> the generic type
+ * @param <PK>
+ *            the generic type of the technical primary key
+ * @param <O>
+ *            the generic type of the owner
+ * @param <K>
+ *            the generic type of the key
+ * @param <V>
+ *            the generic type of the value
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -46,23 +52,23 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class KeyValueOwnerEntity<PK extends Serializable, O, K, V> extends BaseEntity<PK>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The owner of this key-value pair. */
-	@Column(name="owner", nullable=false)
+	@Column(name = "owner", nullable = false)
 	O owner;
-	
+
 	/** The key of this key-value pair. */
-	@Column(name="key", nullable=false)
+	@Column(name = "key", nullable = false)
 	K key;
-	
+
 	/** The value of this key-value pair. */
-	@Column(name="value")
+	@Column(name = "value")
 	V value;
 
 }
