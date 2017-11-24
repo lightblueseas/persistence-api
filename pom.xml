@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>3.15.0</version>
+		<version>3.16.0</version>
 		<relativePath />
 	</parent>
 
@@ -14,11 +14,11 @@
 	<inceptionYear>2015</inceptionYear>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>4.2.0-SNAPSHOT</version>
+	<version>4.2.0</version>
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>4.2.0-SNAPSHOT</persistence-api.version>
+		<persistence-api.version>4.2.0</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
