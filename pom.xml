@@ -5,28 +5,27 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>3.12.1</version>
+		<version>3.16.0</version>
 		<relativePath />
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
-	<packaging>pom</packaging>	
+	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
-	<!-- NOTE: on version change DO NOT FORGET
-	 to change ${persistence-api.version} 
-	 in the properties section ON SAME VERSION. -->
-	<version>3.35.1</version>
+	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
+		in the properties section ON SAME VERSION. -->
+	<version>4.2.0</version>
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>3.35.1</persistence-api.version>
+		<persistence-api.version>4.2.0</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-usertype.version>${persistence-api.version}</data-usertype.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
 		<rest-api.version>${persistence-api.version}</rest-api.version>
-		<rest-client.version>${persistence-api.version}</rest-client.version>	
+		<rest-client.version>${persistence-api.version}</rest-client.version>
 		<!-- JAVAEE-API version -->
 		<javaee-api.version>7.0</javaee-api.version>
 	</properties>
@@ -39,6 +38,16 @@
 
 	<url>https://github.com/lightblueseas/persistence-api</url>
 
+	<licenses>
+
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+
+	</licenses>
+	
 	<scm>
 		<connection>scm:git:git:@github.com:lightblueseas/persistence-api.git</connection>
 		<developerConnection>scm:git:git@github.com:lightblueseas/persistence-api.git</developerConnection>
@@ -80,7 +89,7 @@
 				<artifactId>business-api</artifactId>
 				<version>${business-api.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-usertype</artifactId>

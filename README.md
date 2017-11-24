@@ -60,8 +60,8 @@ You can first define the version properties:
 
 	<properties>
 			...
-		<!-- persistence-api version -->
-		<persistence-api.version>3.35.1</persistence-api.version>
+		<!-- PERSISTENCE-API version -->
+		<persistence-api.version>4.2.0</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
@@ -76,6 +76,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- BUSINESS-API DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>business-api</artifactId>
@@ -88,6 +89,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- DATA-API DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-api</artifactId>
@@ -100,6 +102,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- DATA-INITIALIZATION DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-initialization</artifactId>
@@ -112,6 +115,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- DATA-USERTYPE DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-usertype</artifactId>
@@ -124,6 +128,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- DOMAIN-API DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>domain-api</artifactId>
@@ -136,6 +141,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- REST-API DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>rest-api</artifactId>
@@ -148,6 +154,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
+            <!-- REST-CLIENT DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>rest-client</artifactId>

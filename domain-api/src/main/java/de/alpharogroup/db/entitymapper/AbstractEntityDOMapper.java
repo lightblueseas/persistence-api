@@ -23,6 +23,7 @@ import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingOptions;
 
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
@@ -97,7 +98,7 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 * Factory method for creating the new {@link Mapper} for the mapping process with the given
 	 * mapping files list. This method is invoked in the constructor and can be overridden so users
 	 * can provide their own mapping process.
-	 * 
+	 *
 	 * @param mappingFiles
 	 *            the mapping files
 	 *
@@ -105,7 +106,11 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	 */
 	public Mapper newMapper(final List<String> mappingFiles)
 	{
-		DozerBeanMapper mapper = new DozerBeanMapper(mappingFiles);
+		final DozerBeanMapper mapper = DozerBeanMapperSingleton.get();
+		if (ListExtensions.isNotEmpty(mappingFiles))
+		{
+			mapper.setMappingFiles(mappingFiles);
+		}
 		mapper.addMapping(beanMappingBuilder());
 		mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap,
 			fieldMapping) -> sourceFieldValue == null);

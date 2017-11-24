@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.strategies;
+package de.alpharogroup.db.strategies.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,27 +33,27 @@ public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializabl
 		Serializable
 {
 	/**
-	 * Delete all persistent objects in the given list.
-	 * 
-	 * @param objects
-	 *            the list with the persistent objects to delete
+	 * Delete all persistent entities in the given list.
+	 *
+	 * @param entities
+	 *            the list with the persistent entities to delete
 	 */
-	void delete(final List<T> objects);
+	void delete(final List<T> entities);
 
 	/**
-	 * Deletes an object of a given Id. Will load the object internally so consider using delete (T
-	 * obj) directly
-	 * 
+	 * Deletes an entity of a given Id. Will load the entity internally so consider using delete (T
+	 * entity) directly
+	 *
 	 * @param id
 	 *            the id
 	 */
 	void delete(PK id);
 
 	/**
-	 * Deletes the given object from persistent storage in the database.
-	 * 
-	 * @param object
-	 *            the persistent object
+	 * Deletes the given entity from persistent storage in the database.
+	 *
+	 * @param entity
+	 *            the persistent entity
 	 */
-	void delete(T object);
+	void delete(T entity);
 }

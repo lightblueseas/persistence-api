@@ -19,23 +19,40 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.repository.api.GenericRepository;
+import de.alpharogroup.db.strategies.DefaultDeleteStrategy;
+import de.alpharogroup.db.strategies.DefaultMergeStrategy;
+import de.alpharogroup.db.strategies.DefaultSaveOrUpdateStrategy;
+import de.alpharogroup.db.strategies.api.DeleteStrategy;
+import de.alpharogroup.db.strategies.api.MergeStrategy;
+import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
- * The class {@link AbstractRepository} provides methods for database operations like insert,
- * delete, update and selections.
+ * The abstract class {@link AbstractRepository} provides methods for database operations like
+ * insert, delete, update and selections. The create, update and delete processes can be overwritten
+ * by providing strategies for them. By default the strategies are null and the default behavior of
+ * the process will be taken.
  *
  * @param <T>
- *            the type of the entity object
+ *            the generic type of the domain entity
  * @param <PK>
- *            the type of the primary key from the entity object
+ *            the generic type of the primary key from the domain entity
  * @author Asterios Raptis
  */
 public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Serializable>
@@ -43,12 +60,53 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		GenericRepository<T, PK>
 {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
 		.getFirstTypeArgument(AbstractRepository.class, this.getClass());
+
+	/** The data source. */
+	@Setter
+	@Getter
+	@Autowired
+	private DataSource dataSource;
+
+	/** The entity manager. */
+	@PersistenceContext
+	@Getter
+	@Setter
+	private EntityManager entityManager;
+
+	/** The jdbc template. */
+	@Setter
+	@Getter
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	/** The delete strategy for interact on deletion process. */
+	@Getter
+	private DeleteStrategy<T, PK> deleteStrategy;
+
+	/** The merge strategy for interact on merge process. */
+	@Getter
+	private MergeStrategy<T, PK> mergeStrategy;
+
+	/** The save or update strategy for interact on save or update process. */
+	@Getter
+	private SaveOrUpdateStrategy<T, PK> saveOrUpdateStrategy;
+
+	/**
+	 * initialization block for the strategies.
+	 */
+	{
+		newDeleteStrategy();
+		newMergeStrategy();
+		newSaveOrUpdateStrategy();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -63,11 +121,43 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(final List<T> objects)
+	public TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
 	{
-		for (final T entity : objects)
+		return getEntityManager().createNamedQuery(name, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TypedQuery<T> createNamedTypedQuery(String name)
+	{
+		return createNamedQuery(name, getType());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(final List<T> entities)
+	{
+		if (getDeleteStrategy() != null)
 		{
-			getEntityManager().remove(entity);
+			getDeleteStrategy().delete(entities);
+		}
+		else
+		{
+			for (final T entity : entities)
+			{
+				if (getEntityManager().contains(entity))
+				{
+					getEntityManager().remove(entity);
+				}
+				else
+				{
+					getEntityManager().remove(getEntityManager().merge(entity));
+				}
+			}
 		}
 	}
 
@@ -77,8 +167,15 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	@Override
 	public void delete(final PK id)
 	{
-		final T entity = get(id);
-		delete(entity);
+		if (getDeleteStrategy() != null)
+		{
+			getDeleteStrategy().delete(id);
+		}
+		else
+		{
+			final T entity = get(id);
+			delete(entity);
+		}
 	}
 
 	/**
@@ -87,16 +184,30 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	@Override
 	public void delete(final T entity)
 	{
-		getEntityManager().remove(entity);
+		if (getDeleteStrategy() != null)
+		{
+			getDeleteStrategy().delete(entity);
+		}
+		else
+		{
+			if (getEntityManager().contains(entity))
+			{
+				getEntityManager().remove(entity);
+			}
+			else
+			{
+				getEntityManager().remove(getEntityManager().merge(entity));
+			}
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void evict(final T object)
+	public void evict(final T entity)
 	{
-		getEntityManager().detach(object);
+		getEntityManager().detach(entity);
 	}
 
 	/**
@@ -152,17 +263,23 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		return get(id);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<T> merge(final List<T> objects)
+	public List<T> merge(final List<T> entities)
 	{
 		final List<T> mergedEntities = new ArrayList<>();
-		for (final T object : objects)
+		if (getMergeStrategy() != null)
 		{
-			mergedEntities.add(merge(object));
+			mergedEntities.addAll(getMergeStrategy().merge(entities));
+		}
+		else
+		{
+			for (final T entity : entities)
+			{
+				mergedEntities.add(merge(entity));
+			}
 		}
 		return mergedEntities;
 	}
@@ -171,27 +288,80 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T merge(final T object)
+	public T merge(final T entity)
 	{
-		return getEntityManager().merge(object);
+		if (getMergeStrategy() != null)
+		{
+			return getMergeStrategy().merge(entity);
+		}
+		else
+		{
+			return getEntityManager().merge(entity);
+		}
+	}
+
+	/**
+	 * Factory method for creating a new {@link DeleteStrategy} for interact on deletion process.
+	 * This method can be overridden so users can provide their own version of a new
+	 * {@link DeleteStrategy} for the deletion process.
+	 *
+	 * @return the new {@link DeleteStrategy} for the deletion process.
+	 */
+	public DeleteStrategy<T, PK> newDeleteStrategy()
+	{
+		deleteStrategy = new DefaultDeleteStrategy<>(this);
+		return deleteStrategy;
+	}
+
+	/**
+	 * Factory method for creating a new {@link MergeStrategy} for interact on merge process. This
+	 * method can be overridden so users can provide their own version of a new
+	 * {@link MergeStrategy} for the merge process.
+	 *
+	 * @return the new {@link MergeStrategy} for the merge process.
+	 */
+	public MergeStrategy<T, PK> newMergeStrategy()
+	{
+		mergeStrategy = new DefaultMergeStrategy<>(this);
+		return mergeStrategy;
+	}
+
+	/**
+	 * Factory method for creating a new {@link SaveOrUpdateStrategy} for interact on save or update
+	 * process. This method can be overridden so users can provide their own version of a new
+	 * {@link SaveOrUpdateStrategy} for the save or update process.
+	 *
+	 * @return the new {@link SaveOrUpdateStrategy} for the save or update process.
+	 */
+	public SaveOrUpdateStrategy<T, PK> newSaveOrUpdateStrategy()
+	{
+		saveOrUpdateStrategy = new DefaultSaveOrUpdateStrategy<>(this);
+		return saveOrUpdateStrategy;
 	}
 
 	@Override
-	public void refresh(final T object)
+	public void refresh(final T entity)
 	{
-		getEntityManager().refresh(object);
+		getEntityManager().refresh(entity);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PK> save(final List<T> objects)
+	public List<PK> save(final List<T> entities)
 	{
 		final List<PK> primaryKeys = new ArrayList<>();
-		for (final T object : objects)
+		if (getSaveOrUpdateStrategy() != null)
 		{
-			primaryKeys.add(save(object));
+			primaryKeys.addAll(getSaveOrUpdateStrategy().save(entities));
+		}
+		else
+		{
+			for (final T entity : entities)
+			{
+				primaryKeys.add(save(entity));
+			}
 		}
 		return primaryKeys;
 	}
@@ -200,43 +370,79 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PK save(final T object)
+	public PK save(final T entity)
 	{
-		getEntityManager().persist(object);
-		return object.getId();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void saveOrUpdate(final List<T> objects)
-	{
-		save(objects);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void saveOrUpdate(final T object)
-	{
-		save(object);
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(final List<T> objects)
-	{
-		for (final T t : objects)
+		if (getSaveOrUpdateStrategy() != null)
 		{
-			update(t);
+			return getSaveOrUpdateStrategy().save(entity);
+		}
+		else
+		{
+			getEntityManager().persist(entity);
+			return entity.getId();
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveOrUpdate(final List<T> entities)
+	{
+		if (getSaveOrUpdateStrategy() != null)
+		{
+			getSaveOrUpdateStrategy().saveOrUpdate(entities);
+		}
+		else
+		{
+			for (final T entity : entities)
+			{
+				saveOrUpdate(entity);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveOrUpdate(final T entity)
+	{
+		if (getSaveOrUpdateStrategy() != null)
+		{
+			getSaveOrUpdateStrategy().saveOrUpdate(entity);
+		}
+		else
+		{
+			if (entity.getId() == null)
+			{
+				save(entity);
+			}
+			else
+			{
+				update(entity);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void update(final List<T> entities)
+	{
+		if (getSaveOrUpdateStrategy() != null)
+		{
+			getSaveOrUpdateStrategy().update(entities);
+		}
+		else
+		{
+			for (final T entity : entities)
+			{
+				update(entity);
+			}
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -244,7 +450,14 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	@Override
 	public void update(final T entity)
 	{
-		getEntityManager().merge(entity);
+		if (getSaveOrUpdateStrategy() != null)
+		{
+			getSaveOrUpdateStrategy().update(entity);
+		}
+		else
+		{
+			getEntityManager().merge(entity);
+		}
 	}
 
 }
