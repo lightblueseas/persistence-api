@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  * The class {@link PGEnumUserType} maps string to enum and back. Can be used only with Postgres
  * database and hibernate.
  *
- * Note: Only use with Postgres and hibernate!!!
+ * Note: Only use with Postgres and hibernate 5!!!
  *
  * @author Asterios Raptis
  */
