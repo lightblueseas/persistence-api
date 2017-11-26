@@ -56,7 +56,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	@Override
 	public Object assemble(Serializable cached, Object owner) throws HibernateException
 	{
-        return deepCopy( cached );
+		return deepCopy(cached);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	@Override
 	public Serializable disassemble(Object value) throws HibernateException
 	{
-		return (Enum) deepCopy( value );
+		return (Enum)deepCopy(value);
 	}
 
 	/**
@@ -215,7 +215,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	@Override
 	public Object replace(Object original, Object target, Object owner) throws HibernateException
 	{
-        return deepCopy( original );
+		return deepCopy(original);
 	}
 
 	/**
