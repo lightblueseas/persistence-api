@@ -61,7 +61,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- PERSISTENCE-API version -->
-		<persistence-api.version>4.2.0</persistence-api.version>
+		<persistence-api.version>5.0.0</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
