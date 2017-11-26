@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.EnhancedUserType;
 import org.hibernate.usertype.ParameterizedType;
 import org.postgresql.util.PGobject;
@@ -31,7 +32,7 @@ import org.postgresql.util.PGobject;
 /**
  * The class {@link PGEnumUserType} maps string to enum and back. Can be used only with Postgres
  * database and hibernate.
- * 
+ *
  * Note: Only use with Postgres and hibernate!!!
  */
 public class PGEnumUserType implements EnhancedUserType, ParameterizedType
@@ -53,6 +54,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object deepCopy(Object value) throws HibernateException
 	{
 		return value;
@@ -80,6 +82,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object fromXMLString(String xmlValue)
 	{
@@ -89,6 +92,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int hashCode(Object object) throws HibernateException
 	{
 		return object.hashCode();
@@ -97,6 +101,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean isMutable()
 	{
 		return false;
@@ -121,7 +126,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	public Object nullSafeGet(ResultSet rs, String[] names, Object owner)
 		throws HibernateException, SQLException
 	{
-		Object object = rs.getObject(names[0]);
+		final Object object = rs.getObject(names[0]);
 		if (rs.wasNull())
 		{
 			return null;
@@ -130,25 +135,61 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 		// implementation Postgres specific
 		if (object instanceof PGobject)
 		{
-			PGobject pg = (PGobject)object;
+			final PGobject pg = (PGobject)object;
 			return Enum.valueOf(enumClass, pg.getValue());
 		}
 		// Try to get over the name of the enum value.
 		if (object != null && enumClass != null)
 		{
-			String enumValueName = object.toString().trim();
+			final String enumValueName = object.toString().trim();
 			return Enum.valueOf(enumClass, enumValueName);
 		}
 		return null;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Retrieve an instance of the mapped class from a JDBC result set.
+	 *
+	 * @param rs
+	 *            the JDBC result set
+	 * @param names
+	 *            the column names
+	 * @param session
+	 *            the session
+	 * @param owner
+	 *            the entity that contains the enum.
+	 * @return the object
+	 * @throws HibernateException
+	 *             is thrown if an error from hibernate occured
+	 * @throws SQLException
+	 *             is thrown if an error with sql
 	 */
-	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session,
-		Object owner) throws HibernateException, SQLException
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object nullSafeGet(ResultSet rs, String[] names,
+		SharedSessionContractImplementor session, Object owner)
+		throws HibernateException, SQLException
 	{
-		return nullSafeGet(rs, names, owner);
+		// TODO Auto-generated method stub
+		final Object object = rs.getObject(names[0]);
+		if (rs.wasNull())
+		{
+			return null;
+		}
+		// Notice how Object is mapped to PGobject. This makes this
+		// implementation Postgres specific
+		if (object instanceof PGobject)
+		{
+			final PGobject pg = (PGobject)object;
+			return Enum.valueOf(enumClass, pg.getValue());
+		}
+		// Try to get over the name of the enum value.
+		if (object != null && enumClass != null)
+		{
+			final String enumValueName = object.toString().trim();
+			return Enum.valueOf(enumClass, enumValueName);
+		}
+		return null;
 	}
 
 	/**
@@ -161,15 +202,18 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	 *            the object to write
 	 * @param index
 	 *            the statement parameter index
+	 * @param session
+	 *            the session
 	 * @throws HibernateException
 	 *             is thrown if an error from hibernate occured
 	 * @throws SQLException
 	 *             is thrown if an error with sql
 	 */
-	@SuppressWarnings("rawtypes")
-	public void nullSafeSet(PreparedStatement st, Object value, int index)
-		throws HibernateException, SQLException
+	@Override
+	public void nullSafeSet(PreparedStatement st, Object value, int index,
+		SharedSessionContractImplementor session) throws HibernateException, SQLException
 	{
+		// TODO see how the session is used and change to an appropriate implementation...
 		if (value == null)
 		{
 			st.setNull(index, Types.OTHER);
@@ -179,7 +223,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 		else
 		{
 			// Notice 1111 which java.sql.Type for Postgres Enum
-			st.setObject(index, ((Enum)value), Types.OTHER);
+			st.setObject(index, (value), Types.OTHER);
 		}
 	}
 
@@ -189,12 +233,13 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	public void nullSafeSet(PreparedStatement st, Object value, int index,
 		SessionImplementor session) throws HibernateException, SQLException
 	{
-		nullSafeSet(st, value, index);
+		nullSafeSet(st, value, index, session);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public String objectToSQLString(Object value)
 	{
@@ -204,6 +249,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object replace(Object original, Object target, Object owner) throws HibernateException
 	{
 		return original;
@@ -212,6 +258,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public Class returnedClass()
 	{
@@ -225,12 +272,12 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	@Override
 	public void setParameterValues(Properties parameters)
 	{
-		String enumClassName = parameters.getProperty("enumClassName");
+		final String enumClassName = parameters.getProperty("enumClassName");
 		try
 		{
 			enumClass = (Class<Enum>)Class.forName(enumClassName);
 		}
-		catch (ClassNotFoundException cnfe)
+		catch (final ClassNotFoundException cnfe)
 		{
 			throw new HibernateException("Enum class not found", cnfe);
 		}
@@ -239,6 +286,7 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int[] sqlTypes()
 	{
 		// UPDATE: To support NULL insertion, change to:
@@ -249,9 +297,11 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public String toXMLString(Object value)
 	{
 		return ((Enum)value).name();
 	}
+
 }
