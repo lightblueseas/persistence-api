@@ -97,16 +97,13 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	/**
-	 * Factory callback method that can be overwritten to get another {@link ToStringStyle} object
-	 * for the {@link BaseEntity#toString()}. Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
-	 *
-	 * @return the new {@link ToStringStyle}
+	 * {@inheritDoc}
 	 */
-	protected ToStringStyle newToStringStyle()
-	{
-		return ToStringStyle.SHORT_PREFIX_STYLE;
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + ":" + id;
 	}
 
 	/**
