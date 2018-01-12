@@ -74,8 +74,6 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		if (this == obj)
-			return true;
 		@SuppressWarnings("rawtypes")
 		final BaseEntity other = (BaseEntity)obj;
 		if (id == null)
@@ -83,7 +81,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 			if (other.id != null)
 				return false;
 		}
-		else if (!id.equals(other.id))
+		if (!id.equals(other.id))
 			return false;
 		return true;
 	}
