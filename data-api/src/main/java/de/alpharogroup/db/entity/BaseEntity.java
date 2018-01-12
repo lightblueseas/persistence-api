@@ -103,7 +103,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	 */
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + ":" + id;
+		return getClass().getSimpleName() + ": id=" + id;
 	}
 
 	/**
