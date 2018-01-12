@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Class BaseEntity holds the primary key.
+ * The class {@link BaseEntity} holds the primary key.
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -46,7 +46,7 @@ import lombok.Setter;
 public abstract class BaseEntity<PK extends Serializable> implements Serializable
 {
 
-	/** The Constant serialVersionUID. */
+	/** The serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The technical primary key. */
