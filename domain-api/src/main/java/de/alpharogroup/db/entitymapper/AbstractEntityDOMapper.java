@@ -43,11 +43,11 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 		EntityDOMapper<E, DO>
 {
 
-	/**
-	 * The mapper instance.
-	 */
+	/** The domain object class. */
+	@SuppressWarnings("unchecked")
 	@Getter
-	private final Mapper mapper;
+	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
 
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
@@ -55,11 +55,11 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
 		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 0);
 
-	/** The domain object class. */
-	@SuppressWarnings("unchecked")
+	/**
+	 * The mapper instance.
+	 */
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
+	private final Mapper mapper;
 
 	/**
 	 * Instantiates a new {@link AbstractEntityDOMapper}.

@@ -63,17 +63,15 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The class type of the entity. */
-	@Getter
-	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(AbstractRepository.class, this.getClass());
-
 	/** The data source. */
 	@Setter
 	@Getter
 	@Autowired
 	private DataSource dataSource;
+
+	/** The delete strategy for interact on deletion process. */
+	@Getter
+	private DeleteStrategy<T, PK> deleteStrategy;
 
 	/** The entity manager. */
 	@PersistenceContext
@@ -87,10 +85,6 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	/** The delete strategy for interact on deletion process. */
-	@Getter
-	private DeleteStrategy<T, PK> deleteStrategy;
-
 	/** The merge strategy for interact on merge process. */
 	@Getter
 	private MergeStrategy<T, PK> mergeStrategy;
@@ -98,6 +92,12 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	/** The save or update strategy for interact on save or update process. */
 	@Getter
 	private SaveOrUpdateStrategy<T, PK> saveOrUpdateStrategy;
+
+	/** The class type of the entity. */
+	@Getter
+	@SuppressWarnings("unchecked")
+	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
+		.getFirstTypeArgument(AbstractRepository.class, this.getClass());
 
 	/**
 	 * initialization block for the strategies.

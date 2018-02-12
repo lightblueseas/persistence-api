@@ -27,9 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import de.alpharogroup.clone.object.CloneObjectExtensions;
+import de.alpharogroup.clone.object.CloneObjectQuietlyExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,14 +59,14 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
-		return CloneObjectExtensions.cloneObjectQuietly(this);
+		return CloneObjectQuietlyExtensions.cloneObjectQuietly(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(final Object obj)
 	{
 		if (obj == null)
 			return false;
@@ -97,12 +95,13 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getClass().getSimpleName() + ": id=" + id;
 	}
 
