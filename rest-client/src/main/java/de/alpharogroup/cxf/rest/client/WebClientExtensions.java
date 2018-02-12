@@ -48,12 +48,12 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 public class WebClientExtensions
 {
 
+	/** The Constant DEFAULT_FILTERS_TYPE_EXCLUDES. */
+	public static final String[] DEFAULT_FILTERS_TYPE_EXCLUDES = { ".*_DH_anon_.*" };
+
 	/** The Constant DEFAULT_FILTERS_TYPE_INCLUDES. */
 	public static final String[] DEFAULT_FILTERS_TYPE_INCLUDES = { ".*_EXPORT_.*",
 			".*_EXPORT1024_.*", ".*_WITH_DES_.*", ".*_WITH_AES_.*", ".*_WITH_NULL_.*" };
-
-	/** The Constant DEFAULT_FILTERS_TYPE_EXCLUDES. */
-	public static final String[] DEFAULT_FILTERS_TYPE_EXCLUDES = { ".*_DH_anon_.*" };
 
 	/**
 	 * Factory method for create a new {@link FiltersType} with the default includes and excludes.

@@ -41,13 +41,13 @@ import lombok.ToString;
 public class JdbcUrlBean
 {
 
-	/** The default builder for the postgresql jdbc url. */
-	public static final JdbcUrlBean DEFAULT_POSTGRESQL_URL = JdbcUrlBean.builder()
-		.protocol("jdbc:postgresql://").host("localhost").port(5432).build();
-
 	/** The default builder for the mysql jdbc url. */
 	public static final JdbcUrlBean DEFAULT_MYSQL_URL = JdbcUrlBean.builder()
 		.protocol("jdbc:mysql://").host("localhost").port(3306).build();
+
+	/** The default builder for the postgresql jdbc url. */
+	public static final JdbcUrlBean DEFAULT_POSTGRESQL_URL = JdbcUrlBean.builder()
+		.protocol("jdbc:postgresql://").host("localhost").port(5432).build();
 
 	/**
 	 * Builds a default mysql jdbc url with the given database.
@@ -126,21 +126,21 @@ public class JdbcUrlBean
 		return sb.toString();
 	}
 
-	/** The protocol. */
-	private String protocol;
+	/** The database. */
+	private String database;
 
 	/** The host. */
 	private String host;
 
-	/** The port. */
-	private int port;
-
-	/** The database. */
-	private String database;
-
 	/** The parameters. */
 	@Singular
 	private List<String> parameters;
+
+	/** The port. */
+	private int port;
+
+	/** The protocol. */
+	private String protocol;
 
 
 }

@@ -41,14 +41,14 @@ public abstract class AbstractRestClient
 		http, https
 	};
 
+	/** The Constant DEFAULT_HOST. */
+	public static final String DEFAULT_HOST = "localhost";
+
 	/** The Constant DEFAULT_HTTP_PORT. */
 	public static final int DEFAULT_HTTP_PORT = 8080;
 
 	/** The Constant DEFAULT_HTTPS_PORT. */
 	public static final int DEFAULT_HTTPS_PORT = 8443;
-
-	/** The Constant DEFAULT_HOST. */
-	public static final String DEFAULT_HOST = "localhost";
 
 	/** The Constant BASE_HTTP_URL_PREFIX. */
 	public static final String BASE_HTTP_URL_PREFIX = Scheme.http.name() + "://" + DEFAULT_HOST;

@@ -59,13 +59,13 @@ public abstract class KeyValueOwnerEntity<PK extends Serializable, O, K, V> exte
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The owner of this key-value pair. */
-	@Column(name = "owner", nullable = false)
-	O owner;
-
 	/** The key of this key-value pair. */
 	@Column(name = "key", nullable = false)
 	K key;
+
+	/** The owner of this key-value pair. */
+	@Column(name = "owner", nullable = false)
+	O owner;
 
 	/** The value of this key-value pair. */
 	@Column(name = "value")

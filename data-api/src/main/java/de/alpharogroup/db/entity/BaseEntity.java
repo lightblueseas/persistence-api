@@ -27,16 +27,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import de.alpharogroup.clone.object.CloneObjectExtensions;
+import de.alpharogroup.clone.object.CloneObjectQuietlyExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Class BaseEntity holds the primary key.
+ * The class {@link BaseEntity} holds the primary key.
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -46,7 +44,7 @@ import lombok.Setter;
 public abstract class BaseEntity<PK extends Serializable> implements Serializable
 {
 
-	/** The Constant serialVersionUID. */
+	/** The serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The technical primary key. */
@@ -61,17 +59,15 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
-		return CloneObjectExtensions.cloneObjectQuietly(this);
+		return CloneObjectQuietlyExtensions.cloneObjectQuietly(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(final Object obj)
 	{
-		if (this == obj)
-			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
@@ -83,7 +79,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 			if (other.id != null)
 				return false;
 		}
-		else if (!id.equals(other.id))
+		if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -101,14 +97,12 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	}
 
 	/**
-	 * Factory callback method that can be overwritten to get another {@link ToStringStyle} object
-	 * for the {@link BaseEntity#toString()}. Default is {@link ToStringStyle#SHORT_PREFIX_STYLE}.
-	 *
-	 * @return the new {@link ToStringStyle}
+	 * {@inheritDoc}
 	 */
-	protected ToStringStyle newToStringStyle()
+	@Override
+	public String toString()
 	{
-		return ToStringStyle.SHORT_PREFIX_STYLE;
+		return getClass().getSimpleName() + ": id=" + id;
 	}
 
 	/**

@@ -44,6 +44,10 @@ import de.alpharogroup.service.rs.Securable;
 public abstract class AuthenticationFilter implements ContainerRequestFilter
 {
 
+	/** The application and request URI information. */
+	@Context
+	private UriInfo info;
+
 	/** The resource info. */
 	@Context
 	private ResourceInfo resourceInfo;
@@ -51,10 +55,6 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 	/** The servlet request. */
 	@Context
 	private HttpServletRequest servletRequest;
-
-	/** The application and request URI information. */
-	@Context
-	private UriInfo info;
 
 	/**
 	 * {@inheritDoc}

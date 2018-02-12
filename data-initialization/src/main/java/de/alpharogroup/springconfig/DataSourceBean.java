@@ -43,12 +43,12 @@ public class DataSourceBean
 	/** The driver class name. */
 	private String driverClassName;
 
+	/** The password. */
+	private String password;
+
 	/** The url. */
 	private String url;
 
 	/** The username. */
 	private String username;
-
-	/** The password. */
-	private String password;
 }
