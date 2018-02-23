@@ -17,6 +17,16 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>silly-collections</artifactId>
 		</dependency>
+		<!-- CRYPT-CORE DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>crypt-core</artifactId>
+		</dependency>
+		<!-- CRYPT-DATA DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>crypt-data</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>

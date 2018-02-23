@@ -42,6 +42,9 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
+import de.alpharogroup.crypto.factories.KeyStoreFactory;
+import de.alpharogroup.crypto.ssl.KeyTrustExtensions;
+
 /**
  * The class {@link WebClientExtensions} holds factory methods for server and client parameters.
  */
@@ -76,12 +79,12 @@ public class WebClientExtensions
 	 */
 	public static FiltersType newCipherSuitesFilter(String[] includes, String[] excludes)
 	{
-		FiltersType filtersType = new FiltersType();
-		for (String include : includes)
+		final FiltersType filtersType = new FiltersType();
+		for (final String include : includes)
 		{
 			filtersType.getInclude().add(include);
 		}
-		for (String exclude : excludes)
+		for (final String exclude : excludes)
 		{
 			filtersType.getExclude().add(exclude);
 		}
@@ -99,7 +102,7 @@ public class WebClientExtensions
 	 */
 	public static ClientAuthentication newClientAuthentication(boolean want, boolean required)
 	{
-		ClientAuthentication clientAuthentication = new ClientAuthentication();
+		final ClientAuthentication clientAuthentication = new ClientAuthentication();
 		clientAuthentication.setWant(want);
 		clientAuthentication.setRequired(required);
 		return clientAuthentication;
@@ -139,9 +142,9 @@ public class WebClientExtensions
 	public static JAXRSServerFactoryBean newJAXRSServerFactoryBean(String serverConfigFile,
 		String baseUrl)
 	{
-		JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
-		SpringBusFactory bf = new SpringBusFactory();
-		Bus bus = bf.createBus(serverConfigFile);
+		final JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
+		final SpringBusFactory bf = new SpringBusFactory();
+		final Bus bus = bf.createBus(serverConfigFile);
 		bean.setBus(bus);
 		bean.setAddress(baseUrl);
 		return bean;
@@ -167,8 +170,10 @@ public class WebClientExtensions
 	 *             Signals that an I/O exception has occurred.
 	 * @throws KeyStoreException
 	 *             the key store exception
-	 * @deprecated use instead KeyTrustExtensions
+	 * @deprecated use instead same name method of KeyStoreFactory from project crypt-data.
+	 * Note: will be removed in the next minor release.
 	 */
+	@Deprecated
 	public static KeyStore newKeyStore(final String type, final String password,
 		final File keystoreFile) throws NoSuchAlgorithmException, CertificateException,
 		FileNotFoundException, IOException, KeyStoreException
@@ -208,18 +213,18 @@ public class WebClientExtensions
 		throws UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException,
 		FileNotFoundException, KeyStoreException, IOException
 	{
-		File keystoreFile = new File(keystoreDir, keystoreFilename);
-		File trustManagersKeystoreFile = keystoreFile;
-		String trustManagerAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-		String trustManagersKeystoreType = keystoreType;
-		String trustManagersKeystorePassword = keystorePassword;
-		boolean disableCNCheck = true;
-		String keyManagerAlgorithm = KeyManagerFactory.getDefaultAlgorithm();
-		File keyManagersKeystoreFile = keystoreFile;
-		String keyManagersKeystoreType = keystoreType;
-		String keyManagersKeystorePassword = keystorePassword;
-		FiltersType cipherSuitesFilter = WebClientExtensions.newCipherSuitesFilter();
-		TLSClientParameters tlsClientParameters = WebClientExtensions.newTLSClientParameters(
+		final File keystoreFile = new File(keystoreDir, keystoreFilename);
+		final File trustManagersKeystoreFile = keystoreFile;
+		final String trustManagerAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+		final String trustManagersKeystoreType = keystoreType;
+		final String trustManagersKeystorePassword = keystorePassword;
+		final boolean disableCNCheck = true;
+		final String keyManagerAlgorithm = KeyManagerFactory.getDefaultAlgorithm();
+		final File keyManagersKeystoreFile = keystoreFile;
+		final String keyManagersKeystoreType = keystoreType;
+		final String keyManagersKeystorePassword = keystorePassword;
+		final FiltersType cipherSuitesFilter = WebClientExtensions.newCipherSuitesFilter();
+		final TLSClientParameters tlsClientParameters = WebClientExtensions.newTLSClientParameters(
 			trustManagersKeystoreFile, trustManagerAlgorithm, trustManagersKeystoreType,
 			trustManagersKeystorePassword, keyManagersKeystoreFile, keyManagerAlgorithm,
 			keyManagersKeystoreType, keyManagersKeystorePassword, cipherSuitesFilter,
@@ -272,12 +277,12 @@ public class WebClientExtensions
 		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
 		KeyStoreException, UnrecoverableKeyException
 	{
-		TLSClientParameters tlsClientParameters = new TLSClientParameters();
+		final TLSClientParameters tlsClientParameters = new TLSClientParameters();
 		tlsClientParameters.setDisableCNCheck(disableCNCheck);
-		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType,
+		final TrustManager[] tm = KeyTrustExtensions.resolveTrustManagers(trustManagersKeystoreType,
 			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsClientParameters.setTrustManagers(tm);
-		KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
+		final KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
 			keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsClientParameters.setKeyManagers(km);
 		tlsClientParameters.setCipherSuitesFilter(cipherSuitesFilter);
@@ -330,11 +335,11 @@ public class WebClientExtensions
 		throws KeyStoreException, NoSuchAlgorithmException, CertificateException,
 		FileNotFoundException, IOException, UnrecoverableKeyException
 	{
-		TLSServerParameters tlsServerParameters = new TLSServerParameters();
-		TrustManager[] tm = resolveTrustManagers(trustManagersKeystoreType,
+		final TLSServerParameters tlsServerParameters = new TLSServerParameters();
+		final TrustManager[] tm = KeyTrustExtensions.resolveTrustManagers(trustManagersKeystoreType,
 			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsServerParameters.setTrustManagers(tm);
-		KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
+		final KeyManager[] km = KeyTrustExtensions.resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
 			keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsServerParameters.setKeyManagers(km);
 		tlsServerParameters.setCipherSuitesFilter(cipherSuitesFilter);
@@ -367,13 +372,16 @@ public class WebClientExtensions
 	 *             the key store exception
 	 * @throws UnrecoverableKeyException
 	 *             the unrecoverable key exception
+	 * @deprecated use instead same name method of KeyTrustExtensions from project crypt-core.
+	 * Note: will be removed in the next minor release.
 	 */
+	@Deprecated
 	public static KeyManager[] resolveKeyManagers(final String type, final String password,
 		final File keystoreFile, final String keyManagerAlgorithm)
 		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
 		KeyStoreException, UnrecoverableKeyException
 	{
-		final KeyStore keyStore = newKeyStore(type, password, keystoreFile);
+		final KeyStore keyStore = KeyStoreFactory.newKeyStore(type, password, keystoreFile);
 		final KeyManagerFactory keyFactory = KeyManagerFactory.getInstance(keyManagerAlgorithm);
 		keyFactory.init(keyStore, password.toCharArray());
 		final KeyManager[] keyManagers = keyFactory.getKeyManagers();
@@ -403,13 +411,16 @@ public class WebClientExtensions
 	 *             Signals that an I/O exception has occurred.
 	 * @throws KeyStoreException
 	 *             the key store exception
+	 * @deprecated use instead same name method of KeyTrustExtensions from project crypt-core.
+	 * Note: will be removed in the next minor release.
 	 */
+	@Deprecated
 	public static TrustManager[] resolveTrustManagers(final String type, final String password,
 		final File keystoreFile, final String trustManagerAlgorithm)
 		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
 		KeyStoreException
 	{
-		final KeyStore keyStore = newKeyStore(type, password, keystoreFile);
+		final KeyStore keyStore = KeyStoreFactory.newKeyStore(type, password, keystoreFile);
 		final TrustManagerFactory trustFactory = TrustManagerFactory
 			.getInstance(trustManagerAlgorithm);
 		trustFactory.init(keyStore);
@@ -464,10 +475,10 @@ public class WebClientExtensions
 		KeyStoreException, UnrecoverableKeyException
 	{
 
-		ClientConfiguration config = WebClient.getConfig(client);
-		HTTPConduit httpConduit = config.getHttpConduit();
+		final ClientConfiguration config = WebClient.getConfig(client);
+		final HTTPConduit httpConduit = config.getHttpConduit();
 
-		TLSClientParameters tlsParams = newTLSClientParameters(trustManagersKeystoreFile,
+		final TLSClientParameters tlsParams = newTLSClientParameters(trustManagersKeystoreFile,
 			trustManagerAlgorithm, trustManagersKeystoreType, trustManagersKeystorePassword,
 			keyManagersKeystoreFile, keyManagerAlgorithm, keyManagersKeystoreType,
 			keyManagersKeystorePassword, cipherSuitesFilter, disableCNCheck);
@@ -484,9 +495,9 @@ public class WebClientExtensions
 	 */
 	public static void setMockClientAuthentication(Object client)
 	{
-		ClientConfiguration config = WebClient.getConfig(client);
+		final ClientConfiguration config = WebClient.getConfig(client);
 		// trust all certs...
-		HTTPConduit conduit = config.getHttpConduit();
+		final HTTPConduit conduit = config.getHttpConduit();
 
 		TLSClientParameters params = conduit.getTlsClientParameters();
 
@@ -511,10 +522,10 @@ public class WebClientExtensions
 	public static void setTLSClientParameters(Object client,
 		TLSClientParameters tlsClientParameters)
 	{
-		ClientConfiguration config = WebClient.getConfig(client);
-		HTTPConduit conduit = config.getHttpConduit();
+		final ClientConfiguration config = WebClient.getConfig(client);
+		final HTTPConduit conduit = config.getHttpConduit();
 
-		HTTPClientPolicy httpClientPolicy = conduit.getClient();
+		final HTTPClientPolicy httpClientPolicy = conduit.getClient();
 		if (httpClientPolicy == null)
 		{
 			conduit.setClient(newHTTPClientPolicy(36000l, false, 32000l));

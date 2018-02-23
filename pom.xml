@@ -35,6 +35,11 @@
 		<rest-client.version>${persistence-api.version}</rest-client.version>
 		<!-- JAVAEE-API version -->
 		<javaee-api.version>7.0</javaee-api.version>
+		
+		<!-- MYSTIC-CRYPT versions -->
+		<mystic-crypt.version>5.0.0</mystic-crypt.version>
+		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
+		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 	</properties>
 
 	<modules>
@@ -113,6 +118,18 @@
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
+			</dependency>
+			<!-- CRYPT-CORE DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>crypt-core</artifactId>
+				<version>${crypt-core.version}</version>
+			</dependency>
+			<!-- CRYPT-DATA DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>crypt-data</artifactId>
+				<version>${crypt-data.version}</version>
 			</dependency>
 
 		</dependencies>
