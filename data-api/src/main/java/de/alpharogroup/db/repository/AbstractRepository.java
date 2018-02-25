@@ -378,7 +378,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 		}
 		else
 		{
-			getEntityManager().persist(entity);
+			getEntityManager().merge(entity);
 			return entity.getId();
 		}
 	}

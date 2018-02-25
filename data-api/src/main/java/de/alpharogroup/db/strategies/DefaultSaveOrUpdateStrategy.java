@@ -97,7 +97,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	@Override
 	public PK save(T entity)
 	{
-		getEntityManager().persist(entity);
+		getEntityManager().merge(entity);
 		return entity.getId();
 	}
 
