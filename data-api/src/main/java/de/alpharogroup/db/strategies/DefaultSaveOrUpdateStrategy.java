@@ -46,15 +46,15 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The repository. */
+	@NonNull
+	private final AbstractRepository<T, PK> repository;
+
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
 		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
-
-	/** The repository. */
-	@NonNull
-	private final AbstractRepository<T, PK> repository;
 
 	/**
 	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
@@ -97,7 +97,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	@Override
 	public PK save(T entity)
 	{
-		getEntityManager().persist(entity);
+		getEntityManager().merge(entity);
 		return entity.getId();
 	}
 

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>5.1.0</version>
+		<version>5.2.1</version>
 	</parent>
 
 	<artifactId>rest-client</artifactId>
@@ -16,6 +16,16 @@
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>silly-collections</artifactId>
+		</dependency>
+		<!-- CRYPT-CORE DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>crypt-core</artifactId>
+		</dependency>
+		<!-- CRYPT-DATA DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>crypt-data</artifactId>
 		</dependency>
 
 		<dependency>

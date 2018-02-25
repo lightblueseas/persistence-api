@@ -43,15 +43,15 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	/** The repository. */
+	@NonNull
+	private final AbstractRepository<T, PK> repository;
+
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
 	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
 		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
-
-	/** The repository. */
-	@NonNull
-	private final AbstractRepository<T, PK> repository;
 
 	/**
 	 * Instantiates a new {@link DefaultDeleteStrategy}.

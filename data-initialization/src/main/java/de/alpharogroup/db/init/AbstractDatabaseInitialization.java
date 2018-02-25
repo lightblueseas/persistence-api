@@ -44,66 +44,66 @@ import de.alpharogroup.jdbc.ConnectionsExtensions;
 public abstract class AbstractDatabaseInitialization
 {
 
-	/** The logger constant. */
-	protected static final Logger LOG = Logger
-		.getLogger(AbstractDatabaseInitialization.class.getName());
-
-	/** The Constant JDBC_DB_VENDOR_KEY for the properties key. */
-	public static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
-
-	/** The Constant JDBC_SHOW_SQL_LOG_KEY. */
-	public static final String JDBC_SHOW_SQL_LOG_KEY = "jdbc.show.sql.log";
-
-	/** The Constant JDBC_FILE_ENCODING_KEY. */
-	public static final String JDBC_FILE_ENCODING_KEY = "jdbc.file.encoding";
-
-	/** The Constant JDBC_CREATE_DB_PROCESS_KEY. */
-	public static final String JDBC_CREATE_DB_PROCESS_KEY = "jdbc.create.db.process";
-
-	/** The Constant JDBC_PASSWORD_KEY. */
-	public static final String JDBC_PASSWORD_KEY = "jdbc.password";
-
-	/** The Constant JDBC_USER_KEY. */
-	public static final String JDBC_USER_KEY = "jdbc.user";
-
-	/** The Constant JDBC_DB_NAME_KEY. */
-	public static final String JDBC_DB_NAME_KEY = "jdbc.db.name";
-
-	/** The Constant JDBC_HOST_KEY. */
-	public static final String JDBC_HOST_KEY = "jdbc.host";
-
-	/** The Constant DELETE_PROCESS. */
-	protected static final String DELETE_PROCESS = "delete";
+	/** The Constant CREATE_PROCESS. */
+	protected static final String CREATE_EMPTY_PROCESS = "create-empty";
 
 	/** The Constant CREATE_PROCESS. */
 	protected static final String CREATE_PROCESS = "create";
 
-	/** The Constant CREATE_PROCESS. */
-	protected static final String CREATE_EMPTY_PROCESS = "create-empty";
+	/** The Constant DELETE_PROCESS. */
+	protected static final String DELETE_PROCESS = "delete";
 
 	/** The Constant DROP_PROCESS. */
 	protected static final String DROP_PROCESS = "drop";
 
-	/** The database properties. */
-	protected final Properties databaseProperties;
+	/** The Constant JDBC_CREATE_DB_PROCESS_KEY. */
+	public static final String JDBC_CREATE_DB_PROCESS_KEY = "jdbc.create.db.process";
 
-	/** The host. */
-	protected String host;
+	/** The Constant JDBC_DB_NAME_KEY. */
+	public static final String JDBC_DB_NAME_KEY = "jdbc.db.name";
+
+	/** The Constant JDBC_DB_VENDOR_KEY for the properties key. */
+	public static final String JDBC_DB_VENDOR_KEY = "jdbc.db.vendor";
+
+	/** The Constant JDBC_FILE_ENCODING_KEY. */
+	public static final String JDBC_FILE_ENCODING_KEY = "jdbc.file.encoding";
+
+	/** The Constant JDBC_HOST_KEY. */
+	public static final String JDBC_HOST_KEY = "jdbc.host";
+
+	/** The Constant JDBC_PASSWORD_KEY. */
+	public static final String JDBC_PASSWORD_KEY = "jdbc.password";
+
+	/** The Constant JDBC_SHOW_SQL_LOG_KEY. */
+	public static final String JDBC_SHOW_SQL_LOG_KEY = "jdbc.show.sql.log";
+
+	/** The Constant JDBC_USER_KEY. */
+	public static final String JDBC_USER_KEY = "jdbc.user";
+
+	/** The logger constant. */
+	protected static final Logger LOG = Logger
+		.getLogger(AbstractDatabaseInitialization.class.getName());
 
 	/** The database name. */
 	protected String databaseName;
 
-	/** The database user. */
-	protected String databaseUser;
-
 	/** The database password. */
 	protected String databasePassword;
 
-	/** The initialization process. */
-	protected String initializationProcess;
+	/** The database properties. */
+	protected final Properties databaseProperties;
+
+	/** The database user. */
+	protected String databaseUser;
 
 	/** The file encoding. */
 	protected String fileEncoding;
+
+	/** The host. */
+	protected String host;
+
+	/** The initialization process. */
+	protected String initializationProcess;
 
 	/** The log. */
 	protected boolean log;

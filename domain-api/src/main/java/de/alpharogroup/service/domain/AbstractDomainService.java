@@ -51,28 +51,28 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 		DomainService<PK, DO>
 {
 
-	/** The repository reference. */
-	@Setter
+	/** The domain object class. */
+	@SuppressWarnings("unchecked")
 	@Getter
-	private REPOSITORY repository;
+	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
+	/** The entity class. */
+	@SuppressWarnings("unchecked")
+	@Getter
+	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
+		.getTypeArgument(AbstractDomainService.class, getClass(), 2);
 	/**
 	 * The mapper.
 	 */
 	@Setter
 	@Getter
 	private M mapper;
-	/** The entity class. */
-	@SuppressWarnings("unchecked")
-	@Getter
-	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractDomainService.class, getClass(), 2);
 
-	/** The domain object class. */
-	@SuppressWarnings("unchecked")
+	/** The repository reference. */
+	@Setter
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractDomainService.class, getClass(), 1);
+	private REPOSITORY repository;
 
 	/**
 	 * {@inheritDoc}
