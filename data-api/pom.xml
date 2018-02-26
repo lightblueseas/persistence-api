@@ -42,6 +42,12 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>jobject-clone</artifactId>
 		</dependency>
+		<!-- TEST-OBJECTS DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>test-objects</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
