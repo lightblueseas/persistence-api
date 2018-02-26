@@ -68,20 +68,21 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@Override
 	public boolean equals(final Object obj)
 	{
-		if (obj == null)
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass())
+		{
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		@SuppressWarnings("rawtypes")
 		final BaseEntity other = (BaseEntity)obj;
-		if (id == null)
+		if (id == null || other.id == null)
 		{
-			if (other.id != null)
-				return false;
-		}
-		if (!id.equals(other.id))
 			return false;
-		return true;
+		}
+		return id.equals(other.id);
 	}
 
 	/**
