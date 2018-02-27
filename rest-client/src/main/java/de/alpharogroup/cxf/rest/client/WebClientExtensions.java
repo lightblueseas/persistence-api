@@ -16,10 +16,8 @@
 package de.alpharogroup.cxf.rest.client;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
@@ -42,7 +40,6 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
-import de.alpharogroup.crypto.factories.KeyStoreFactory;
 import de.alpharogroup.crypto.ssl.KeyTrustExtensions;
 
 /**
@@ -151,39 +148,6 @@ public class WebClientExtensions
 	}
 
 	/**
-	 * Factory method for load the {@link KeyStore} object from the given file.
-	 *
-	 * @param type
-	 *            the type of the keystore
-	 * @param password
-	 *            the password of the keystore
-	 * @param keystoreFile
-	 *            the keystore file
-	 * @return the loaded {@link KeyStore} object
-	 * @throws NoSuchAlgorithmException
-	 *             the no such algorithm exception
-	 * @throws CertificateException
-	 *             the certificate exception
-	 * @throws FileNotFoundException
-	 *             the file not found exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws KeyStoreException
-	 *             the key store exception
-	 * @deprecated use instead same name method of KeyStoreFactory from project crypt-data.
-	 * Note: will be removed in the next minor release.
-	 */
-	@Deprecated
-	public static KeyStore newKeyStore(final String type, final String password,
-		final File keystoreFile) throws NoSuchAlgorithmException, CertificateException,
-		FileNotFoundException, IOException, KeyStoreException
-	{
-		final KeyStore keyStore = KeyStore.getInstance(type);
-		keyStore.load(new FileInputStream(keystoreFile), password.toCharArray());
-		return keyStore;
-	}
-
-	/**
 	 * Factory method for create a new {@link TLSServerParameters} from the given parameters.
 	 *
 	 * @param keystoreDir
@@ -282,8 +246,8 @@ public class WebClientExtensions
 		final TrustManager[] tm = KeyTrustExtensions.resolveTrustManagers(trustManagersKeystoreType,
 			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsClientParameters.setTrustManagers(tm);
-		final KeyManager[] km = resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
-			keyManagersKeystoreFile, keyManagerAlgorithm);
+		final KeyManager[] km = KeyTrustExtensions.resolveKeyManagers(keyManagersKeystoreType,
+			keyManagersKeystorePassword, keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsClientParameters.setKeyManagers(km);
 		tlsClientParameters.setCipherSuitesFilter(cipherSuitesFilter);
 		return tlsClientParameters;
@@ -339,93 +303,12 @@ public class WebClientExtensions
 		final TrustManager[] tm = KeyTrustExtensions.resolveTrustManagers(trustManagersKeystoreType,
 			trustManagersKeystorePassword, trustManagersKeystoreFile, trustManagerAlgorithm);
 		tlsServerParameters.setTrustManagers(tm);
-		final KeyManager[] km = KeyTrustExtensions.resolveKeyManagers(keyManagersKeystoreType, keyManagersKeystorePassword,
-			keyManagersKeystoreFile, keyManagerAlgorithm);
+		final KeyManager[] km = KeyTrustExtensions.resolveKeyManagers(keyManagersKeystoreType,
+			keyManagersKeystorePassword, keyManagersKeystoreFile, keyManagerAlgorithm);
 		tlsServerParameters.setKeyManagers(km);
 		tlsServerParameters.setCipherSuitesFilter(cipherSuitesFilter);
 		tlsServerParameters.setClientAuthentication(clientAuthentication);
 		return tlsServerParameters;
-	}
-
-	/**
-	 * Resolve the {@link KeyManager} array from the keystore that is resolved from the given
-	 * parameters.
-	 *
-	 * @param type
-	 *            the type
-	 * @param password
-	 *            the password
-	 * @param keystoreFile
-	 *            the keystore file
-	 * @param keyManagerAlgorithm
-	 *            the key manager algorithm
-	 * @return the key manager[]
-	 * @throws NoSuchAlgorithmException
-	 *             the no such algorithm exception
-	 * @throws CertificateException
-	 *             the certificate exception
-	 * @throws FileNotFoundException
-	 *             the file not found exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws KeyStoreException
-	 *             the key store exception
-	 * @throws UnrecoverableKeyException
-	 *             the unrecoverable key exception
-	 * @deprecated use instead same name method of KeyTrustExtensions from project crypt-core.
-	 * Note: will be removed in the next minor release.
-	 */
-	@Deprecated
-	public static KeyManager[] resolveKeyManagers(final String type, final String password,
-		final File keystoreFile, final String keyManagerAlgorithm)
-		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
-		KeyStoreException, UnrecoverableKeyException
-	{
-		final KeyStore keyStore = KeyStoreFactory.newKeyStore(type, password, keystoreFile);
-		final KeyManagerFactory keyFactory = KeyManagerFactory.getInstance(keyManagerAlgorithm);
-		keyFactory.init(keyStore, password.toCharArray());
-		final KeyManager[] keyManagers = keyFactory.getKeyManagers();
-		return keyManagers;
-	}
-
-	/**
-	 * Resolve the {@link TrustManager} array from the keystore that is resolved from the given
-	 * parameters.
-	 *
-	 * @param type
-	 *            the type
-	 * @param password
-	 *            the password
-	 * @param keystoreFile
-	 *            the keystore file
-	 * @param trustManagerAlgorithm
-	 *            the trust manager algorithm
-	 * @return the trust manager[]
-	 * @throws NoSuchAlgorithmException
-	 *             the no such algorithm exception
-	 * @throws CertificateException
-	 *             the certificate exception
-	 * @throws FileNotFoundException
-	 *             the file not found exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws KeyStoreException
-	 *             the key store exception
-	 * @deprecated use instead same name method of KeyTrustExtensions from project crypt-core.
-	 * Note: will be removed in the next minor release.
-	 */
-	@Deprecated
-	public static TrustManager[] resolveTrustManagers(final String type, final String password,
-		final File keystoreFile, final String trustManagerAlgorithm)
-		throws NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException,
-		KeyStoreException
-	{
-		final KeyStore keyStore = KeyStoreFactory.newKeyStore(type, password, keystoreFile);
-		final TrustManagerFactory trustFactory = TrustManagerFactory
-			.getInstance(trustManagerAlgorithm);
-		trustFactory.init(keyStore);
-		final TrustManager[] trustManagers = trustFactory.getTrustManagers();
-		return trustManagers;
 	}
 
 	/**
