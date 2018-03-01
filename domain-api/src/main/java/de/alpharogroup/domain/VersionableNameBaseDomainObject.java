@@ -23,23 +23,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The abstract class {@link NameBaseDomainObject} is the base class for all domain objects that
- * have a name attribute.
- *
- * @deprecated use instead {@link VersionableNameBaseDomainObject}. will be deleted on next minor
- *             release.
+ * The abstract class {@link VersionableNameBaseDomainObject} is the base class for all domain
+ * objects that have a name attribute and are versionable.
  *
  * @param <K>
  *            the primary key type of the corresponding entity
  */
-@Deprecated
 @Getter
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class NameBaseDomainObject<K> extends VersionableBaseDomainObject<K>
+public class VersionableNameBaseDomainObject<K> extends VersionableBaseDomainObject<K>
 {
 
 	/**

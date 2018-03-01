@@ -1,42 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+	
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
 		<version>5.4.0</version>
 	</parent>
-
-	<artifactId>rest-api</artifactId>
+	
+	<artifactId>domain-mapper</artifactId>
 
 	<dependencies>
-
+	
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>domain-api</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>data-api</artifactId>
+		</dependency>
+		<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jcommons-lang</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
 		</dependency>
-
+		<!-- JOBJECT-MERGE DEPENDENCIES -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jaxrs</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jobject-merge</artifactId>
 		</dependency>
 
 	</dependencies>
+
 </project>
