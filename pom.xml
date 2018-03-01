@@ -51,6 +51,7 @@
 		<module>data-initialization</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
+		<module>domain-mapper</module>
 	</modules>
 
 	<scm>
