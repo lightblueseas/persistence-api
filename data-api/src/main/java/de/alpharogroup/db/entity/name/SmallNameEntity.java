@@ -24,21 +24,18 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.name.versionable.VersionableExtraLargeNameEntity;
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ExtraLargeNameBaseEntity} is a base entity for a table with a single value.
+ * The class {@link SmallNameEntity} is a base entity for a table with a single value.
  *
  * @param <T>
  *            the generic type of the id
- * @deprecated use instead  {@link VersionableExtraLargeNameEntity}
  */
-@Deprecated
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
@@ -46,15 +43,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraLargeNameBaseEntity<T extends Serializable>
-	extends
-		VersionableBaseEntity<T>
+public abstract class SmallNameEntity<T extends Serializable> extends BaseEntity<T>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
-	@Column(unique = false, name = "name", length = 1024)
+	@Column(unique = false, name = "name", length = 128)
 	private String name;
 }

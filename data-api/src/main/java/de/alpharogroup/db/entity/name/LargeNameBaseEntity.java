@@ -24,6 +24,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableLargeNameEntity;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,7 +36,9 @@ import lombok.Setter;
  *
  * @param <T>
  *            the generic type of the id
+ * @deprecated use instead  {@link VersionableLargeNameEntity}
  */
+@Deprecated
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
