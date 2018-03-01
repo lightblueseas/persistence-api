@@ -10,29 +10,5 @@
 	</parent>
 
 	<artifactId>domain-api</artifactId>
-
-	<dependencies>
-
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>data-api</artifactId>
-		</dependency>
-		<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jcommons-lang</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
-		</dependency>
-		<!-- JOBJECT-MERGE DEPENDENCIES -->
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jobject-merge</artifactId>
-		</dependency>
-
-	</dependencies>
 	
 </project>
