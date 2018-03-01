@@ -39,22 +39,22 @@ import de.alpharogroup.io.StreamExtensions;
 import de.alpharogroup.jdbc.ConnectionsExtensions;
 
 /**
- * The abstract class {@link AbstractDatabaseInitialization} for initialize a database.
+ * The abstract class {@link AbstractDatabaseInitialization} for initialize, drop and create a database.
  */
 public abstract class AbstractDatabaseInitialization
 {
 
 	/** The Constant CREATE_PROCESS. */
-	protected static final String CREATE_EMPTY_PROCESS = "create-empty";
+	public static final String CREATE_EMPTY_PROCESS = "create-empty";
 
 	/** The Constant CREATE_PROCESS. */
-	protected static final String CREATE_PROCESS = "create";
+	public static final String CREATE_PROCESS = "create";
 
 	/** The Constant DELETE_PROCESS. */
-	protected static final String DELETE_PROCESS = "delete";
+	public static final String DELETE_PROCESS = "delete";
 
 	/** The Constant DROP_PROCESS. */
-	protected static final String DROP_PROCESS = "drop";
+	public static final String DROP_PROCESS = "drop";
 
 	/** The Constant JDBC_CREATE_DB_PROCESS_KEY. */
 	public static final String JDBC_CREATE_DB_PROCESS_KEY = "jdbc.create.db.process";

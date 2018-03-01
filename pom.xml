@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>4.4.0</version>
+		<version>4.6.0</version>
 		<relativePath></relativePath>
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>5.2.1</version>
+	<version>5.3.1</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
@@ -25,7 +25,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>5.2.1</persistence-api.version>
+		<persistence-api.version>5.3.1</persistence-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
@@ -34,12 +34,13 @@
 		<rest-api.version>${persistence-api.version}</rest-api.version>
 		<rest-client.version>${persistence-api.version}</rest-client.version>
 		<!-- JAVAEE-API version -->
-		<javaee-api.version>7.0</javaee-api.version>
-		
+		<javaee-api.version>7.0</javaee-api.version>		
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>5.0.0</mystic-crypt.version>
+		<mystic-crypt.version>5.1.0</mystic-crypt.version>
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
+		<!-- TEST-OBJECTS version -->
+		<test-objects.version>4.23.0</test-objects.version>
 	</properties>
 
 	<modules>
@@ -130,6 +131,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>crypt-data</artifactId>
 				<version>${crypt-data.version}</version>
+			</dependency>
+			<!-- TEST-OBJECTS DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>test-objects</artifactId>
+				<version>${test-objects.version}</version>
 			</dependency>
 
 		</dependencies>

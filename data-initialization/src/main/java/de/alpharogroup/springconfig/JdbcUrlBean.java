@@ -17,7 +17,7 @@ package de.alpharogroup.springconfig;
 
 import java.util.List;
 
-import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.collections.CollectionExtensions;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -86,7 +86,7 @@ public class JdbcUrlBean
 	{
 		final StringBuilder sb = new StringBuilder();
 		sb.append(bean.getProtocol()).append(bean.getDatabase());
-		if (ListExtensions.isNotEmpty(bean.getParameters()))
+		if (CollectionExtensions.isNotEmpty(bean.getParameters()))
 		{
 			for (final String parameter : bean.getParameters())
 			{

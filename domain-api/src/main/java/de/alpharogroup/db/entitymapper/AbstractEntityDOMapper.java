@@ -23,7 +23,7 @@ import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingOptions;
 
-import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.collections.CollectionExtensions;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
@@ -107,7 +107,7 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	public Mapper newMapper(final List<String> mappingFiles)
 	{
 		final DozerBeanMapper mapper = DozerBeanMapperSingleton.get();
-		if (ListExtensions.isNotEmpty(mappingFiles))
+		if (CollectionExtensions.isNotEmpty(mappingFiles))
 		{
 			mapper.setMappingFiles(mappingFiles);
 		}
