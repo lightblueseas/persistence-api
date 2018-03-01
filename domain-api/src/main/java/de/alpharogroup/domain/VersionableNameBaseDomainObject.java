@@ -23,8 +23,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The abstract class {@link VersionableNameBaseDomainObject} is the base class for all domain objects that
- * have a name attribute and are versionable.
+ * The abstract class {@link VersionableNameBaseDomainObject} is the base class for all domain
+ * objects that have a name attribute and are versionable.
  *
  * @param <K>
  *            the primary key type of the corresponding entity
