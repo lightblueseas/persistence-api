@@ -39,7 +39,8 @@ import de.alpharogroup.io.StreamExtensions;
 import de.alpharogroup.jdbc.ConnectionsExtensions;
 
 /**
- * The abstract class {@link AbstractDatabaseInitialization} for initialize, drop and create a database.
+ * The abstract class {@link AbstractDatabaseInitialization} for initialize, drop and create a
+ * database.
  */
 public abstract class AbstractDatabaseInitialization
 {

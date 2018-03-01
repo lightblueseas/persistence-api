@@ -36,7 +36,7 @@ import lombok.Setter;
  *
  * @param <T>
  *            the generic type of the id
- * @deprecated use instead  {@link VersionableNameEntity}
+ * @deprecated use instead {@link VersionableNameEntity}
  */
 @Deprecated
 @MappedSuperclass

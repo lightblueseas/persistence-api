@@ -43,9 +43,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraSmallUniqueNameEntity<T extends Serializable>
-	extends
-	BaseEntity<T>
+public abstract class ExtraSmallUniqueNameEntity<T extends Serializable> extends BaseEntity<T>
 {
 
 	/** The serial Version UID. */

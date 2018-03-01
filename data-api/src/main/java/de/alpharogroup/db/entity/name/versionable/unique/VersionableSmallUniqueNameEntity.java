@@ -31,7 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link VersionableSmallUniqueNameEntity} is a base entity for a table with a single value.
+ * The class {@link VersionableSmallUniqueNameEntity} is a base entity for a table with a single
+ * value.
  *
  * @param <T>
  *            the generic type of the id
@@ -43,7 +44,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableSmallUniqueNameEntity<T extends Serializable> extends VersionableBaseEntity<T>
+public abstract class VersionableSmallUniqueNameEntity<T extends Serializable>
+	extends
+		VersionableBaseEntity<T>
 {
 
 	/** The serial Version UID. */
