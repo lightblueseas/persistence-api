@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.name.unique;
+package de.alpharogroup.db.entity.name.versionable.unique;
 
 import java.io.Serializable;
 
@@ -24,7 +24,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.name.versionable.unique.VersionableExtraSmallUniqueNameEntity;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,14 +31,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ExtraSmallUNameBaseEntity} is a base entity for a table with a single value.
+ * The class {@link VersionableExtraSmallUniqueNameEntity} is a base entity for a table with a
+ * single value.
  *
  * @param <T>
  *            the generic type of the id
- * @deprecated use instead {@link VersionableExtraSmallUniqueNameEntity}. will be deleted on next
- *             minor release.
  */
-@Deprecated
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
@@ -47,7 +44,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraSmallUNameBaseEntity<T extends Serializable>
+public abstract class VersionableExtraSmallUniqueNameEntity<T extends Serializable>
 	extends
 		VersionableBaseEntity<T>
 {
