@@ -16,16 +16,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
-            <!-- XML-EXTENSIONS DEPENDENCY -->
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>xml-extensions</artifactId>
-		</dependency>
-		<!-- JOBJECT-CLONE DEPENDENCIES -->
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jobject-clone</artifactId>
-		</dependency>
 
 	</dependencies>
 

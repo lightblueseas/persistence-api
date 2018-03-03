@@ -16,8 +16,6 @@
 package de.alpharogroup.db.entity;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -27,8 +25,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.clone.object.CloneObjectQuietlyExtensions;
-import de.alpharogroup.xml.XmlExtensions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -52,15 +48,6 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private PK id;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object clone() throws CloneNotSupportedException
-	{
-		return CloneObjectQuietlyExtensions.cloneObjectQuietly(this);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -106,17 +93,4 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 		return getClass().getSimpleName() + ": id=" + id;
 	}
 
-	/**
-	 * Returns a xml string representation of the object.
-	 *
-	 * @return the xml string.
-	 */
-	public String toXml()
-	{
-		final Map<String, Class<?>> aliases = new HashMap<>();
-		final String lqSimpleName = this.getClass().getSimpleName().toLowerCase();
-		aliases.put(lqSimpleName, getClass());
-		final String xml = XmlExtensions.toXmlWithXStream(this, aliases);
-		return xml;
-	}
 }
