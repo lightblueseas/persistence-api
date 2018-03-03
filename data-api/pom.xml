@@ -6,12 +6,17 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>5.4.1</version>
+		<version>6.0.0</version>
 	</parent>
 
 	<artifactId>data-api</artifactId>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>base-entities</artifactId>
+		</dependency>
 		<!-- HIBERNATE DEPENDENCIES -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

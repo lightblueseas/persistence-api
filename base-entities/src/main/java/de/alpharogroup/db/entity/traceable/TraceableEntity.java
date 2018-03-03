@@ -13,33 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.name.unique;
+package de.alpharogroup.db.entity.traceable;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.name.versionable.unique.VersionableExtraSmallUniqueNameEntity;
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.create.Creation;
+import de.alpharogroup.db.entity.delete.Deletion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ExtraSmallUNameBaseEntity} is a base entity for a table with a single value.
+ * The entity class {@link TraceableEntity} is keeping the information for the deletion and for the
+ * creation of an entity. <br>
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
- * @deprecated use instead {@link VersionableExtraSmallUniqueNameEntity}. will be deleted on next
- *             minor release.
+ * @param <U>
+ *            the generic type of the user or account
+ * @see Creation
+ * @see Deletion
  */
-@Deprecated
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
@@ -47,15 +50,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraSmallUNameBaseEntity<T extends Serializable>
-	extends
-		VersionableBaseEntity<T>
+public abstract class TraceableEntity<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
-	/** The serial Version UID. */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The name. */
-	@Column(unique = true, name = "name", length = 64)
-	private String name;
+	/** The date and time when the entity that owns this entity was deleted. */
+	private LocalDateTime deleted;
+
+	/** The user or account that deleted the entity that owns this entity. */
+	private U deletedBy;
+
+
+	/** The date and time when the entity that owns this entity was created. */
+	private LocalDateTime created;
+
+	/** The user or account that created the entity that owns this entity. */
+	private U createdBy;
+
 }

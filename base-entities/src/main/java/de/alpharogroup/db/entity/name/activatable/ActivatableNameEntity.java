@@ -13,41 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.domain;
+package de.alpharogroup.db.entity.name.activatable;
 
+import java.io.Serializable;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
+
+import de.alpharogroup.db.entity.activatable.ActivatableEntity;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * The abstract class {@link NameBaseDomainObject} is the base class for all domain objects that
- * have a name attribute.
+ * The class {@link ActivatableNameEntity} is a base entity for a table with a single value.
  *
- * @deprecated use instead {@link VersionableNameBaseDomainObject}. will be deleted on next minor
- *             release.
- *
- * @param <K>
- *            the primary key type of the corresponding entity
+ * @param <T>
+ *            the generic type of the id
  */
-@Deprecated
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Access(AccessType.FIELD)
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class NameBaseDomainObject<K> extends VersionableBaseDomainObject<K>
+public abstract class ActivatableNameEntity<T extends Serializable> extends ActivatableEntity<T>
 {
 
-	/**
-	 * The serialVersionUID.
-	 */
+	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
+	@Column(unique = false, name = "name")
 	private String name;
-
 }
