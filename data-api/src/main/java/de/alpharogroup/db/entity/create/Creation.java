@@ -31,8 +31,7 @@ import lombok.ToString;
 
 /**
  * The entity class {@link Creation} is keeping the information for the creation of an entity. This
- * entity can be attached to the parent entity for keep information when the parent entity was
- * created.
+ * entity can be extended or attached to another entity for keep information when it was created.
  *
  * @param <PK>
  *            the generic type of the id
