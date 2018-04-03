@@ -78,9 +78,9 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void delete(T id)
+	public void delete(T object)
 	{
-		getRepository().delete(id);
+		getRepository().delete(object);
 	}
 
 	/**
