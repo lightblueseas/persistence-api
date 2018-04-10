@@ -45,10 +45,39 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
 	/** The repository reference. */
 	@Getter
 	@Setter
 	private REPOSITORY repository;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Query createNativeQuery(String sqlString)
+	{
+		return getRepository().createNativeQuery(sqlString);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Query createNativeQuery(String sqlString, Class resultClass)
+	{
+		return getRepository().createNativeQuery(sqlString, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Query createNativeQuery(String sqlString, String resultSetMapping)
+	{
+		return getRepository().createNativeQuery(sqlString, resultSetMapping);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -209,5 +238,4 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	{
 		getRepository().saveOrUpdate(object);
 	}
-
 }

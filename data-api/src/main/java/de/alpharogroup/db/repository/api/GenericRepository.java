@@ -69,6 +69,49 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	TypedQuery<T> createNamedTypedQuery(String name);
 
 	/**
+	 * Factory method for create a new instance of {@link Query} from the given sql string and
+	 * execute a native sql statement for update or delete.
+	 * 
+	 * Note: this method delegates to the underlying entity manager.
+	 * 
+	 * @param sqlString
+	 *            a native SQL query string
+	 * @return the new {@link Query} instance
+	 */
+	public Query createNativeQuery(String sqlString);
+
+	/**
+	 * Factory method for create a new instance of {@link Query} from the given sql string and
+	 * execute a native sql statement.
+	 * 
+	 * Note: this method delegates to the underlying entity manager.
+	 * 
+	 * @param sqlString
+	 *            a native SQL query string
+	 * @param resultClass
+	 *            the class of the resulting instance(s)
+	 * 
+	 * @return the new {@link Query} instance
+	 */
+	public Query createNativeQuery(String sqlString,
+		@SuppressWarnings("rawtypes") Class resultClass);
+
+
+	/**
+	 * Factory method for create a new instance of {@link Query} from the given sql string and
+	 * execute a native sql statement.
+	 * 
+	 * Note: this method delegates to the underlying entity manager.
+	 * 
+	 * @param sqlString
+	 *            a native SQL query string
+	 * @param resultSetMapping
+	 *            the name of the result set mapping
+	 * @return the new {@link Query} instance
+	 */
+	public Query createNativeQuery(String sqlString, String resultSetMapping);
+
+	/**
 	 * Delete all persistent entities in the given list.
 	 *
 	 * @param entities
