@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>4.6.0</version>
+		<version>4.7.0</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -42,7 +42,7 @@
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
-		<test-objects.version>4.23.0</test-objects.version>
+		<test-objects.version>4.24.0</test-objects.version>
 	</properties>
 
 	<modules>
