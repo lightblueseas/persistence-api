@@ -139,6 +139,34 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Query createNativeQuery(String sqlString)
+	{
+		return getEntityManager().createNativeQuery(sqlString);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Query createNativeQuery(String sqlString, Class resultClass)
+	{
+		return getEntityManager().createNativeQuery(sqlString, resultClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Query createNativeQuery(String sqlString, String resultSetMapping)
+	{
+		return getEntityManager().createNativeQuery(sqlString, resultSetMapping);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void delete(final List<T> entities)
 	{
 		if (getDeleteStrategy() != null)

@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>4.6.0</version>
+		<version>4.7.0</version>
 		<relativePath></relativePath>
 	</parent>
 
 	<artifactId>persistence-api</artifactId>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>6.0.0</version>
+	<version>6.1.0</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
@@ -25,7 +25,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>6.0.0</persistence-api.version>
+		<persistence-api.version>6.1.0</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
@@ -42,7 +42,7 @@
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
-		<test-objects.version>4.23.0</test-objects.version>
+		<test-objects.version>4.24.0</test-objects.version>
 	</properties>
 
 	<modules>
