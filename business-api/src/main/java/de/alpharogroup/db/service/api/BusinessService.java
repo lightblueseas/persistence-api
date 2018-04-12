@@ -18,6 +18,7 @@ package de.alpharogroup.db.service.api;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import de.alpharogroup.db.entity.BaseEntity;
@@ -36,6 +37,13 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 {
 
 	/**
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
+	 */
+	EntityManager getEntityManager();
+
+	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
 	 * execute a native sql statement for update or delete.
 	 * 
@@ -45,7 +53,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 *            a native SQL query string
 	 * @return the new {@link Query} instance
 	 */
-	public Query createNativeQuery(String sqlString);
+	Query createNativeQuery(String sqlString);
 
 	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
@@ -60,7 +68,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * 
 	 * @return the new {@link Query} instance
 	 */
-	public Query createNativeQuery(String sqlString,
+	Query createNativeQuery(String sqlString,
 		@SuppressWarnings("rawtypes") Class resultClass);
 
 
@@ -76,7 +84,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 *            the name of the result set mapping
 	 * @return the new {@link Query} instance
 	 */
-	public Query createNativeQuery(String sqlString, String resultSetMapping);
+	Query createNativeQuery(String sqlString, String resultSetMapping);
 	
 	/**
 	 * Delete all persistent objects in the given list.
