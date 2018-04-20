@@ -27,14 +27,15 @@ import javax.persistence.MappedSuperclass;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.create.Creation;
 import de.alpharogroup.db.entity.delete.Deletion;
+import de.alpharogroup.db.entity.modify.LastModification;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link TraceableEntity} is keeping the information for the creation, last modification and for the
- * deletion of an entity. <br>
+ * The entity class {@link TraceableEntity} is keeping the information for the creation, last
+ * modification and for the deletion of an entity. <br>
  *
  * @param <PK>
  *            the generic type of the id
