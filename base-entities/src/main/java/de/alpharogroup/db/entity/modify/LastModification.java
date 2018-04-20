@@ -13,66 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.traceable;
+package de.alpharogroup.db.entity.modify;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.create.Creation;
-import de.alpharogroup.db.entity.delete.Deletion;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * The entity class {@link TraceableEntity} is keeping the information for the creation, last modification and for the
- * deletion of an entity. <br>
+ * The entity class {@link LastModification} is keeping information of the last modification of an entity.
+ * This entity can be extended or attached to another entity for keep information when it was last
+ * modified. In combination with the {@link VersionableBaseEntity} it can build a history of
+ * modification of an entity.
  *
  * @param <PK>
  *            the generic type of the id
  * @param <U>
  *            the generic type of the user or account
- * @see Creation
- * @see Deletion
- * @see LastModification
  */
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Access(AccessType.FIELD)
+@Entity
+@Table(name = "modified")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class TraceableEntity<PK extends Serializable, U> extends BaseEntity<PK>
+@Builder(toBuilder = true)
+public class LastModification<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-
-	/** The date and time when the entity that owns this entity was created. */
-	private LocalDateTime created;
-
-	/** The user or account that created the entity that owns this entity. */
-	private U createdBy;
 
 	/** The date and time when the entity that owns this entity was modified. */
 	private LocalDateTime lastModified;
 
 	/** The user or account that modified the entity that owns this entity. */
 	private U lastModifiedBy;
-
-	/** The date and time when the entity that owns this entity was deleted. */
-	private LocalDateTime deleted;
-
-	/** The user or account that deleted the entity that owns this entity. */
-	private U deletedBy;
 
 }

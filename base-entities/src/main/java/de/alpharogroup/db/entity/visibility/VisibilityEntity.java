@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.activatable;
+package de.alpharogroup.db.entity.visibility;
 
 import java.io.Serializable;
 
@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ActivatableEntity} is a base entity with a flag 'active' that indicates if an
- * entity is active(enabled) or not.
+ * The class {@link VisibilityEntity} is a base entity with a flag 'visible' that indicates if the
+ * entity is visible or not.
  *
  * @param <T>
  *            the generic type of the id
@@ -44,13 +44,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ActivatableEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class VisibilityEntity<T extends Serializable> extends BaseEntity<T>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The attribute active, if true this entity is active. */
-	@Column(name = "active")
-	private boolean active;
+	/** The attribute visible, if true this entity is visible. */
+	@Column(name = "visible")
+	private boolean visible;
 }

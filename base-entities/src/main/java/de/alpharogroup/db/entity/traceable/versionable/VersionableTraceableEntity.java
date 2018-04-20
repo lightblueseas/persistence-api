@@ -33,8 +33,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link VersionableTraceableEntity} is keeping the information for the deletion and for the
- * creation of an entity. <br>
+ * The entity class {@link VersionableTraceableEntity} is keeping the information for the creation,
+ * last modification and for the deletion of an entity. <br>
  *
  * @param <PK>
  *            the generic type of the id
@@ -50,23 +50,30 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableTraceableEntity<PK extends Serializable, U> extends VersionableBaseEntity<PK>
+public abstract class VersionableTraceableEntity<PK extends Serializable, U>
+	extends
+		VersionableBaseEntity<PK>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-
-	/** The date and time when the entity that owns this entity was deleted. */
-	private LocalDateTime deleted;
-
-	/** The user or account that deleted the entity that owns this entity. */
-	private U deletedBy;
-
 
 	/** The date and time when the entity that owns this entity was created. */
 	private LocalDateTime created;
 
 	/** The user or account that created the entity that owns this entity. */
 	private U createdBy;
+
+	/** The date and time when the entity that owns this entity was modified. */
+	private LocalDateTime lastModified;
+
+	/** The user or account that modified the entity that owns this entity. */
+	private U lastModifiedBy;
+
+	/** The date and time when the entity that owns this entity was deleted. */
+	private LocalDateTime deleted;
+
+	/** The user or account that deleted the entity that owns this entity. */
+	private U deletedBy;
 
 }
