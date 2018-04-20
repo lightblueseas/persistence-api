@@ -30,8 +30,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a
- * validTill property for restricting an entity in a time range in which it is valid.
+ * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a validTill
+ * property for restricting an entity in a time range in which it is valid.
  *
  * @param <T>
  *            the generic type of the id

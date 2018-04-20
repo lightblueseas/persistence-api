@@ -37,13 +37,6 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 {
 
 	/**
-	 * Gets the entity manager.
-	 *
-	 * @return the entity manager
-	 */
-	EntityManager getEntityManager();
-
-	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
 	 * execute a native sql statement for update or delete.
 	 * 
@@ -68,9 +61,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * 
 	 * @return the new {@link Query} instance
 	 */
-	Query createNativeQuery(String sqlString,
-		@SuppressWarnings("rawtypes") Class resultClass);
-
+	Query createNativeQuery(String sqlString, @SuppressWarnings("rawtypes") Class resultClass);
 
 	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
@@ -85,7 +76,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * @return the new {@link Query} instance
 	 */
 	Query createNativeQuery(String sqlString, String resultSetMapping);
-	
+
 	/**
 	 * Delete all persistent objects in the given list.
 	 * 
@@ -143,6 +134,13 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * @return An object of type T
 	 */
 	T get(PK id);
+
+	/**
+	 * Gets the entity manager.
+	 *
+	 * @return the entity manager
+	 */
+	EntityManager getEntityManager();
 
 	/**
 	 * Retrieve a persisted object with a given id from the database.
