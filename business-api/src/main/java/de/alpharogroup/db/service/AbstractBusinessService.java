@@ -18,6 +18,7 @@ package de.alpharogroup.db.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The repository reference. */
 	@Getter
 	@Setter
@@ -146,6 +147,15 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	public T get(PK id)
 	{
 		return getRepository().get(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public EntityManager getEntityManager()
+	{
+		return getRepository().getEntityManager();
 	}
 
 	/**

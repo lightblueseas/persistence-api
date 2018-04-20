@@ -13,46 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.validation;
+package de.alpharogroup.db.entity.visibility;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a validTill
- * property for restricting an entity in a time range in which it is valid.
+ * The class {@link VisibilityEntity} is a base entity with a flag 'visible' that indicates if the
+ * entity is visible or not.
  *
  * @param <T>
  *            the generic type of the id
  */
-@Entity
-@Table(name = "validation")
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Access(AccessType.FIELD)
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-public class ValidatableEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class VisibilityEntity<T extends Serializable> extends BaseEntity<T>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The valid from date for validation. */
-	private LocalDateTime validFrom;
-
-	/** The valid till date for validation. */
-	private LocalDateTime validTill;
+	/** The attribute visible, if true this entity is visible. */
+	@Column(name = "visible")
+	private boolean visible;
 }

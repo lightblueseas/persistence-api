@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.validation;
+package de.alpharogroup.db.entity.modify;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,6 +22,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,29 +31,34 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a validTill
- * property for restricting an entity in a time range in which it is valid.
+ * The entity class {@link LastModification} is keeping information of the last modification of an
+ * entity. This entity can be extended or attached to another entity for keep information when it
+ * was last modified. In combination with the {@link VersionableBaseEntity} it can build a history
+ * of modification of an entity.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
+ * @param <U>
+ *            the generic type of the user or account
  */
 @Entity
-@Table(name = "validation")
+@Table(name = "modified")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ValidatableEntity<T extends Serializable> extends BaseEntity<T>
+public class LastModification<PK extends Serializable, U> extends BaseEntity<PK>
 {
 
-	/** The serial Version UID. */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The valid from date for validation. */
-	private LocalDateTime validFrom;
+	/** The date and time when the entity that owns this entity was modified. */
+	private LocalDateTime lastModified;
 
-	/** The valid till date for validation. */
-	private LocalDateTime validTill;
+	/** The user or account that modified the entity that owns this entity. */
+	private U lastModifiedBy;
+
 }

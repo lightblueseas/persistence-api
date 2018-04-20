@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ActivatableEntity} is a base entity with a flag 'active' that indicates if the
- * entity is active or not.
+ * The class {@link ActivatableEntity} is a base entity with a flag 'active' that indicates if an
+ * entity is active(enabled) or not.
  *
  * @param <T>
  *            the generic type of the id
@@ -50,7 +50,7 @@ public abstract class ActivatableEntity<T extends Serializable> extends BaseEnti
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The attribute active, if true the user account is active. */
+	/** The attribute active, if true this entity is active. */
 	@Column(name = "active")
 	private boolean active;
 }
