@@ -4,7 +4,16 @@
 Version 6.2.0-SNAPSHOT
 -------------
 
+ADDED:
+ 
+- new base entities
+	- for persist last modification
+	- for set visibility
+	
+CHANGED:
 
+- TraceableEntity and VersionableTraceableEntity added new fields for persist last modification
+- javadoc extended
 
 Version 6.1.0
 -------------
