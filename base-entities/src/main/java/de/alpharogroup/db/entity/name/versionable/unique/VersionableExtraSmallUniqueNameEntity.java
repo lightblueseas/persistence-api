@@ -32,7 +32,7 @@ import lombok.Setter;
 
 /**
  * The class {@link VersionableExtraSmallUniqueNameEntity} is a base entity for a table with a
- * single value.
+ * single unique value of length of 64.
  *
  * @param <T>
  *            the generic type of the id

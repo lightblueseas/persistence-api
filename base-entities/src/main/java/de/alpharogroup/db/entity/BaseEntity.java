@@ -31,6 +31,9 @@ import lombok.Setter;
 
 /**
  * The class {@link BaseEntity} holds the primary key.
+ *
+ * @param <PK>
+ *            the generic type of the technical primary key.
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)

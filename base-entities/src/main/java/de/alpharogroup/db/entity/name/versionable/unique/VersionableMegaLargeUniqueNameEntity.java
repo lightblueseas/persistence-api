@@ -31,7 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link VersionableUniqueNameEntity} is a base entity for a table with a single unique value of length of 8192.
+ * The class {@link VersionableMegaLargeUniqueNameEntity} is a base entity for a table with a
+ * single unique value of length of 8192.
  *
  * @param <T>
  *            the generic type of the id
@@ -43,7 +44,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableUniqueNameEntity<T extends Serializable>
+public abstract class VersionableMegaLargeUniqueNameEntity<T extends Serializable>
 	extends
 		VersionableBaseEntity<T>
 {
@@ -52,6 +53,6 @@ public abstract class VersionableUniqueNameEntity<T extends Serializable>
 	private static final long serialVersionUID = 1L;
 
 	/** The name. */
-	@Column(unique = true, name = "name")
+	@Column(unique = true, name = "name", length = 8192)
 	private String name;
 }
