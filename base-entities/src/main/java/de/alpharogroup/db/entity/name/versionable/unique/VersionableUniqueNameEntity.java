@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link VersionableUniqueNameEntity} is a base entity for a table with a single unique value of length of 8192.
+ * The class {@link VersionableUniqueNameEntity} is a base entity for a table with a single unique value of length of 255.
  *
  * @param <T>
  *            the generic type of the id
