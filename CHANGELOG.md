@@ -4,6 +4,10 @@
 Version 6.3.0-SNAPSHOT
 -------------
 
+ADDED:
+ 
+- new base entities
+	- for unique name
 
 
 Version 6.2.0
