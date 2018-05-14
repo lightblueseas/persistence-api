@@ -40,7 +40,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class BaseEntity<PK extends Serializable> implements Serializable
+public abstract class BaseEntity<PK extends Serializable> implements Serializable, Identifiable<PK>
 {
 
 	/** The serialVersionUID. */

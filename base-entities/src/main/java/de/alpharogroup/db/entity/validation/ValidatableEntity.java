@@ -45,6 +45,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class ValidatableEntity<T extends Serializable> extends BaseEntity<T>
+	implements
+		Validatable<LocalDateTime>
 {
 
 	/** The serial Version UID. */

@@ -45,6 +45,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class ActivatableEntity<T extends Serializable> extends BaseEntity<T>
+	implements
+		Activatable
 {
 
 	/** The serial Version UID. */

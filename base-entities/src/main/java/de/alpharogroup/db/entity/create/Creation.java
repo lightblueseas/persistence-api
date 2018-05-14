@@ -47,6 +47,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Creation<PK extends Serializable, U> extends BaseEntity<PK>
+	implements
+		Creatable<LocalDateTime, U>
 {
 
 	/** The Constant serialVersionUID. */

@@ -45,6 +45,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class VisibilityEntity<T extends Serializable> extends BaseEntity<T>
+	implements
+		Visibility
 {
 
 	/** The serial Version UID. */

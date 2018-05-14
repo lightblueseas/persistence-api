@@ -53,6 +53,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class TraceableEntity<PK extends Serializable, U> extends BaseEntity<PK>
+	implements
+		Traceable<LocalDateTime, U>
 {
 
 	/** The Constant serialVersionUID. */
