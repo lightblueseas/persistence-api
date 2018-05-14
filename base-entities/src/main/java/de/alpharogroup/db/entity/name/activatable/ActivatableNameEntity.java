@@ -25,6 +25,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import de.alpharogroup.db.entity.activatable.ActivatableEntity;
+import de.alpharogroup.db.entity.name.IdentifiableNameableActivatable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.Setter;
 /**
  * The class {@link ActivatableNameEntity} is a base entity for a table with a single value.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -43,7 +44,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ActivatableNameEntity<T extends Serializable> extends ActivatableEntity<T>
+public abstract class ActivatableNameEntity<PK extends Serializable> extends ActivatableEntity<PK>
+	implements
+		IdentifiableNameableActivatable<PK>
 {
 
 	/** The serial Version UID. */

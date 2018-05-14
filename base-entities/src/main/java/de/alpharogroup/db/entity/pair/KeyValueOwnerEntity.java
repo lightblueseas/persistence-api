@@ -54,6 +54,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class KeyValueOwnerEntity<PK extends Serializable, O, K, V> extends BaseEntity<PK>
+	implements
+		IdentifiableKeyValueOwner<PK, O, K, V>
 {
 
 	/** The Constant serialVersionUID. */

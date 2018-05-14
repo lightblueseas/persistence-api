@@ -16,7 +16,6 @@
 package de.alpharogroup.db.entity.traceable;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -39,6 +38,8 @@ import lombok.Setter;
  *
  * @param <PK>
  *            the generic type of the id
+ * @param <T>
+ *            the generic type of time measurement
  * @param <U>
  *            the generic type of the user or account
  * @see Creation
@@ -52,28 +53,28 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class TraceableEntity<PK extends Serializable, U> extends BaseEntity<PK>
+public abstract class TraceableEntity<PK extends Serializable, T, U> extends BaseEntity<PK>
 	implements
-		Traceable<LocalDateTime, U>
+		IdentifiableTraceable<PK, T, U>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The date and time when the entity that owns this entity was created. */
-	private LocalDateTime created;
+	private T created;
 
 	/** The user or account that created the entity that owns this entity. */
 	private U createdBy;
 
 	/** The date and time when the entity that owns this entity was modified. */
-	private LocalDateTime lastModified;
+	private T lastModified;
 
 	/** The user or account that modified the entity that owns this entity. */
 	private U lastModifiedBy;
 
 	/** The date and time when the entity that owns this entity was deleted. */
-	private LocalDateTime deleted;
+	private T deleted;
 
 	/** The user or account that deleted the entity that owns this entity. */
 	private U deletedBy;

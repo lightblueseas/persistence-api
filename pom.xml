@@ -33,10 +33,11 @@
 		<data-usertype.version>${persistence-api.version}</data-usertype.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
 		<domain-mapper.version>${persistence-api.version}</domain-mapper.version>
+		<entities-api.version>${persistence-api.version}</entities-api.version>
 		<rest-api.version>${persistence-api.version}</rest-api.version>
 		<rest-client.version>${persistence-api.version}</rest-client.version>
 		<!-- JAVAEE-API version -->
-		<javaee-api.version>7.0</javaee-api.version>		
+		<javaee-api.version>7.0</javaee-api.version>
 		<!-- MYSTIC-CRYPT versions -->
 		<mystic-crypt.version>5.1.0</mystic-crypt.version>
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
@@ -53,6 +54,7 @@
 		<module>data-initialization</module>
 		<module>domain-api</module>
 		<module>domain-mapper</module>
+		<module>entities-api</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
 	</modules>
@@ -130,6 +132,12 @@
 				<artifactId>rest-client</artifactId>
 				<version>${rest-client.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>entities-api</artifactId>
+				<version>${entities-api.version}</version>
+			</dependency>
 			<!-- JAVAEE-API DEPENDENCIES -->
 			<dependency>
 				<groupId>javax</groupId>
@@ -160,7 +168,7 @@
 	</dependencyManagement>
 
 	<build>
-	
+
 		<plugins>
 
 			<plugin>
@@ -177,7 +185,7 @@
 			</plugin>
 
 		</plugins>
-		
+
 	</build>
 
 </project>

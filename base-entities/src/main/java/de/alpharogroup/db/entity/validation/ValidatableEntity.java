@@ -16,7 +16,6 @@
 package de.alpharogroup.db.entity.validation;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -33,7 +32,7 @@ import lombok.ToString;
  * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a validTill
  * property for restricting an entity in a time range in which it is valid.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @Entity
@@ -44,17 +43,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ValidatableEntity<T extends Serializable> extends BaseEntity<T>
+public class ValidatableEntity<PK extends Serializable, T> extends BaseEntity<PK>
 	implements
-		Validatable<LocalDateTime>
+		IdentifiableValidatable<PK, T>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The valid from date for validation. */
-	private LocalDateTime validFrom;
+	private T validFrom;
 
 	/** The valid till date for validation. */
-	private LocalDateTime validTill;
+	private T validTill;
 }

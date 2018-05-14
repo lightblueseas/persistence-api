@@ -16,6 +16,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>entities-api</artifactId>
+		</dependency>
 
 	</dependencies>
 

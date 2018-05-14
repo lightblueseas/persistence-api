@@ -25,6 +25,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.name.IdentifiableNameable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.Setter;
 /**
  * The class {@link ExtraLargeUniqueNameEntity} is a base entity for a table with a single value.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -43,7 +44,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraLargeUniqueNameEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class ExtraLargeUniqueNameEntity<PK extends Serializable> extends BaseEntity<PK>
+	implements
+		IdentifiableNameable<PK>
 {
 
 	/** The serial Version UID. */

@@ -33,7 +33,7 @@ import lombok.Setter;
 /**
  * The class {@link ExtraSmallNameEntity} is a base entity for a table with a single value.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -43,7 +43,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraSmallNameEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class ExtraSmallNameEntity<PK extends Serializable> extends BaseEntity<PK>
+	implements
+		IdentifiableNameable<PK>
 {
 
 	/** The serial Version UID. */

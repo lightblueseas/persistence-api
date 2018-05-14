@@ -8,6 +8,7 @@ ADDED:
  
 - new base entities
 	- for unique name
+- new entity interfaces project
 
 
 Version 6.2.0
