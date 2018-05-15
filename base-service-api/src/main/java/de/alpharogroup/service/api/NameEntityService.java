@@ -2,10 +2,10 @@ package de.alpharogroup.service.api;
 
 import java.io.Serializable;
 
-import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.service.api.BusinessService;
 
-public interface BaseNameEntityService<T extends BaseEntity<PK>, PK extends Serializable> extends BusinessService<T, PK>
+public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable> extends BusinessService<T, PK>
 {
 
 	/**
