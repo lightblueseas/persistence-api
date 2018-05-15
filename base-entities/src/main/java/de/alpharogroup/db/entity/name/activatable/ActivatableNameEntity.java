@@ -24,8 +24,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.activatable.ActivatableEntity;
 import de.alpharogroup.db.entity.name.IdentifiableNameableActivatable;
+import de.alpharogroup.db.entity.name.NameEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +44,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ActivatableNameEntity<PK extends Serializable> extends ActivatableEntity<PK>
+public abstract class ActivatableNameEntity<PK extends Serializable> extends NameEntity<PK>
 	implements
 		IdentifiableNameableActivatable<PK>
 {
@@ -55,4 +55,8 @@ public abstract class ActivatableNameEntity<PK extends Serializable> extends Act
 	/** The name. */
 	@Column(unique = false, name = "name")
 	private String name;
+
+	/** The attribute active, if true this entity is active. */
+	@Column(name = "active")
+	private boolean active;
 }

@@ -8,6 +8,15 @@
 		<version>6.3.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>entities-api</artifactId>
+	<artifactId>base-service-api</artifactId>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>business-api</artifactId>
+		</dependency>
+
+	</dependencies>
 
 </project>

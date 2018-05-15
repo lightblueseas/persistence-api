@@ -57,6 +57,7 @@
 		<module>entities-api</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
+		<module>base-service-api</module>
 	</modules>
 
 	<scm>

@@ -24,7 +24,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,9 +42,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraLargeNameEntity<PK extends Serializable> extends BaseEntity<PK>
-	implements
-		IdentifiableNameable<PK>
+public abstract class ExtraLargeNameEntity<PK extends Serializable> extends NameEntity<PK>
 {
 
 	/** The serial Version UID. */

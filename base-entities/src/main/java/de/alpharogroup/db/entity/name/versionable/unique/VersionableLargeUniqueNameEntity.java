@@ -24,8 +24,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import de.alpharogroup.db.entity.name.IdentifiableNameableVersionable;
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,9 +46,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public abstract class VersionableLargeUniqueNameEntity<PK extends Serializable>
 	extends
-		VersionableBaseEntity<PK>
-	implements
-		IdentifiableNameableVersionable<PK>
+	VersionableNameEntity<PK>
 {
 
 	/** The serial Version UID. */

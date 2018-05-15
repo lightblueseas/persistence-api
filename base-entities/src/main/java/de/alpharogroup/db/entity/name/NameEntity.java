@@ -19,19 +19,15 @@ import java.io.Serializable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
- * The class {@link NameEntity} is a base entity for a table with a single value.
+ * The class {@link NameEntity} is a base entity for all name entities. A name entity is an entity
+ * with a single string value.
  *
  * @param <PK>
  *            the generic type of the id
@@ -39,10 +35,6 @@ import lombok.Setter;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
 	implements
 		IdentifiableNameable<PK>
@@ -50,8 +42,4 @@ public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
-
-	/** The name. */
-	@Column(unique = false, name = "name")
-	private String name;
 }

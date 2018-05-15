@@ -19,10 +19,10 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.validation.ValidatableEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,10 +44,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
 public class VersionableValidatableEntity<PK extends Serializable, T>
 	extends
-		VersionableBaseEntity<PK>
+	ValidatableEntity<PK, T>
 	implements
 		IdentifiableValidatableVersionable<PK, T>
 {
@@ -55,9 +54,9 @@ public class VersionableValidatableEntity<PK extends Serializable, T>
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The valid from date for validation. */
-	private T validFrom;
-
-	/** The valid till date for validation. */
-	private T validTill;
+	/**
+	 * The version property for the optimistic lock value.
+	 **/
+	@Version
+	private Integer version;
 }
