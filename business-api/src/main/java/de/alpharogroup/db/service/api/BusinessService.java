@@ -35,7 +35,7 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	extends
 		Serializable
 {
-
+	
 	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
 	 * execute a native sql statement for update or delete.
@@ -141,6 +141,15 @@ public interface BusinessService<T extends BaseEntity<PK>, PK extends Serializab
 	 * @return the entity manager
 	 */
 	EntityManager getEntityManager();
+
+	/**
+	 * Gets the {@link Query} from the given string.
+	 *
+	 * @param s
+	 *            the query as string
+	 * @return the query
+	 */
+	Query getQuery(String jpqlString);
 
 	/**
 	 * Retrieve a persisted object with a given id from the database.

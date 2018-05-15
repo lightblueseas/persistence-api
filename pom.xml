@@ -27,6 +27,7 @@
 		<!-- PERSISTENCE-API versions -->
 		<persistence-api.version>6.3.0-SNAPSHOT</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
+		<base-service-api.version>${persistence-api.version}</base-service-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
@@ -44,10 +45,13 @@
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
 		<test-objects.version>4.24.0</test-objects.version>
+		<!-- TMP version -->		
+		<jcommons-lang.version>4.31.0</jcommons-lang.version>
 	</properties>
 
 	<modules>
 		<module>base-entities</module>
+		<module>base-service-api</module>
 		<module>business-api</module>
 		<module>data-api</module>
 		<module>data-usertype</module>
@@ -57,7 +61,6 @@
 		<module>entities-api</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
-		<module>base-service-api</module>
 	</modules>
 
 	<scm>
@@ -85,11 +88,11 @@
 				<artifactId>base-entities</artifactId>
 				<version>${base-entities.version}</version>
 			</dependency>
-
+			
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>data-api</artifactId>
-				<version>${data-api.version}</version>
+				<artifactId>base-service-api</artifactId>
+				<version>${base-service-api.version}</version>
 			</dependency>
 
 			<dependency>
@@ -100,14 +103,20 @@
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>data-usertype</artifactId>
-				<version>${data-usertype.version}</version>
+				<artifactId>data-api</artifactId>
+				<version>${data-api.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-initialization</artifactId>
 				<version>${data-initialization.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>data-usertype</artifactId>
+				<version>${data-usertype.version}</version>
 			</dependency>
 
 			<dependency>
@@ -124,6 +133,12 @@
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
+				<artifactId>entities-api</artifactId>
+				<version>${entities-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
 				<artifactId>rest-api</artifactId>
 				<version>${rest-api.version}</version>
 			</dependency>
@@ -132,12 +147,6 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>rest-client</artifactId>
 				<version>${rest-client.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>entities-api</artifactId>
-				<version>${entities-api.version}</version>
 			</dependency>
 			<!-- JAVAEE-API DEPENDENCIES -->
 			<dependency>
