@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.name.JpqlStringFactory;
 import de.alpharogroup.db.entity.name.NameEntity;
@@ -46,5 +48,23 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	 *            the value
 	 * @return the entity object
 	 */
-	T getOrCreateNewNameEntity(final String value);
+	@Transactional
+	default T getOrCreateNewNameEntity(final String value)
+	{
+		T nameEntity = find(value);
+		if (nameEntity == null)
+		{
+			nameEntity = newNameEntity(value);
+			nameEntity = merge(nameEntity);
+		}
+		return nameEntity;
+	}
+	
+	/**
+	 * Factory method for create a new name entity.
+	 *
+	 * @param value the value
+	 * @return the new name entity
+	 */
+	T newNameEntity(final String value);
 }
