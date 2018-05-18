@@ -13,7 +13,7 @@
 	<artifactId>persistence-api</artifactId>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>6.3.0-SNAPSHOT</version>
+	<version>6.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
@@ -46,7 +46,7 @@
 		<!-- TEST-OBJECTS version -->
 		<test-objects.version>4.24.0</test-objects.version>
 		<!-- TMP version -->		
-		<jcommons-lang.version>4.31.0</jcommons-lang.version>
+		<jcommons-lang.version>4.32</jcommons-lang.version>
 	</properties>
 
 	<modules>
