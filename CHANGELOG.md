@@ -10,6 +10,9 @@ ADDED:
 	- for unique name
 - new entity interfaces project
 
+CHANGED:
+
+- removed unneeded .0 at the end of version
 
 Version 6.2.0
 -------------

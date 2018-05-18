@@ -29,7 +29,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	{
 		@SuppressWarnings("unchecked")
 		Class<T> type = (Class<T>)TypeArgumentsExtensions
-			.getFirstTypeArgument(NameEntityService.class, this.getClass());
+			.getFirstTypeArgument(this.getClass());
 		final String hqlString = JpqlStringFactory.forNameEntity(type, nameValue);
 		final Query query = getQuery(hqlString);
 		if (nameValue != null && !nameValue.isEmpty())
