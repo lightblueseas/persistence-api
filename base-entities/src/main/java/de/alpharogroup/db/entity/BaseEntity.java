@@ -31,13 +31,16 @@ import lombok.Setter;
 
 /**
  * The class {@link BaseEntity} holds the primary key.
+ *
+ * @param <PK>
+ *            the generic type of the technical primary key.
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class BaseEntity<PK extends Serializable> implements Serializable
+public abstract class BaseEntity<PK extends Serializable> implements Serializable, Identifiable<PK>
 {
 
 	/** The serialVersionUID. */

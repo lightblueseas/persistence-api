@@ -33,7 +33,7 @@ import lombok.Setter;
 /**
  * The class {@link VersionableBaseEntity} has a version property for the optimistic lock value.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -43,7 +43,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableBaseEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class VersionableBaseEntity<PK extends Serializable> extends BaseEntity<PK>
+	implements
+		IdentifiableVersionable<PK>
 {
 
 	/** The serial Version UID. */

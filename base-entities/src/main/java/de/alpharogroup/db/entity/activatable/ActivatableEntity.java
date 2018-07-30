@@ -34,7 +34,7 @@ import lombok.Setter;
  * The class {@link ActivatableEntity} is a base entity with a flag 'active' that indicates if an
  * entity is active(enabled) or not.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -44,7 +44,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ActivatableEntity<T extends Serializable> extends BaseEntity<T>
+public abstract class ActivatableEntity<PK extends Serializable> extends BaseEntity<PK>
+	implements
+		IdentifiableActivatable<PK>
 {
 
 	/** The serial Version UID. */

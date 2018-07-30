@@ -16,14 +16,13 @@
 package de.alpharogroup.db.entity.validation.versionable;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.validation.ValidatableEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,8 +32,10 @@ import lombok.ToString;
  * The class {@link VersionableValidatableEntity} is a base entity and has a validFrom property and
  * a validTill property for restricting an entity in a time range in which it is valid.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
+ * @param <T>
+ *            the generic type of time measurement
  */
 @Entity
 @Table(name = "version-validation")
@@ -43,16 +44,19 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-public class VersionableValidatableEntity<T extends Serializable> extends VersionableBaseEntity<T>
+public class VersionableValidatableEntity<PK extends Serializable, T>
+	extends
+		ValidatableEntity<PK, T>
+	implements
+		IdentifiableValidatableVersionable<PK, T>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The valid from date for validation. */
-	private LocalDateTime validFrom;
-
-	/** The valid till date for validation. */
-	private LocalDateTime validTill;
+	/**
+	 * The version property for the optimistic lock value.
+	 **/
+	@Version
+	private Integer version;
 }

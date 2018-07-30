@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>6.2.0</version>
+		<version>6.3</version>
 	</parent>
 
 	<artifactId>base-entities</artifactId>
@@ -15,6 +15,11 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>entities-api</artifactId>
 		</dependency>
 
 	</dependencies>

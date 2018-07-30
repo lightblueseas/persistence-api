@@ -16,17 +16,18 @@
 package de.alpharogroup.db.entity.traceable.versionable;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 import de.alpharogroup.db.entity.create.Creation;
 import de.alpharogroup.db.entity.delete.Deletion;
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.traceable.IdentifiableTraceableVersionable;
+import de.alpharogroup.db.entity.traceable.TraceableEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,8 @@ import lombok.Setter;
  *
  * @param <PK>
  *            the generic type of the id
+ * @param <T>
+ *            the generic type of time measurement
  * @param <U>
  *            the generic type of the user or account
  * @see Creation
@@ -50,30 +53,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableTraceableEntity<PK extends Serializable, U>
+public abstract class VersionableTraceableEntity<PK extends Serializable, T, U>
 	extends
-		VersionableBaseEntity<PK>
+		TraceableEntity<PK, T, U>
+	implements
+		IdentifiableTraceableVersionable<PK, T, U>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The date and time when the entity that owns this entity was created. */
-	private LocalDateTime created;
-
-	/** The user or account that created the entity that owns this entity. */
-	private U createdBy;
-
-	/** The date and time when the entity that owns this entity was modified. */
-	private LocalDateTime lastModified;
-
-	/** The user or account that modified the entity that owns this entity. */
-	private U lastModifiedBy;
-
-	/** The date and time when the entity that owns this entity was deleted. */
-	private LocalDateTime deleted;
-
-	/** The user or account that deleted the entity that owns this entity. */
-	private U deletedBy;
+	/**
+	 * The version property for the optimistic lock value.
+	 **/
+	@Version
+	private Integer version;
 
 }

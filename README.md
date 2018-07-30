@@ -15,6 +15,10 @@ The persistence-api is the parent project that provides api module projects for 
 
 Here is a simple description of the important module projects:
 
+# entities-api
+
+The entities-api module project provides several interfaces like Versionable, Activatable, Validatable that can be implemented from entity or domain classes
+
 # base-entities
 
 The base-entities module project provides abstract entity classes like versionable, activatable, validatable and other useful base entity classes. 
@@ -69,7 +73,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- PERSISTENCE-API version -->
-		<persistence-api.version>6.2.0</persistence-api.version>
+		<persistence-api.version>6.3</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>

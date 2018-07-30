@@ -1,6 +1,19 @@
 ## Change log
 ----------------------
 
+Version 6.3
+-------------
+
+ADDED:
+ 
+- new base entities
+	- for unique name
+- new entity interfaces project
+
+CHANGED:
+
+- removed unneeded .0 at the end of version
+
 Version 6.2.0
 -------------
 

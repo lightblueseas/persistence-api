@@ -19,12 +19,13 @@ import java.io.Serializable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.name.IdentifiableNameableVersionable;
+import de.alpharogroup.db.entity.name.NameEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.Setter;
 /**
  * The class {@link VersionableNameEntity} is a base entity for a table with a single value.
  *
- * @param <T>
+ * @param <PK>
  *            the generic type of the id
  */
 @MappedSuperclass
@@ -43,13 +44,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableNameEntity<T extends Serializable> extends VersionableBaseEntity<T>
+public abstract class VersionableNameEntity<PK extends Serializable> extends NameEntity<PK>
+	implements
+		IdentifiableNameableVersionable<PK>
 {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The name. */
-	@Column(unique = false, name = "name")
-	private String name;
+	/**
+	 * The version property for the optimistic lock value.
+	 **/
+	@Version
+	private Integer version;
 }

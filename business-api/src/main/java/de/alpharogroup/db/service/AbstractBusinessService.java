@@ -159,15 +159,12 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	}
 
 	/**
-	 * Gets the {@link Query} from the given string.
-	 *
-	 * @param s
-	 *            the query as string
-	 * @return the query
+	 * {@inheritDoc}
 	 */
-	public Query getQuery(String s)
+	@Override
+	public Query getQuery(String jpqlString)
 	{
-		return getRepository().getQuery(s);
+		return getRepository().getQuery(jpqlString);
 	}
 
 	/**

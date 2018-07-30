@@ -31,10 +31,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
 import org.hibernate.engine.jdbc.internal.Formatter;
 
-import de.alpharogroup.file.create.CreateFileExtensions;
+import de.alpharogroup.file.create.CreateFileQuietlyExtensions;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
-import de.alpharogroup.file.write.WriteFileExtensions;
+import de.alpharogroup.file.write.WriteFileQuietlyExtensions;
 import de.alpharogroup.io.StreamExtensions;
 import de.alpharogroup.jdbc.ConnectionsExtensions;
 
@@ -199,7 +199,7 @@ public abstract class AbstractDatabaseInitialization
 		}
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
 		LOG.debug("write result to file initializeSchema.sql");
-		final boolean writen = WriteFileExtensions.writeStringToFile(initializeSchemaDdl,
+		final boolean writen = WriteFileQuietlyExtensions.writeStringToFile(initializeSchemaDdl,
 			sb.toString(), fileEncoding);
 		LOG.debug("end process of creation of initializeSchema.sql file.");
 		return writen;
@@ -286,7 +286,7 @@ public abstract class AbstractDatabaseInitialization
 			"src/main/resources/dll", "dropSchema.sql");
 		if (!dropSchemaSqlFile.exists())
 		{
-			CreateFileExtensions.newFileQuietly(dropSchemaSqlFile);
+			CreateFileQuietlyExtensions.newFileQuietly(dropSchemaSqlFile);
 		}
 		ConnectionsExtensions.executeSqlScript(
 			(BufferedReader)StreamExtensions.getReader(dropSchemaSqlFile, fileEncoding, false),
@@ -483,9 +483,9 @@ public abstract class AbstractDatabaseInitialization
 					createIndexesAndAlterTable.add(currentLine);
 				}
 			}
-			WriteFileExtensions.writeLinesToFile(dropTables, dropSchemaSqlDir, "UTF-8");
-			WriteFileExtensions.writeLinesToFile(createTables, schemaSqlDir, "UTF-8");
-			WriteFileExtensions.writeLinesToFile(createIndexesAndAlterTable,
+			WriteFileQuietlyExtensions.writeLinesToFile(dropTables, dropSchemaSqlDir, "UTF-8");
+			WriteFileQuietlyExtensions.writeLinesToFile(createTables, schemaSqlDir, "UTF-8");
+			WriteFileQuietlyExtensions.writeLinesToFile(createIndexesAndAlterTable,
 				createIndexesAndForeignKeys, "UTF-8");
 		}
 	}
@@ -517,7 +517,7 @@ public abstract class AbstractDatabaseInitialization
 	{
 		final String contentSchema = ReadFileExtensions.readFromFile(schema);
 		final String result = StringUtils.replace(contentSchema, "MEDIUMBLOB", "BYTEA");
-		WriteFileExtensions.writeStringToFile(schema, result, "UTF-8");
+		WriteFileQuietlyExtensions.writeStringToFile(schema, result, "UTF-8");
 		return result;
 	}
 

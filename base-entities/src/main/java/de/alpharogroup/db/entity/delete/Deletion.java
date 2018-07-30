@@ -16,7 +16,6 @@
 package de.alpharogroup.db.entity.delete;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -49,6 +48,8 @@ import lombok.ToString;
  *
  * @param <PK>
  *            the generic type of the id
+ * @param <T>
+ *            the generic type of time measurement
  * @param <U>
  *            the generic type of the user or account
  */
@@ -60,14 +61,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Deletion<PK extends Serializable, U> extends BaseEntity<PK>
+public class Deletion<PK extends Serializable, T, U> extends BaseEntity<PK>
+	implements
+		IdentifiableDeletable<PK, T, U>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The date and time when the entity that owns this entity was deleted. */
-	private LocalDateTime deleted;
+	private T deleted;
 
 	/** The user or account that deleted the entity that owns this entity. */
 	private U deletedBy;
