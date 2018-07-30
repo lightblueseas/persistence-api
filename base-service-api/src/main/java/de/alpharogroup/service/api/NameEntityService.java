@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.service.api;
 
 import java.io.Serializable;
@@ -28,8 +43,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	default T find(final String nameValue)
 	{
 		@SuppressWarnings("unchecked")
-		Class<T> type = (Class<T>)TypeArgumentsExtensions
-			.getFirstTypeArgument(this.getClass());
+		Class<T> type = (Class<T>)TypeArgumentsExtensions.getFirstTypeArgument(this.getClass());
 		final String hqlString = JpqlStringFactory.forNameEntity(type, nameValue);
 		final Query query = getQuery(hqlString);
 		if (nameValue != null && !nameValue.isEmpty())
@@ -59,11 +73,12 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 		}
 		return nameEntity;
 	}
-	
+
 	/**
 	 * Factory method for create a new name entity.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the new name entity
 	 */
 	T newNameEntity(final String value);

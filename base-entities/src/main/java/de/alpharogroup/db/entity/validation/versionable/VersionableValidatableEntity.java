@@ -46,7 +46,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class VersionableValidatableEntity<PK extends Serializable, T>
 	extends
-	ValidatableEntity<PK, T>
+		ValidatableEntity<PK, T>
 	implements
 		IdentifiableValidatableVersionable<PK, T>
 {

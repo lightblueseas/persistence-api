@@ -45,7 +45,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public abstract class VersionableExtraLargeNameEntity<PK extends Serializable>
 	extends
-	VersionableNameEntity<PK>
+		VersionableNameEntity<PK>
 {
 
 	/** The serial Version UID. */

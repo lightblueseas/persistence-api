@@ -18,8 +18,8 @@ package de.alpharogroup.db.entity;
 import java.io.Serializable;
 
 /**
- * The interface {@link Identifiable} can be implemented from an entity that have to be identifiable as the name already
- * says.
+ * The interface {@link Identifiable} can be implemented from an entity that have to be identifiable
+ * as the name already says.
  *
  * @param <PK>
  *            the generic type of the identifier
