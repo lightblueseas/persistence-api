@@ -29,7 +29,7 @@ import org.springframework.cache.interceptor.SimpleKeyGenerator;
 import org.springframework.cache.support.CompositeCacheManager;
 import org.springframework.core.io.ClassPathResource;
 
-import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.collections.list.ListFactory;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -50,7 +50,7 @@ public class SpringCacheConfigurationFactory
 	public static CacheManager newCacheManager(final CacheManager... cacheCacheManager)
 	{
 
-		final List<CacheManager> cacheManagers = ListExtensions.newArrayList();
+		final List<CacheManager> cacheManagers = ListFactory.newArrayList();
 		for (final CacheManager cm : cacheCacheManager)
 		{
 			if (cm != null)

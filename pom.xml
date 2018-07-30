@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>4.7.0</version>
+		<version>4.8</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -25,7 +25,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>6.3.0-SNAPSHOT</persistence-api.version>
+		<persistence-api.version>6.3-SNAPSHOT</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
 		<base-service-api.version>${persistence-api.version}</base-service-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
@@ -40,13 +40,13 @@
 		<!-- JAVAEE-API version -->
 		<javaee-api.version>7.0</javaee-api.version>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>5.1.0</mystic-crypt.version>
+		<mystic-crypt.version>5.4</mystic-crypt.version>
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
-		<test-objects.version>4.24.0</test-objects.version>
+		<test-objects.version>4.28</test-objects.version>
 		<!-- TMP version -->		
-		<jcommons-lang.version>4.32</jcommons-lang.version>
+		<jcommons-lang.version>4.35</jcommons-lang.version>
 	</properties>
 
 	<modules>
