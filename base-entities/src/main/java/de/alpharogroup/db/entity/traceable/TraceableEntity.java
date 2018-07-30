@@ -67,16 +67,16 @@ public abstract class TraceableEntity<PK extends Serializable, T, U> extends Bas
 	/** The user or account that created the entity that owns this entity. */
 	private U createdBy;
 
-	/** The date and time when the entity that owns this entity was modified. */
-	private T lastModified;
-
-	/** The user or account that modified the entity that owns this entity. */
-	private U lastModifiedBy;
-
 	/** The date and time when the entity that owns this entity was deleted. */
 	private T deleted;
 
 	/** The user or account that deleted the entity that owns this entity. */
 	private U deletedBy;
+
+	/** The date and time when the entity that owns this entity was modified. */
+	private T lastModified;
+
+	/** The user or account that modified the entity that owns this entity. */
+	private U lastModifiedBy;
 
 }

@@ -52,11 +52,11 @@ public abstract class ActivatableNameEntity<PK extends Serializable> extends Nam
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The name. */
-	@Column(unique = false, name = "name")
-	private String name;
-
 	/** The attribute active, if true this entity is active. */
 	@Column(name = "active")
 	private boolean active;
+
+	/** The name. */
+	@Column(unique = false, name = "name")
+	private String name;
 }
