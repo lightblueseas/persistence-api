@@ -12,7 +12,12 @@
 	<artifactId>rest-client</artifactId>
 
 	<dependencies>
-		<!-- NEW EXTENSIONS LIB DEPENDENCIES -->
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>rest-api</artifactId>
+		</dependency>	
+		<!-- SILLY-COLLECTIONS version -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>silly-collections</artifactId>
@@ -27,12 +32,7 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>crypt-data</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>rest-api</artifactId>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-client</artifactId>

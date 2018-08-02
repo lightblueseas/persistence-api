@@ -48,17 +48,17 @@
 		<!-- TMP version -->		
 		<jcommons-lang.version>4.35</jcommons-lang.version>
 	</properties>
-
+	
 	<modules>
-		<module>base-entities</module>
-		<module>base-service-api</module>
-		<module>business-api</module>
-		<module>data-api</module>
-		<module>data-usertype</module>
-		<module>data-initialization</module>
-		<module>domain-api</module>
-		<module>domain-mapper</module>
 		<module>entities-api</module>
+		<module>domain-api</module>
+		<module>data-initialization</module>
+		<module>data-usertype</module>
+		<module>base-entities</module>
+		<module>data-api</module>
+		<module>business-api</module>
+		<module>base-service-api</module>
+		<module>domain-mapper</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
 	</modules>
