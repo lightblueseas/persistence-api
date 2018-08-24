@@ -73,8 +73,9 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- PERSISTENCE-API version -->
-		<persistence-api.version>6.3</persistence-api.version>
+		<persistence-api.version>6.4</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
+		<base-service-api.version>${persistence-api.version}</base-service-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
@@ -90,7 +91,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
-            <!-- BUSINESS-API DEPENDENCY -->
+            <!-- BASE-ENTITIES DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>base-entities</artifactId>
@@ -108,6 +109,19 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>business-api</artifactId>
 				<version>${business-api.version}</version>
+			</dependency>
+			...
+		</dependencies>
+
+Add the following maven dependency to your project `pom.xml` if you want to import the functionality of base-service-api:
+
+		<dependencies>
+			...
+            <!-- BASE-SERVICE-API DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>base-service-api</artifactId>
+				<version>${base-service-api.version}</version>
 			</dependency>
 			...
 		</dependencies>
@@ -168,7 +182,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 
 		<dependencies>
 			...
-            <!-- DOMAIN-API DEPENDENCY -->
+            <!-- DOMAIN-MAPPER DEPENDENCY -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>domain-mapper</artifactId>
