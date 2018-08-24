@@ -1,9 +1,12 @@
 ## Change log
 ----------------------
 
-Version 6.4-SNAPSHOT
+Version 6.4
 -------------
 
+CHANGED:
+
+- update of parent version to 5
 
 Version 6.3
 -------------
