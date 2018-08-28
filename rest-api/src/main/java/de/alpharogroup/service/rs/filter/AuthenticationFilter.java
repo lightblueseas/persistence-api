@@ -36,7 +36,27 @@ import javax.ws.rs.ext.Provider;
 import de.alpharogroup.service.rs.Securable;
 
 /**
- * The class {@link AuthenticationFilter}.
+ * The class {@link AuthenticationFilter} authenticates given tokens from request of users or accounts.
+ * <br><br>
+ * An authentication scheme based on tokens follow these steps:
+ * <ol>
+ * <li>  The client sends their credentials (username and password) to the server.
+ * <li>  The server authenticates the credentials and, if they are valid, generate a token for the user.
+ * <li>  The server stores the previously generated token in some storage along with the user identifier and an expiration date.
+ * <li>  The server sends the generated token to the client.
+ * <li>  The client sends the token to the server in each request.
+ * <li>  The server, in each request, extracts the token from the incoming request. With the token, the server looks up the user details to perform authentication. 
+ * 		<ul>
+ * 			<li> If the token is valid, the server accepts the request.</li>
+ * 			<li> If the token is invalid, the server refuses the request.</li>
+ * 		</ul>
+ * </li>
+ * <li> Once the authentication has been performed, the server performs authorization.
+ * <li> The server can provide an endpoint to refresh tokens.
+ * </ol>
+ * Note: The step 3 is not required if the server has issued a signed token (such as JWT, which allows you to perform stateless authentication).
+ * 
+ * @see also <a href="https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">Best practice for REST token-based authentication with JAX-RS and Jersey</a> 
  */
 @Securable
 @Provider
