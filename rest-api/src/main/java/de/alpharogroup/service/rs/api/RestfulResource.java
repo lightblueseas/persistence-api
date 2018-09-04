@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.service.rs;
+package de.alpharogroup.service.rs.api;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -43,7 +43,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 * @return the domain object with the id from the entity.
 	 */
 	@POST
-	@Path("/")
+	@Path("/create")
 	DO create(DO domainObject);
 
 	/**
@@ -53,7 +53,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 *            the id
 	 */
 	@DELETE
-	@Path("/{id}/")
+	@Path("/delete/{id}/")
 	void delete(@PathParam("id") PK id);
 
 	/**
@@ -64,7 +64,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 * @return the domain object
 	 */
 	@GET
-	@Path("/{id}/")
+	@Path("/read/{id}/")
 	DO read(@PathParam("id") PK id);
 
 	/**
@@ -74,7 +74,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 *            the domain object
 	 */
 	@PUT
-	@Path("/")
+	@Path("/read")
 	void update(DO domainObject);
 
 }

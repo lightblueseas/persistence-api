@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.service.domain.DomainService;
+import de.alpharogroup.service.rs.api.RestfulResource;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +33,7 @@ import lombok.Setter;
  * @param <DS>
  *            the generic type of the domain service interface
  */
-public class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>>
+public abstract class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>>
 	implements
 		RestfulResource<PK, DO>
 {

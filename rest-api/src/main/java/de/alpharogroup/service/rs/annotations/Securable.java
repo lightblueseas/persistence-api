@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.service.rs;
+package de.alpharogroup.service.rs.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,10 +23,12 @@ import java.lang.annotation.Target;
 import javax.ws.rs.NameBinding;
 
 /**
- * The annotation {@link Securable}.
+ * The annotation {@link Securable} is annotated with the meta-annotation {@link NameBinding} that
+ * is part of JAX-RS. The meta-annotation {@link NameBinding} can be used to create other
+ * annotations to bind filters and interceptors to resource classes and methods.
  */
+@NameBinding
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(value = RetentionPolicy.RUNTIME)
-@NameBinding
 public @interface Securable {
 }
