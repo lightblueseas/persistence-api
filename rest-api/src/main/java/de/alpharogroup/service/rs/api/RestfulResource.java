@@ -74,7 +74,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 *            the domain object
 	 */
 	@PUT
-	@Path("/read")
+	@Path("/update")
 	void update(DO domainObject);
 
 }
