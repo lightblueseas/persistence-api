@@ -43,7 +43,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 * @return the domain object with the id from the entity.
 	 */
 	@POST
-	@Path("/create")
+	@Path("/")
 	DO create(DO domainObject);
 
 	/**
@@ -53,7 +53,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 *            the id
 	 */
 	@DELETE
-	@Path("/delete/{id}/")
+	@Path("/{id}/")
 	void delete(@PathParam("id") PK id);
 
 	/**
@@ -64,7 +64,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 * @return the domain object
 	 */
 	@GET
-	@Path("/read/{id}/")
+	@Path("/{id}/")
 	DO read(@PathParam("id") PK id);
 
 	/**
@@ -74,7 +74,7 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	 *            the domain object
 	 */
 	@PUT
-	@Path("/update")
+	@Path("/")
 	void update(DO domainObject);
 
 }
