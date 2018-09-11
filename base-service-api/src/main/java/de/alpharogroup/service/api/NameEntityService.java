@@ -39,8 +39,22 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	 * @param nameValue
 	 *            the name value
 	 * @return the found entity object or null if not.
+	 * @deprecated use instead the method findFirst in this interface
 	 */
+	@Deprecated
 	default T find(final String nameValue)
+	{
+		return findFirst(nameValue);
+	}
+
+	/**
+	 * Find the entities objects from the given name value.
+	 *
+	 * @param nameValue
+	 *            the name value
+	 * @return the list with the entities
+	 */
+	default List<T> findEntities(final String nameValue)
 	{
 		@SuppressWarnings("unchecked")
 		Class<T> type = (Class<T>)TypeArgumentsExtensions.getFirstTypeArgument(this.getClass());
@@ -52,6 +66,19 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 		}
 		@SuppressWarnings("unchecked")
 		final List<T> nameEntities = query.getResultList();
+		return nameEntities;
+	}
+
+	/**
+	 * Find the entity object from the given name value.
+	 * 
+	 * @param nameValue
+	 *            the name value
+	 * @return the found entity object or null if not.
+	 */
+	default T findFirst(final String nameValue)
+	{
+		final List<T> nameEntities = findEntities(nameValue);
 		return ListExtensions.getFirst(nameEntities);
 	}
 
@@ -65,7 +92,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	@Transactional
 	default T getOrCreateNewNameEntity(final String value)
 	{
-		T nameEntity = find(value);
+		T nameEntity = findFirst(value);
 		if (nameEntity == null)
 		{
 			nameEntity = newNameEntity(value);

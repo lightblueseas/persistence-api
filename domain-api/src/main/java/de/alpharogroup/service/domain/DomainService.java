@@ -42,6 +42,15 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	DO create(DO domainObject);
 
 	/**
+	 * Deletes an entity in the underlying database from the given domain object
+	 *
+	 * @param domainObject
+	 *            the domain object to be deleted
+	 * @return the domain object generated from the deleted entity
+	 */
+	void delete(DO domainObject);
+
+	/**
 	 * Deletes an entity with the given id.
 	 *
 	 * @param id

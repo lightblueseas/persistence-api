@@ -59,9 +59,27 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void delete(DO domainObject)
+	{
+		domainService.delete(domainObject);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void delete(final PK id)
 	{
 		domainService.delete(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void merge(DO domainObject)
+	{
+		domainService.update(domainObject);
 	}
 
 	/**

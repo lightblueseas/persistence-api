@@ -63,8 +63,8 @@ import de.alpharogroup.service.rs.enums.AuthenticationScheme;
  * allows you to perform stateless authentication).
  * 
  * Note: also see <a href=
- *      "https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">Best
- *      practice for REST token-based authentication with JAX-RS and Jersey</a>
+ * "https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">Best
+ * practice for REST token-based authentication with JAX-RS and Jersey</a>
  */
 @Securable
 @Provider

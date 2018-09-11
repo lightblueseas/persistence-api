@@ -92,6 +92,17 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
+	public void delete(DO domainObject)
+	{
+		E entity = getMapper().toEntity(domainObject);
+		repository.delete(entity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	@Override
 	public DO delete(final PK id)
 	{
 		final E entity = repository.get(id);
@@ -157,8 +168,9 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	@Override
 	public DO update(final DO domainObject)
 	{
-		E entity = repository.get(domainObject.getId());
-		MergeObjectQuietlyExtensions.mergeOrCopyQuietly(entity, domainObject);
+		final E dbEntity = repository.get(domainObject.getId());
+		E entity = getMapper().toEntity(domainObject);
+		MergeObjectQuietlyExtensions.mergeOrCopyQuietly(dbEntity, entity);
 		entity = repository.merge(entity);
 		return domainObject;
 	}

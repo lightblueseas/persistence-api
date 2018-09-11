@@ -25,7 +25,7 @@ import javax.ws.rs.PathParam;
 import de.alpharogroup.domain.DomainObject;
 
 /**
- * The Interface {@link RestfulResource}.
+ * The interface {@link RestfulResource} provides crud methods
  *
  * @param <PK>
  *            the generic type of the primary key
@@ -47,6 +47,16 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	DO create(DO domainObject);
 
 	/**
+	 * Deletes an entity in the underlying database from the given domain object
+	 *
+	 * @param domainObject
+	 *            the domain object to be deleted
+	 */
+	@POST
+	@Path("/delete/")
+	void delete(DO domainObject);
+
+	/**
 	 * Deletes an entity with the given id.
 	 *
 	 * @param id
@@ -55,6 +65,16 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>>
 	@DELETE
 	@Path("/{id}/")
 	void delete(@PathParam("id") PK id);
+
+	/**
+	 * Updates the given domain object to the underlying database.
+	 *
+	 * @param domainObject
+	 *            the domain object
+	 */
+	@POST
+	@Path("/merge/")
+	void merge(DO domainObject);
 
 	/**
 	 * Read an entity with the given id and maps it to a domain object that will be returned.
