@@ -30,6 +30,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.api.GenericRepository;
@@ -210,6 +211,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public void delete(final T entity)
 	{
 		if (getDeleteStrategy() != null)
@@ -316,6 +318,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public T merge(final T entity)
 	{
 		if (getMergeStrategy() != null)
@@ -398,6 +401,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public PK save(final T entity)
 	{
 		if (getSaveOrUpdateStrategy() != null)
@@ -434,6 +438,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public void saveOrUpdate(final T entity)
 	{
 		if (getSaveOrUpdateStrategy() != null)
@@ -476,6 +481,7 @@ public abstract class AbstractRepository<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public void update(final T entity)
 	{
 		if (getSaveOrUpdateStrategy() != null)

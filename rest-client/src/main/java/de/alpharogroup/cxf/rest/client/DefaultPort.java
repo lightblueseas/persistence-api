@@ -15,17 +15,33 @@
  */
 package de.alpharogroup.cxf.rest.client;
 
-import lombok.Getter;
-
+/**
+ * The enum {@link DefaultPort}
+ */
 public enum DefaultPort
 {
 
-	HTTP(8080), HTTPS(8443);
-	@Getter
+	/** The default http port. */
+	HTTP(8080),
+	/** The default https port. */
+	HTTPS(8443);
+
+	/** The port. */
 	private final int port;
 
-	DefaultPort(final int port)
+	/**
+	 * instantiates a new {@link DefaultPort} object
+	 *
+	 * @param port
+	 *            the port
+	 */
+	private DefaultPort(final int port)
 	{
 		this.port = port;
+	}
+
+	public int getPort()
+	{
+		return port;
 	}
 }

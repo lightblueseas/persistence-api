@@ -46,7 +46,6 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	 *
 	 * @param domainObject
 	 *            the domain object to be deleted
-	 * @return the domain object generated from the deleted entity
 	 */
 	void delete(DO domainObject);
 

@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.SaveOrUpdateStrategy;
@@ -95,6 +97,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public PK save(T entity)
 	{
 		getEntityManager().merge(entity);
@@ -145,6 +148,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public void update(T entity)
 	{
 		getEntityManager().merge(entity);
