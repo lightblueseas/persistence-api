@@ -1,6 +1,16 @@
 ## Change log
 ----------------------
 
+Version 6.5
+-------------
+ADDED:
+ 
+- new StreamingOutput for InputStream created
+
+CHANGED:
+
+- moved rest interfaces, enum and classes to appropriate packages
+
 Version 6.4
 -------------
 

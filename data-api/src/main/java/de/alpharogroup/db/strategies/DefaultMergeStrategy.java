@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.MergeStrategy;
@@ -94,6 +96,7 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public T merge(T entity)
 	{
 		return getEntityManager().merge(entity);

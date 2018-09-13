@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -13,7 +14,7 @@
 	<artifactId>persistence-api</artifactId>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>6.4</version>
+	<version>6.5</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
@@ -25,7 +26,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>6.4</persistence-api.version>
+		<persistence-api.version>6.5</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
 		<base-service-api.version>${persistence-api.version}</base-service-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
@@ -45,10 +46,10 @@
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
 		<test-objects.version>4.28</test-objects.version>
-		<!-- TMP version -->		
+		<!-- TMP version -->
 		<jcommons-lang.version>4.35</jcommons-lang.version>
 	</properties>
-	
+
 	<modules>
 		<module>entities-api</module>
 		<module>domain-api</module>
@@ -88,7 +89,7 @@
 				<artifactId>base-entities</artifactId>
 				<version>${base-entities.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>base-service-api</artifactId>

@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.repository.AbstractRepository;
 import de.alpharogroup.db.strategies.api.DeleteStrategy;
@@ -72,14 +74,7 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	{
 		for (final T entity : objects)
 		{
-			if (getEntityManager().contains(entity))
-			{
-				getEntityManager().remove(entity);
-			}
-			else
-			{
-				getEntityManager().remove(getEntityManager().merge(entity));
-			}
+			delete(entity);
 		}
 	}
 
@@ -97,6 +92,7 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public void delete(T entity)
 	{
 		if (getEntityManager().contains(entity))
