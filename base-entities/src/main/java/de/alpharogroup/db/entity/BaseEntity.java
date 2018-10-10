@@ -25,9 +25,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link BaseEntity} holds the primary key.
@@ -41,6 +44,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseEntity<PK extends Serializable> implements Serializable, Identifiable<PK>
 {
 
@@ -52,7 +56,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
-	private PK id;
+	PK id;
 
 	/**
 	 * {@inheritDoc}
