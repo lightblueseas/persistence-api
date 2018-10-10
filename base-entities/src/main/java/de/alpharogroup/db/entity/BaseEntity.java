@@ -40,6 +40,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class BaseEntity<PK extends Serializable> implements Serializable, Identifiable<PK>
 {
 
@@ -48,44 +49,10 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 
 	/** The technical primary key. */
 	@Id
+	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private PK id;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(final Object obj)
-	{
-		if (this == obj)
-		{
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass())
-		{
-			return false;
-		}
-		@SuppressWarnings("rawtypes")
-		final BaseEntity other = (BaseEntity)obj;
-		if (id == null || other.id == null)
-		{
-			return false;
-		}
-		return id.equals(other.id);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
 
 	/**
 	 * {@inheritDoc}
