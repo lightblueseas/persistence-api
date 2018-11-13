@@ -48,6 +48,7 @@
 		<test-objects.version>4.28</test-objects.version>
 		<!-- TMP version -->
 		<jcommons-lang.version>4.35</jcommons-lang.version>
+		<spring-data-jpa.version>2.0.8.RELEASE</spring-data-jpa.version>
 	</properties>
 
 	<modules>
@@ -172,6 +173,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>test-objects</artifactId>
 				<version>${test-objects.version}</version>
+			</dependency>
+			<!-- SPRING-DATA-JPA DEPENDENCY -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>${spring-data-jpa.version}</version>
 			</dependency>
 
 		</dependencies>
