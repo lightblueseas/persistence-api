@@ -34,15 +34,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link VersionableTraceableEntity} is keeping the information for the creation,
- * last modification and for the deletion of an entity. <br>
+ * The entity class {@link VersionableTraceableEntity} is keeping the
+ * information for the creation, last modification and for the deletion of an
+ * entity. <br>
  *
- * @param <PK>
- *            the generic type of the id
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <PK> the generic type of the id
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  * @see Creation
  * @see Deletion
  */
@@ -53,12 +51,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableTraceableEntity<PK extends Serializable, T, U>
-	extends
-		TraceableEntity<PK, T, U>
-	implements
-		IdentifiableTraceableVersionable<PK, T, U>
-{
+public abstract class VersionableTraceableEntity<PK extends Serializable, T, U> extends TraceableEntity<PK, T, U>
+		implements IdentifiableTraceableVersionable<PK, T, U> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

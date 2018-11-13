@@ -16,11 +16,10 @@
 package de.alpharogroup.db.entity.name;
 
 /**
- * The interface {@link Nameable} can be implemented from an entity for a table with a single string
- * value.
+ * The interface {@link Nameable} can be implemented from an entity for a table
+ * with a single string value.
  */
-public interface Nameable
-{
+public interface Nameable {
 
 	/**
 	 * Gets the name.
@@ -32,8 +31,7 @@ public interface Nameable
 	/**
 	 * Sets the name.
 	 *
-	 * @param name
-	 *            the new name
+	 * @param name the new name
 	 */
 	void setName(String name);
 }

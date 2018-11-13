@@ -21,25 +21,20 @@ import lombok.experimental.UtilityClass;
  * A factory for creating JpqlString objects.
  */
 @UtilityClass
-public class JpqlStringFactory
-{
+public class JpqlStringFactory {
 
 	/**
 	 * Creates jpql query for the given name entity class.
 	 *
-	 * @param name
-	 *            the name
+	 * @param name the name
 	 *
 	 * @return the jpql string
 	 */
-	public static <T extends NameEntity<?>> String forNameEntity(final Class<T> entityClass,
-		final String name)
-	{
+	public static <T extends NameEntity<?>> String forNameEntity(final Class<T> entityClass, final String name) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("select ne from " + entityClass.getSimpleName() + " ne");
 		final boolean nameIsNotNull = name != null && !name.isEmpty();
-		if (nameIsNotNull)
-		{
+		if (nameIsNotNull) {
 			sb.append(" ");
 			sb.append("where ne.name=:name");
 		}

@@ -19,12 +19,10 @@ import de.alpharogroup.db.entity.validation.Validatable;
 import de.alpharogroup.db.entity.version.Versionable;
 
 /**
- * The interface {@link ValidatableVersionable} is a combination of the interfaces
- * {@link Validatable} and {@link Versionable}.
+ * The interface {@link ValidatableVersionable} is a combination of the
+ * interfaces {@link Validatable} and {@link Versionable}.
  *
- * @param <T>
- *            the generic type of time measurement
+ * @param <T> the generic type of time measurement
  */
-public interface ValidatableVersionable<T> extends Validatable<T>, Versionable
-{
+public interface ValidatableVersionable<T> extends Validatable<T>, Versionable {
 }

@@ -13,18 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.validation;
+package de.alpharogroup.db.entity.uniqueable;
 
 import java.io.Serializable;
 
-import de.alpharogroup.db.entity.Identifiable;
-
 /**
- * The interface {@link IdentifiableValidatable} is a combination of the
- * interfaces {@link Identifiable} and {@link Validatable}.
+ * The interface {@link Uniqueable} can be implemented from an entity that have
+ * to be uniqueable. An good example would be entities that are needed in rest
+ * services
  *
- * @param <PK> the generic type of the identifier
- * @param <T> the generic type of time measurement
+ * @param <PK> the generic type of the unique identifier
  */
-public interface IdentifiableValidatable<PK extends Serializable, T> extends Identifiable<PK>, Validatable<T> {
+public interface Uniqueable<PK extends Serializable> {
+
+	/**
+	 * Gets the uuid.
+	 *
+	 * @return the uuid
+	 */
+	PK getUuid();
+
+	/**
+	 * Sets the uuid.
+	 *
+	 * @param uuid the new uuid
+	 */
+	void setUuid(final PK uuid);
 }

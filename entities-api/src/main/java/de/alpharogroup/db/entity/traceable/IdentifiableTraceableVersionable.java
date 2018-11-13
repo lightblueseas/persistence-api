@@ -24,21 +24,13 @@ import de.alpharogroup.db.entity.modify.LastModified;
 import de.alpharogroup.db.entity.version.Versionable;
 
 /**
- * The interface {@link IdentifiableTraceableVersionable} is a combination of the interfaces
- * {@link Identifiable},{@link Creatable}, {@link LastModified}, {@link Deletable} and
- * {@link Versionable}.
+ * The interface {@link IdentifiableTraceableVersionable} is a combination of
+ * the interfaces {@link Identifiable},{@link Creatable}, {@link LastModified},
+ * {@link Deletable} and {@link Versionable}.
  *
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
 public interface IdentifiableTraceableVersionable<PK extends Serializable, T, U>
-	extends
-		Identifiable<PK>,
-		Creatable<T, U>,
-		LastModified<T, U>,
-		Deletable<T, U>,
-		Versionable
-{
+		extends Identifiable<PK>, Creatable<T, U>, LastModified<T, U>, Deletable<T, U>, Versionable {
 }

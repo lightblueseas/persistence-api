@@ -23,37 +23,29 @@ import de.alpharogroup.db.entity.BaseEntity;
 /**
  * The interface {@link DeleteStrategy} can interact if entities are deleted.
  *
- * @param <T>
- *            the type of the entity object
- * @param <PK>
- *            the type of the primary key from the entity object
+ * @param <T> the type of the entity object
+ * @param <PK> the type of the primary key from the entity object
  */
-public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
-	extends
-		Serializable
-{
+public interface DeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
 	/**
 	 * Delete all persistent entities in the given list.
 	 *
-	 * @param entities
-	 *            the list with the persistent entities to delete
+	 * @param entities the list with the persistent entities to delete
 	 */
 	void delete(final List<T> entities);
 
 	/**
-	 * Deletes an entity of a given Id. Will load the entity internally so consider using delete (T
-	 * entity) directly
+	 * Deletes an entity of a given Id. Will load the entity internally so consider
+	 * using delete (T entity) directly
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 */
 	void delete(PK id);
 
 	/**
 	 * Deletes the given entity from persistent storage in the database.
 	 *
-	 * @param entity
-	 *            the persistent entity
+	 * @param entity the persistent entity
 	 */
 	void delete(T entity);
 }

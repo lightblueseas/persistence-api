@@ -18,8 +18,7 @@ package de.alpharogroup.cxf.rest.client;
 /**
  * The enum {@link DefaultPort}
  */
-public enum DefaultPort
-{
+public enum DefaultPort {
 
 	/** The default http port. */
 	HTTP(8080),
@@ -32,16 +31,13 @@ public enum DefaultPort
 	/**
 	 * instantiates a new {@link DefaultPort} object
 	 *
-	 * @param port
-	 *            the port
+	 * @param port the port
 	 */
-	private DefaultPort(final int port)
-	{
+	private DefaultPort(final int port) {
 		this.port = port;
 	}
 
-	public int getPort()
-	{
+	public int getPort() {
 		return port;
 	}
 }

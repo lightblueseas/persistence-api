@@ -20,14 +20,11 @@ import de.alpharogroup.db.entity.delete.Deletable;
 import de.alpharogroup.db.entity.modify.LastModified;
 
 /**
- * The interface {@link Traceable} is a combination of the interfaces {@link Creatable},
- * {@link LastModified} and {@link Deletable}.
+ * The interface {@link Traceable} is a combination of the interfaces
+ * {@link Creatable}, {@link LastModified} and {@link Deletable}.
  *
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
-public interface Traceable<T, U> extends Creatable<T, U>, LastModified<T, U>, Deletable<T, U>
-{
+public interface Traceable<T, U> extends Creatable<T, U>, LastModified<T, U>, Deletable<T, U> {
 }

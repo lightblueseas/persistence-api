@@ -34,34 +34,27 @@ import lombok.Setter;
 /**
  * The Class {@link AbstractDomainService}.
  *
- * @param <PK>
- *            the generic type of the primary key
- * @param <DO>
- *            the generic type of the domain object
- * @param <E>
- *            the element type of the entity
- * @param <REPOSITORY>
- *            the generic type of the data transfer object
- * @param <M>
- *            the generic type of the entity mapper
+ * @param <PK> the generic type of the primary key
+ * @param <DO> the generic type of the domain object
+ * @param <E> the element type of the entity
+ * @param <REPOSITORY> the generic type of the data transfer object
+ * @param <M> the generic type of the entity mapper
  */
 @Transactional
 public abstract class AbstractDomainService<PK extends Serializable, DO extends DomainObject<PK>, E extends BaseEntity<PK>, REPOSITORY extends GenericRepository<E, PK>, M extends EntityDOMapper<E, DO>>
-	implements
-		DomainService<PK, DO>
-{
+		implements DomainService<PK, DO> {
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractDomainService.class, getClass(), 1);
+	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractDomainService.class, getClass(), 1);
 
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractDomainService.class, getClass(), 2);
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions.getTypeArgument(AbstractDomainService.class,
+			getClass(), 2);
 	/**
 	 * The mapper.
 	 */
@@ -79,8 +72,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public DO create(final DO domainObject)
-	{
+	public DO create(final DO domainObject) {
 		E entity = getMapper().toEntity(domainObject);
 		entity = repository.merge(entity);
 		domainObject.setId(entity.getId());
@@ -92,8 +84,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public void delete(DO domainObject)
-	{
+	public void delete(DO domainObject) {
 		E entity = getMapper().toEntity(domainObject);
 		repository.delete(entity);
 	}
@@ -103,8 +94,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public DO delete(final PK id)
-	{
+	public DO delete(final PK id) {
 		final E entity = repository.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
 		repository.delete(id);
@@ -115,8 +105,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean exists(final PK id)
-	{
+	public boolean exists(final PK id) {
 		return repository.exists(id);
 	}
 
@@ -124,12 +113,10 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DO> findAll()
-	{
+	public List<DO> findAll() {
 		final Collection<E> all = repository.findAll();
 		final List<DO> domainObjects = new ArrayList<>();
-		for (final E entity : all)
-		{
+		for (final E entity : all) {
 			domainObjects.add(getMapper().toDomainObject(entity));
 		}
 		return domainObjects;
@@ -140,11 +127,9 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public Collection<PK> persist(final Collection<DO> domainObjects)
-	{
+	public Collection<PK> persist(final Collection<DO> domainObjects) {
 		final Collection<PK> primaryKeys = new ArrayList<>();
-		for (final DO domainObject : domainObjects)
-		{
+		for (final DO domainObject : domainObjects) {
 			primaryKeys.add(create(domainObject).getId());
 		}
 		return primaryKeys;
@@ -154,8 +139,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO read(final PK id)
-	{
+	public DO read(final PK id) {
 		final E entity = repository.get(id);
 		final DO domainObject = getMapper().toDomainObject(entity);
 		return domainObject;
@@ -166,8 +150,7 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
-	public DO update(final DO domainObject)
-	{
+	public DO update(final DO domainObject) {
 		final E dbEntity = repository.get(domainObject.getId());
 		E entity = getMapper().toEntity(domainObject);
 		MergeObjectQuietlyExtensions.mergeOrCopyQuietly(dbEntity, entity);

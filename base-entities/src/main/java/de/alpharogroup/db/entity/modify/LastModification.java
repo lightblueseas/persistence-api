@@ -30,17 +30,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The entity class {@link LastModification} is keeping information of the last modification of an
- * entity. This entity can be extended or attached to another entity for keep information when it
- * was last modified. In combination with the {@link VersionableBaseEntity} it can build a history
- * of modification of an entity.
+ * The entity class {@link LastModification} is keeping information of the last
+ * modification of an entity. This entity can be extended or attached to another
+ * entity for keep information when it was last modified. In combination with
+ * the {@link VersionableBaseEntity} it can build a history of modification of
+ * an entity.
  *
- * @param <PK>
- *            the generic type of the id
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <PK> the generic type of the id
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
 @Entity
 @Table(name = "modified")
@@ -51,9 +49,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class LastModification<PK extends Serializable, T, U> extends BaseEntity<PK>
-	implements
-		IdentifiableLastModified<PK, T, U>
-{
+		implements IdentifiableLastModified<PK, T, U> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

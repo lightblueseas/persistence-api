@@ -20,19 +20,12 @@ import java.io.Serializable;
 import de.alpharogroup.db.entity.Identifiable;
 
 /**
- * The interface {@link IdentifiableDeletable} is a combination of the interfaces
- * {@link Identifiable} and {@link Deletable}.
+ * The interface {@link IdentifiableDeletable} is a combination of the
+ * interfaces {@link Identifiable} and {@link Deletable}.
  *
- * @param <PK>
- *            the generic type of the identifier
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <PK> the generic type of the identifier
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
-public interface IdentifiableDeletable<PK extends Serializable, T, U>
-	extends
-		Identifiable<PK>,
-		Deletable<T, U>
-{
+public interface IdentifiableDeletable<PK extends Serializable, T, U> extends Identifiable<PK>, Deletable<T, U> {
 }

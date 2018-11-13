@@ -26,17 +26,12 @@ import lombok.Setter;
 /**
  * The Class {@link AbstractRestfulResource}.
  *
- * @param <PK>
- *            the generic type of the primary key
- * @param <DO>
- *            the generic type of the domain object
- * @param <DS>
- *            the generic type of the domain service interface
+ * @param <PK> the generic type of the primary key
+ * @param <DO> the generic type of the domain object
+ * @param <DS> the generic type of the domain service interface
  */
 public abstract class AbstractRestfulResource<PK extends Serializable, DO extends DomainObject<PK>, DS extends DomainService<PK, DO>>
-	implements
-		RestfulResource<PK, DO>
-{
+		implements RestfulResource<PK, DO> {
 
 	/**
 	 * The domain service.
@@ -49,8 +44,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO create(final DO domainObject)
-	{
+	public DO create(final DO domainObject) {
 		final DO newDomainObject = domainService.create(domainObject);
 		return newDomainObject;
 	}
@@ -59,8 +53,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(DO domainObject)
-	{
+	public void delete(DO domainObject) {
 		domainService.delete(domainObject);
 	}
 
@@ -68,8 +61,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(final PK id)
-	{
+	public void delete(final PK id) {
 		domainService.delete(id);
 	}
 
@@ -77,8 +69,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void merge(DO domainObject)
-	{
+	public void merge(DO domainObject) {
 		domainService.update(domainObject);
 	}
 
@@ -86,8 +77,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DO read(final PK id)
-	{
+	public DO read(final PK id) {
 		final DO domainObject = domainService.read(id);
 		return domainObject;
 	}
@@ -96,8 +86,7 @@ public abstract class AbstractRestfulResource<PK extends Serializable, DO extend
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(final DO domainObject)
-	{
+	public void update(final DO domainObject) {
 		domainService.update(domainObject);
 	}
 

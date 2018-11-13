@@ -26,11 +26,10 @@ import javax.ws.rs.core.StreamingOutput;
 import lombok.NonNull;
 
 /**
- * The class {@link InputStreamStreamingOutput} can be used for put an {@link InputStream} to a
- * {@link Response} object.
+ * The class {@link InputStreamStreamingOutput} can be used for put an
+ * {@link InputStream} to a {@link Response} object.
  */
-public class InputStreamStreamingOutput implements StreamingOutput
-{
+public class InputStreamStreamingOutput implements StreamingOutput {
 
 	/** The input stream */
 	private final InputStream inputStream;
@@ -38,11 +37,9 @@ public class InputStreamStreamingOutput implements StreamingOutput
 	/**
 	 * Instantiates a new {@link InputStreamStreamingOutput} object
 	 *
-	 * @param input
-	 *            the input stream
+	 * @param input the input stream
 	 */
-	public InputStreamStreamingOutput(final @NonNull InputStream input)
-	{
+	public InputStreamStreamingOutput(final @NonNull InputStream input) {
 		this.inputStream = input;
 	}
 
@@ -50,13 +47,10 @@ public class InputStreamStreamingOutput implements StreamingOutput
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void write(final @NonNull OutputStream output)
-		throws IOException, WebApplicationException
-	{
+	public void write(final @NonNull OutputStream output) throws IOException, WebApplicationException {
 		int bytesRead;
 		byte[] buffer = new byte[4096];
-		while ((bytesRead = this.inputStream.read(buffer)) != -1)
-		{
+		while ((bytesRead = this.inputStream.read(buffer)) != -1) {
 			output.write(buffer, 0, bytesRead);
 		}
 	}

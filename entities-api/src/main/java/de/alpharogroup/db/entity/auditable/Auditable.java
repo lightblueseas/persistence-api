@@ -19,13 +19,12 @@ import de.alpharogroup.db.entity.create.Creatable;
 import de.alpharogroup.db.entity.modify.LastModified;
 
 /**
- * The interface {@link Auditable} is a combination of the interfaces {@link Creatable} and
- * {@link LastModified} and can be implemented by classes with auditing purposes.
+ * The interface {@link Auditable} is a combination of the interfaces
+ * {@link Creatable} and {@link LastModified} and can be implemented by classes
+ * with auditing purposes.
  *
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
 public interface Auditable<T, U> extends Creatable<T, U>, LastModified<T, U> {
 }

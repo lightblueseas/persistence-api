@@ -31,19 +31,14 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of the
- * {@link SaveOrUpdateStrategy}.
+ * The class {@link DefaultSaveOrUpdateStrategy} is a default implementation of
+ * the {@link SaveOrUpdateStrategy}.
  *
- * @param <T>
- *            the type of the entity object
- * @param <PK>
- *            the type of the primary key from the entity object
+ * @param <T> the type of the entity object
+ * @param <PK> the type of the primary key from the entity object
  */
 public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
-	implements
-		SaveOrUpdateStrategy<T, PK>
-{
-
+		implements SaveOrUpdateStrategy<T, PK> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -55,17 +50,15 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
+	private final Class<T> type = (Class<T>) TypeArgumentsExtensions
+			.getFirstTypeArgument(DefaultSaveOrUpdateStrategy.class, this.getClass());
 
 	/**
 	 * Instantiates a new {@link DefaultSaveOrUpdateStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param repository the repository
 	 */
-	public DefaultSaveOrUpdateStrategy(AbstractRepository<T, PK> repository)
-	{
+	public DefaultSaveOrUpdateStrategy(AbstractRepository<T, PK> repository) {
 		this.repository = repository;
 	}
 
@@ -74,8 +67,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 *
 	 * @return the entity manager
 	 */
-	private EntityManager getEntityManager()
-	{
+	private EntityManager getEntityManager() {
 		return this.repository.getEntityManager();
 	}
 
@@ -83,11 +75,9 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PK> save(List<T> entities)
-	{
+	public List<PK> save(List<T> entities) {
 		final List<PK> primaryKeys = new ArrayList<>();
-		for (final T entity : entities)
-		{
+		for (final T entity : entities) {
 			primaryKeys.add(save(entity));
 		}
 		return primaryKeys;
@@ -98,8 +88,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 */
 	@Override
 	@Transactional
-	public PK save(T entity)
-	{
+	public PK save(T entity) {
 		getEntityManager().merge(entity);
 		return entity.getId();
 	}
@@ -108,10 +97,8 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(List<T> entities)
-	{
-		for (final T entity : entities)
-		{
+	public void saveOrUpdate(List<T> entities) {
+		for (final T entity : entities) {
 			saveOrUpdate(entity);
 		}
 	}
@@ -120,14 +107,10 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveOrUpdate(T entity)
-	{
-		if (entity.getId() == null)
-		{
+	public void saveOrUpdate(T entity) {
+		if (entity.getId() == null) {
 			save(entity);
-		}
-		else
-		{
+		} else {
 			update(entity);
 		}
 	}
@@ -136,10 +119,8 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(List<T> entities)
-	{
-		for (final T entity : entities)
-		{
+	public void update(List<T> entities) {
+		for (final T entity : entities) {
 			update(entity);
 		}
 	}
@@ -149,8 +130,7 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 	 */
 	@Override
 	@Transactional
-	public void update(T entity)
-	{
+	public void update(T entity) {
 		getEntityManager().merge(entity);
 	}
 

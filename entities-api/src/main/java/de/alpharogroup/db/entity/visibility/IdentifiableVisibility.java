@@ -21,15 +21,10 @@ import de.alpharogroup.db.entity.Identifiable;
 import de.alpharogroup.db.entity.version.Versionable;
 
 /**
- * The interface {@link IdentifiableVisibility} is a combination of the interfaces
- * {@link Identifiable} and {@link Versionable}.
+ * The interface {@link IdentifiableVisibility} is a combination of the
+ * interfaces {@link Identifiable} and {@link Versionable}.
  * 
- * @param <PK>
- *            the generic type of the identifier
+ * @param <PK> the generic type of the identifier
  */
-public interface IdentifiableVisibility<PK extends Serializable>
-	extends
-		Identifiable<PK>,
-		Visibility
-{
+public interface IdentifiableVisibility<PK extends Serializable> extends Identifiable<PK>, Visibility {
 }

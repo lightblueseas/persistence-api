@@ -30,10 +30,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link ExtraLargeNameEntity} is a base entity for a table with a single value.
+ * The class {@link ExtraLargeNameEntity} is a base entity for a table with a
+ * single value.
  *
- * @param <PK>
- *            the generic type of the id
+ * @param <PK> the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -42,8 +42,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ExtraLargeNameEntity<PK extends Serializable> extends NameEntity<PK>
-{
+public abstract class ExtraLargeNameEntity<PK extends Serializable> extends NameEntity<PK> {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

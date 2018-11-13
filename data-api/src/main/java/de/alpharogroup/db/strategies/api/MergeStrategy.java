@@ -23,21 +23,15 @@ import de.alpharogroup.db.entity.BaseEntity;
 /**
  * The interface {@link MergeStrategy} can interact if entities are merged.
  *
- * @param <T>
- *            the type of the entity object
- * @param <PK>
- *            the type of the primary key from the entity object
+ * @param <T> the type of the entity object
+ * @param <PK> the type of the primary key from the entity object
  */
-public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
-	extends
-		Serializable
-{
+public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
 
 	/**
 	 * Merges all new entities in the given list.
 	 *
-	 * @param entities
-	 *            the list to save
+	 * @param entities the list to save
 	 * @return the list with the ids of the merged entities
 	 */
 	List<T> merge(List<T> entities);
@@ -45,8 +39,7 @@ public interface MergeStrategy<T extends BaseEntity<PK>, PK extends Serializable
 	/**
 	 * Merges the given entity. @see Hibernate documentation.
 	 *
-	 * @param entity
-	 *            the entity
+	 * @param entity the entity
 	 * @return the entity
 	 */
 	T merge(final T entity);

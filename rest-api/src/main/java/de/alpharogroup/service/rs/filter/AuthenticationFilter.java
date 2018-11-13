@@ -37,30 +37,32 @@ import de.alpharogroup.service.rs.annotations.Securable;
 import de.alpharogroup.service.rs.enums.AuthenticationScheme;
 
 /**
- * The class {@link AuthenticationFilter} authenticates given tokens from request of users or
- * accounts. <br>
+ * The class {@link AuthenticationFilter} authenticates given tokens from
+ * request of users or accounts. <br>
  * <br>
  * An authentication scheme based on tokens follow these steps:
  * <ol>
  * <li>The client sends their credentials (username and password) to the server.
- * <li>The server authenticates the credentials and, if they are valid, generate a token for the
- * user.
- * <li>The server stores the previously generated token in some storage along with the user
- * identifier and an expiration date.
+ * <li>The server authenticates the credentials and, if they are valid, generate
+ * a token for the user.
+ * <li>The server stores the previously generated token in some storage along
+ * with the user identifier and an expiration date.
  * <li>The server sends the generated token to the client.
  * <li>The client sends the token to the server in each request.
- * <li>The server, in each request, extracts the token from the incoming request. With the token,
- * the server looks up the user details to perform authentication.
+ * <li>The server, in each request, extracts the token from the incoming
+ * request. With the token, the server looks up the user details to perform
+ * authentication.
  * <ul>
  * <li>If the token is valid, the server accepts the request.</li>
  * <li>If the token is invalid, the server refuses the request.</li>
  * </ul>
  * </li>
- * <li>Once the authentication has been performed, the server performs authorization.
+ * <li>Once the authentication has been performed, the server performs
+ * authorization.
  * <li>The server can provide an endpoint to refresh tokens.
  * </ol>
- * Note: The step 3 is not required if the server has issued a signed token (such as JWT, which
- * allows you to perform stateless authentication).
+ * Note: The step 3 is not required if the server has issued a signed token
+ * (such as JWT, which allows you to perform stateless authentication).
  * 
  * Note: also see <a href=
  * "https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">Best
@@ -69,8 +71,7 @@ import de.alpharogroup.service.rs.enums.AuthenticationScheme;
 @Securable
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public abstract class AuthenticationFilter implements ContainerRequestFilter
-{
+public abstract class AuthenticationFilter implements ContainerRequestFilter {
 
 	/** The application and request URI information. */
 	@Context
@@ -88,26 +89,20 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException
-	{
+	public void filter(ContainerRequestContext requestContext) throws IOException {
 		// check the request url path, if it is a sign in request
-		try
-		{
-			if (isSigninRequest(requestContext))
-			{
+		try {
+			if (isSigninRequest(requestContext)) {
 				// ignore them
 				return;
 			}
 			// check if the resource is protected
-			if (isSecured())
-			{
+			if (isSecured()) {
 				// Get the HTTP Authorization header from the request
-				String authorizationHeader = requestContext
-					.getHeaderString(HttpHeaders.AUTHORIZATION);
+				String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
 				// Check if the HTTP Authorization header is present
-				if (authorizationHeader == null)
-				{
+				if (authorizationHeader == null) {
 					throw new NotAuthorizedException("Authorization header must be provided");
 				}
 
@@ -118,24 +113,22 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 				String username = onValidateToken(token);
 				requestContext.setSecurityContext(newSecurityContext(username));
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			requestContext.abortWith(newFaultResponse());
 		}
 	}
 
 	/**
-	 * Checks if is the resourceClass is annotated with the annotation {@link Securable}.
+	 * Checks if is the resourceClass is annotated with the annotation
+	 * {@link Securable}.
 	 *
-	 * @return true, if is the resourceClass is annotated with the annotation {@link Securable}.
+	 * @return true, if is the resourceClass is annotated with the annotation
+	 *         {@link Securable}.
 	 */
-	protected boolean isSecured()
-	{
+	protected boolean isSecured() {
 		Class<?> resourceClass = resourceInfo.getResourceClass();
 		Securable securable = resourceClass.getAnnotation(Securable.class);
-		if (securable != null)
-		{
+		if (securable != null) {
 			return true;
 		}
 		Method method = resourceInfo.getResourceMethod();
@@ -145,15 +138,13 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 	}
 
 	/**
-	 * Checks if the given path is a sign in path. Overwrite this method to provide specific sign in
-	 * path for your application.
+	 * Checks if the given path is a sign in path. Overwrite this method to provide
+	 * specific sign in path for your application.
 	 *
-	 * @param path
-	 *            the sign in path to check.
+	 * @param path the sign in path to check.
 	 * @return true, if the given path is a sign in path otherwise false.
 	 */
-	protected boolean isSigninPath(String path)
-	{
+	protected boolean isSigninPath(String path) {
 		boolean isSigninPath = path.equals("auth/credentials") || path.equals("auth/form");
 		return isSigninPath;
 	}
@@ -161,22 +152,17 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 	/**
 	 * Checks if the current request is a is a sign request.
 	 *
-	 * @param requestContext
-	 *            the request context
+	 * @param requestContext the request context
 	 * @return true, if the current request is a is a sign request.
-	 * @throws Exception
-	 *             occurs if some error like the scheme is not https
+	 * @throws Exception occurs if some error like the scheme is not https
 	 */
-	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception
-	{
+	protected boolean isSigninRequest(ContainerRequestContext requestContext) throws Exception {
 		boolean isSigninRequest = false;
 		String path = info.getPath();
 		// check the request url path, if it is a sign in request
-		if (isSigninPath(path))
-		{
+		if (isSigninPath(path)) {
 			// check if scheme is https
-			if (!servletRequest.isSecure())
-			{
+			if (!servletRequest.isSecure()) {
 				throw new SSLException("use https scheme");
 			}
 			isSigninRequest = true;
@@ -185,62 +171,56 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 	}
 
 	/**
-	 * Factory callback method for create a new authentication scheme for the header key
-	 * 'WWW-Authenticate'. Overwrite to set specific application authentication scheme.
+	 * Factory callback method for create a new authentication scheme for the header
+	 * key 'WWW-Authenticate'. Overwrite to set specific application authentication
+	 * scheme.
 	 *
 	 * @return the new authentication scheme.
 	 */
-	protected String newAuthenticationScheme()
-	{
+	protected String newAuthenticationScheme() {
 		return AuthenticationScheme.BASIC.getValue();
 	}
 
 	/**
-	 * Factory callback method for create a new {@link Response} with a 401 status code
+	 * Factory callback method for create a new {@link Response} with a 401 status
+	 * code
 	 *
 	 * @return the new fault {@link Response} object
 	 */
-	protected Response newFaultResponse()
-	{
+	protected Response newFaultResponse() {
 		Response faultResponse = Response.status(Response.Status.UNAUTHORIZED)
-			.header(HttpHeaders.WWW_AUTHENTICATE,
-				newAuthenticationScheme() + " realm=\"" + newRealmValue() + "\"")
-			.build();
+				.header(HttpHeaders.WWW_AUTHENTICATE, newAuthenticationScheme() + " realm=\"" + newRealmValue() + "\"")
+				.build();
 		return faultResponse;
 	}
 
 	/**
-	 * Factory callback method for create a new realm value for the header key 'WWW-Authenticate'.
-	 * Overwrite to set specific application realm value.
+	 * Factory callback method for create a new realm value for the header key
+	 * 'WWW-Authenticate'. Overwrite to set specific application realm value.
 	 *
 	 * @return the new realm value.
 	 */
-	protected String newRealmValue()
-	{
+	protected String newRealmValue() {
 		return "alpharogroup.de";
 	}
 
 	/**
 	 * Factory method for create a new security context with the given user name.
 	 *
-	 * @param username
-	 *            the user name
+	 * @param username the user name
 	 * @return the security context
 	 */
-	protected SecurityContext newSecurityContext(final String username)
-	{
+	protected SecurityContext newSecurityContext(final String username) {
 		return new AuthenticationSecurityContext(username);
 	}
 
 	/**
-	 * Abstract callback method that checks if the given token is valid. For instance if it is not
-	 * expired.
+	 * Abstract callback method that checks if the given token is valid. For
+	 * instance if it is not expired.
 	 *
-	 * @param token
-	 *            the token
+	 * @param token the token
 	 * @return the string the user name
-	 * @throws Exception
-	 *             if the token is not valid
+	 * @throws Exception if the token is not valid
 	 */
 	protected abstract String onValidateToken(String token) throws Exception;
 

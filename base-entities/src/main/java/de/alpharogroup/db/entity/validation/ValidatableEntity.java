@@ -29,11 +29,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link ValidatableEntity} is a base entity and has a validFrom property and a validTill
- * property for restricting an entity in a time range in which it is valid.
+ * The class {@link ValidatableEntity} is a base entity and has a validFrom
+ * property and a validTill property for restricting an entity in a time range
+ * in which it is valid.
  *
- * @param <PK>
- *            the generic type of the id
+ * @param <PK> the generic type of the id
  */
 @Entity
 @Table(name = "validation")
@@ -44,9 +44,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class ValidatableEntity<PK extends Serializable, T> extends BaseEntity<PK>
-	implements
-		IdentifiableValidatable<PK, T>
-{
+		implements IdentifiableValidatable<PK, T> {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

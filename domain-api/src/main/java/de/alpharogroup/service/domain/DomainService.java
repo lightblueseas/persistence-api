@@ -24,19 +24,16 @@ import de.alpharogroup.domain.DomainObject;
 /**
  * The Interface {@link DomainService} provide methods for crud processes.
  *
- * @param <PK>
- *            the generic type of the primary key
- * @param <DO>
- *            the generic type of the domain object
+ * @param <PK> the generic type of the primary key
+ * @param <DO> the generic type of the domain object
  */
-public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>>
-{
+public interface DomainService<PK extends Serializable, DO extends DomainObject<PK>> {
 
 	/**
-	 * Creates an entity from the given domain object and persist it to the underlying database.
+	 * Creates an entity from the given domain object and persist it to the
+	 * underlying database.
 	 *
-	 * @param domainObject
-	 *            the domain object
+	 * @param domainObject the domain object
 	 * @return the domain object with the id from the entity.
 	 */
 	DO create(DO domainObject);
@@ -44,16 +41,14 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	/**
 	 * Deletes an entity in the underlying database from the given domain object
 	 *
-	 * @param domainObject
-	 *            the domain object to be deleted
+	 * @param domainObject the domain object to be deleted
 	 */
 	void delete(DO domainObject);
 
 	/**
 	 * Deletes an entity with the given id.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the deleted entity as a domain object
 	 */
 	DO delete(PK id);
@@ -61,8 +56,7 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	/**
 	 * Checks if an entry exists with the given id.
 	 * 
-	 * @param id
-	 *            the id to check
+	 * @param id the id to check
 	 * @return true, if an entry exists with the given id, otherwise false.
 	 */
 	boolean exists(PK id);
@@ -77,17 +71,16 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	/**
 	 * Persist all new domain objects in the given {@link Collection}.
 	 * 
-	 * @param domainObjects
-	 *            the {@link Collection} of domain objects to persist
+	 * @param domainObjects the {@link Collection} of domain objects to persist
 	 * @return the {@link Collection} with the id's of the persisted objects
 	 */
 	Collection<PK> persist(Collection<DO> domainObjects);
 
 	/**
-	 * Read an entity with the given id and maps it to a domain object that will be returned.
+	 * Read an entity with the given id and maps it to a domain object that will be
+	 * returned.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the domain object
 	 */
 	DO read(PK id);
@@ -95,8 +88,7 @@ public interface DomainService<PK extends Serializable, DO extends DomainObject<
 	/**
 	 * Updates the given domain object to the underlying database.
 	 *
-	 * @param domainObject
-	 *            the domain object
+	 * @param domainObject the domain object
 	 * @return the updated domain object
 	 */
 	DO update(DO domainObject);

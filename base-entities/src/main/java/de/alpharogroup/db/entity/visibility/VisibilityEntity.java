@@ -31,11 +31,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link VisibilityEntity} is a base entity with a flag 'visible' that indicates if the
- * entity is visible or not.
+ * The class {@link VisibilityEntity} is a base entity with a flag 'visible'
+ * that indicates if the entity is visible or not.
  *
- * @param <PK>
- *            the generic type of the id
+ * @param <PK> the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -45,9 +44,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class VisibilityEntity<PK extends Serializable> extends BaseEntity<PK>
-	implements
-		IdentifiableVisibility<PK>
-{
+		implements IdentifiableVisibility<PK> {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

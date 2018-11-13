@@ -26,36 +26,27 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-public abstract class AuthenticationEndpoint
-{
+public abstract class AuthenticationEndpoint {
 
 	/**
 	 * Authenticate against your user-management-system.
 	 *
-	 * @param username
-	 *            the username
-	 * @param password
-	 *            the password
-	 * @throws Exception
-	 *             is thrown if the credentials are not valid
+	 * @param username the username
+	 * @param password the password
+	 * @throws Exception is thrown if the credentials are not valid
 	 */
 	protected abstract void authenticate(String username, String password) throws Exception;
 
 	/**
 	 * Authenticate user.
 	 *
-	 * @param username
-	 *            the username
-	 * @param password
-	 *            the password
+	 * @param username the username
+	 * @param password the password
 	 * @return the response
 	 */
 	@POST
-	public Response authenticateUser(@FormParam("username") String username,
-		@FormParam("password") String password)
-	{
-		try
-		{
+	public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
+		try {
 
 			// Authenticate the given user
 			authenticate(username, password);
@@ -66,9 +57,7 @@ public abstract class AuthenticationEndpoint
 			// Set the token on the response and return it
 			return Response.ok(token).build();
 
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 	}
@@ -76,8 +65,7 @@ public abstract class AuthenticationEndpoint
 	/**
 	 * Create a new token that is associated with the given username.
 	 *
-	 * @param username
-	 *            the username
+	 * @param username the username
 	 * @return the new token that is associated with the given username.
 	 */
 	protected abstract String newToken(String username);

@@ -20,19 +20,12 @@ import java.io.Serializable;
 import de.alpharogroup.db.entity.Identifiable;
 
 /**
- * The interface {@link IdentifiableLastModified} is a combination of the interfaces
- * {@link Identifiable} and {@link LastModified}.
+ * The interface {@link IdentifiableLastModified} is a combination of the
+ * interfaces {@link Identifiable} and {@link LastModified}.
  *
- * @param <PK>
- *            the generic type of the identifier
- * @param <T>
- *            the generic type of time measurement
- * @param <U>
- *            the generic type of the user or account
+ * @param <PK> the generic type of the identifier
+ * @param <T> the generic type of time measurement
+ * @param <U> the generic type of the user or account
  */
-public interface IdentifiableLastModified<PK extends Serializable, T, U>
-	extends
-		Identifiable<PK>,
-		LastModified<T, U>
-{
+public interface IdentifiableLastModified<PK extends Serializable, T, U> extends Identifiable<PK>, LastModified<T, U> {
 }

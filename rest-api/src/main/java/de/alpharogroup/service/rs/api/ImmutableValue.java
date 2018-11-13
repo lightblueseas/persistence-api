@@ -16,13 +16,12 @@
 package de.alpharogroup.service.rs.api;
 
 /**
- * The interface {@link ImmutableValue} provides a getter for an immutable value.
+ * The interface {@link ImmutableValue} provides a getter for an immutable
+ * value.
  *
- * @param <T>
- *            the generic type of the value
+ * @param <T> the generic type of the value
  */
-public interface ImmutableValue<T>
-{
+public interface ImmutableValue<T> {
 
 	/**
 	 * Gets the immutable value

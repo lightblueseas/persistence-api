@@ -29,13 +29,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link VersionableValidatableEntity} is a base entity and has a validFrom property and
- * a validTill property for restricting an entity in a time range in which it is valid.
+ * The class {@link VersionableValidatableEntity} is a base entity and has a
+ * validFrom property and a validTill property for restricting an entity in a
+ * time range in which it is valid.
  *
- * @param <PK>
- *            the generic type of the id
- * @param <T>
- *            the generic type of time measurement
+ * @param <PK> the generic type of the id
+ * @param <T> the generic type of time measurement
  */
 @Entity
 @Table(name = "version-validation")
@@ -44,12 +43,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class VersionableValidatableEntity<PK extends Serializable, T>
-	extends
-		ValidatableEntity<PK, T>
-	implements
-		IdentifiableValidatableVersionable<PK, T>
-{
+public class VersionableValidatableEntity<PK extends Serializable, T> extends ValidatableEntity<PK, T>
+		implements IdentifiableValidatableVersionable<PK, T> {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

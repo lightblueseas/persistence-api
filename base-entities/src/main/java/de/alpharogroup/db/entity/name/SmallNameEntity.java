@@ -30,10 +30,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link SmallNameEntity} is a base entity for a table with a single value.
+ * The class {@link SmallNameEntity} is a base entity for a table with a single
+ * value.
  *
- * @param <PK>
- *            the generic type of the id
+ * @param <PK> the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -43,9 +43,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class SmallNameEntity<PK extends Serializable> extends NameEntity<PK>
-	implements
-		IdentifiableNameable<PK>
-{
+		implements IdentifiableNameable<PK> {
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

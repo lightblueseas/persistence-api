@@ -30,30 +30,26 @@ import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
 /**
- * The abstract class {@link AbstractEntityDOMapper} provides an base implementation for mapping
- * entities to domain objects and back.
+ * The abstract class {@link AbstractEntityDOMapper} provides an base
+ * implementation for mapping entities to domain objects and back.
  *
- * @param <E>
- *            the element type
- * @param <DO>
- *            the generic type
+ * @param <E> the element type
+ * @param <DO> the generic type
  */
 public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>>
-	implements
-		EntityDOMapper<E, DO>
-{
+		implements EntityDOMapper<E, DO> {
 
 	/** The domain object class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<DO> domainObjectClass = (Class<DO>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
+	private final Class<DO> domainObjectClass = (Class<DO>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 1);
 
 	/** The entity class. */
 	@SuppressWarnings("unchecked")
 	@Getter
-	private final Class<E> entityClass = (Class<E>)TypeArgumentsExtensions
-		.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 0);
+	private final Class<E> entityClass = (Class<E>) TypeArgumentsExtensions
+			.getTypeArgument(AbstractEntityDOMapper.class, this.getClass(), 0);
 
 	/**
 	 * The mapper instance.
@@ -64,56 +60,47 @@ public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends
 	/**
 	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 */
-	public AbstractEntityDOMapper()
-	{
-		this(Collections.<String> emptyList());
+	public AbstractEntityDOMapper() {
+		this(Collections.<String>emptyList());
 	}
 
 	/**
 	 * Instantiates a new {@link AbstractEntityDOMapper}.
 	 *
-	 * @param mappingFiles
-	 *            the mapping files
+	 * @param mappingFiles the mapping files
 	 */
-	public AbstractEntityDOMapper(final List<String> mappingFiles)
-	{
+	public AbstractEntityDOMapper(final List<String> mappingFiles) {
 		mapper = newMapper(mappingFiles);
 	}
 
-	private BeanMappingBuilder beanMappingBuilder()
-	{
-		return new BeanMappingBuilder()
-		{
+	private BeanMappingBuilder beanMappingBuilder() {
+		return new BeanMappingBuilder() {
 			@Override
-			protected void configure()
-			{
+			protected void configure() {
 				mapping(getEntityClass(), getDomainObjectClass(), TypeMappingOptions.mapNull(false),
-					TypeMappingOptions.mapEmptyString(false));
+						TypeMappingOptions.mapEmptyString(false));
 			}
 
 		};
 	}
 
 	/**
-	 * Factory method for creating the new {@link Mapper} for the mapping process with the given
-	 * mapping files list. This method is invoked in the constructor and can be overridden so users
-	 * can provide their own mapping process.
+	 * Factory method for creating the new {@link Mapper} for the mapping process
+	 * with the given mapping files list. This method is invoked in the constructor
+	 * and can be overridden so users can provide their own mapping process.
 	 *
-	 * @param mappingFiles
-	 *            the mapping files
+	 * @param mappingFiles the mapping files
 	 *
 	 * @return the new {@link Mapper} for the mapping process.
 	 */
-	public Mapper newMapper(final List<String> mappingFiles)
-	{
+	public Mapper newMapper(final List<String> mappingFiles) {
 		final DozerBeanMapper mapper = DozerBeanMapperSingleton.get();
-		if (CollectionExtensions.isNotEmpty(mappingFiles))
-		{
+		if (CollectionExtensions.isNotEmpty(mappingFiles)) {
 			mapper.setMappingFiles(mappingFiles);
 		}
 		mapper.addMapping(beanMappingBuilder());
-		mapper.setCustomFieldMapper((source, destination, sourceFieldValue, classMap,
-			fieldMapping) -> sourceFieldValue == null);
+		mapper.setCustomFieldMapper(
+				(source, destination, sourceFieldValue, classMap, fieldMapping) -> sourceFieldValue == null);
 		return mapper;
 	}
 

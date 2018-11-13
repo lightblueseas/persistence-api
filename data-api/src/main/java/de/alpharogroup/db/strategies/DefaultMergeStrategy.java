@@ -31,18 +31,13 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * The class {@link DefaultMergeStrategy} is a default implementation of the {@link MergeStrategy}.
+ * The class {@link DefaultMergeStrategy} is a default implementation of the
+ * {@link MergeStrategy}.
  *
- * @param <T>
- *            the type of the entity object
- * @param <PK>
- *            the type of the primary key from the entity object
+ * @param <T> the type of the entity object
+ * @param <PK> the type of the primary key from the entity object
  */
-public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable>
-	implements
-		MergeStrategy<T, PK>
-{
-
+public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializable> implements MergeStrategy<T, PK> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -54,17 +49,15 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
-		.getFirstTypeArgument(DefaultMergeStrategy.class, this.getClass());
+	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(DefaultMergeStrategy.class,
+			this.getClass());
 
 	/**
 	 * Instantiates a new {@link DefaultMergeStrategy}.
 	 *
-	 * @param repository
-	 *            the repository
+	 * @param repository the repository
 	 */
-	public DefaultMergeStrategy(AbstractRepository<T, PK> repository)
-	{
+	public DefaultMergeStrategy(AbstractRepository<T, PK> repository) {
 		this.repository = repository;
 	}
 
@@ -73,8 +66,7 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	 *
 	 * @return the entity manager
 	 */
-	private EntityManager getEntityManager()
-	{
+	private EntityManager getEntityManager() {
 		return this.repository.getEntityManager();
 	}
 
@@ -82,11 +74,9 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<T> merge(List<T> objects)
-	{
+	public List<T> merge(List<T> objects) {
 		final List<T> mergedEntities = new ArrayList<>();
-		for (final T object : objects)
-		{
+		for (final T object : objects) {
 			mergedEntities.add(merge(object));
 		}
 		return mergedEntities;
@@ -97,8 +87,7 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 	 */
 	@Override
 	@Transactional
-	public T merge(T entity)
-	{
+	public T merge(T entity) {
 		return getEntityManager().merge(entity);
 	}
 

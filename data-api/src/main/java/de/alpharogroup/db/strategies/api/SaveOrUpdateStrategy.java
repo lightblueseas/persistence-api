@@ -21,23 +21,18 @@ import java.util.List;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The interface {@link SaveOrUpdateStrategy} can interact if entities are saved or updated.
+ * The interface {@link SaveOrUpdateStrategy} can interact if entities are saved
+ * or updated.
  *
- * @param <T>
- *            the type of the entity object
- * @param <PK>
- *            the type of the primary key from the entity object
+ * @param <T> the type of the entity object
+ * @param <PK> the type of the primary key from the entity object
  */
-public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable>
-	extends
-		Serializable
-{
+public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Serializable> extends Serializable {
 
 	/**
 	 * Save all new entities in the given list.
 	 *
-	 * @param entities
-	 *            the list to save
+	 * @param entities the list to save
 	 * @return the list with the primary keys of the saved entities
 	 */
 	List<PK> save(List<T> entities);
@@ -45,8 +40,7 @@ public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Seria
 	/**
 	 * Persist the given entity into database.
 	 *
-	 * @param entity
-	 *            the new instance to save.
+	 * @param entity the new instance to save.
 	 * @return the id of the saved entity
 	 */
 	PK save(T entity);
@@ -54,32 +48,28 @@ public interface SaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Seria
 	/**
 	 * Save or update all transient entities in the given list.
 	 *
-	 * @param entities
-	 *            the transient entities
+	 * @param entities the transient entities
 	 */
 	void saveOrUpdate(List<T> entities);
 
 	/**
 	 * Save or update the given persistent entity.
 	 *
-	 * @param entity
-	 *            the transient entity to save or update.
+	 * @param entity the transient entity to save or update.
 	 */
 	void saveOrUpdate(T entity);
 
 	/**
 	 * Update all transient entities in the given list.
 	 *
-	 * @param entities
-	 *            the transient entities to update.
+	 * @param entities the transient entities to update.
 	 */
 	void update(List<T> entities);
 
 	/**
 	 * Update changes made to the given entity.
 	 *
-	 * @param entity
-	 *            the transient entity to update.
+	 * @param entity the transient entity to update.
 	 */
 	void update(T entity);
 }
