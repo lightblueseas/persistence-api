@@ -49,10 +49,13 @@
 		<!-- TMP version -->
 		<jcommons-lang.version>4.35</jcommons-lang.version>
 		<spring-data-jpa.version>2.0.8.RELEASE</spring-data-jpa.version>
+		<!-- ENT-CORE version -->
+		<ent-core.version>1</ent-core.version>
+		<!-- ENT-API version -->
+		<ent-api.version>1</ent-api.version>
 	</properties>
 
 	<modules>
-		<module>entities-api</module>
 		<module>domain-api</module>
 		<module>data-initialization</module>
 		<module>data-usertype</module>
@@ -84,6 +87,18 @@
 	<dependencyManagement>
 
 		<dependencies>
+			<!-- ENT-API DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>ent-api</artifactId>
+				<version>${ent-api.version}</version>
+			</dependency>
+			<!-- ENT-CORE DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>ent-core</artifactId>
+				<version>${ent-core.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
@@ -131,12 +146,6 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>domain-mapper</artifactId>
 				<version>${domain-mapper.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>entities-api</artifactId>
-				<version>${entities-api.version}</version>
 			</dependency>
 
 			<dependency>
