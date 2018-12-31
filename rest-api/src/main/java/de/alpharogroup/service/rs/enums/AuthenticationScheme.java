@@ -22,7 +22,8 @@ import lombok.NonNull;
 /**
  * The enum {@link AuthenticationScheme} provides values for
  */
-public enum AuthenticationScheme implements ImmutableValue<String> {
+public enum AuthenticationScheme implements ImmutableValue<String>
+{
 
 	/** The basic. */
 	BASIC("Basic"),
@@ -37,9 +38,11 @@ public enum AuthenticationScheme implements ImmutableValue<String> {
 	/**
 	 * private constructor
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 */
-	private AuthenticationScheme(final @NonNull String value) {
+	private AuthenticationScheme(final @NonNull String value)
+	{
 		this.value = value;
 	}
 }

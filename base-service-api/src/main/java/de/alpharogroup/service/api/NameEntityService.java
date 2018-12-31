@@ -28,32 +28,40 @@ import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.service.api.BusinessService;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 
-public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable> extends BusinessService<T, PK> {
+public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable>
+	extends
+		BusinessService<T, PK>
+{
 
 	/**
 	 * Find the entity object from the given name value.
 	 * 
-	 * @param nameValue the name value
+	 * @param nameValue
+	 *            the name value
 	 * @return the found entity object or null if not.
 	 * @deprecated use instead the method findFirst in this interface
 	 */
 	@Deprecated
-	default T find(final String nameValue) {
+	default T find(final String nameValue)
+	{
 		return findFirst(nameValue);
 	}
 
 	/**
 	 * Find the entities objects from the given name value.
 	 *
-	 * @param nameValue the name value
+	 * @param nameValue
+	 *            the name value
 	 * @return the list with the entities
 	 */
-	default List<T> findEntities(final String nameValue) {
+	default List<T> findEntities(final String nameValue)
+	{
 		@SuppressWarnings("unchecked")
-		Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(this.getClass());
+		Class<T> type = (Class<T>)TypeArgumentsExtensions.getFirstTypeArgument(this.getClass());
 		final String hqlString = JpqlStringFactory.forNameEntity(type, nameValue);
 		final Query query = getQuery(hqlString);
-		if (nameValue != null && !nameValue.isEmpty()) {
+		if (nameValue != null && !nameValue.isEmpty())
+		{
 			query.setParameter("name", nameValue);
 		}
 		@SuppressWarnings("unchecked")
@@ -64,10 +72,12 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	/**
 	 * Find the entity object from the given name value.
 	 * 
-	 * @param nameValue the name value
+	 * @param nameValue
+	 *            the name value
 	 * @return the found entity object or null if not.
 	 */
-	default T findFirst(final String nameValue) {
+	default T findFirst(final String nameValue)
+	{
 		final List<T> nameEntities = findEntities(nameValue);
 		return ListExtensions.getFirst(nameEntities);
 	}
@@ -75,13 +85,16 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	/**
 	 * Gets the or creates a new entity object
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the entity object
 	 */
 	@Transactional
-	default T getOrCreateNewNameEntity(final String value) {
+	default T getOrCreateNewNameEntity(final String value)
+	{
 		T nameEntity = findFirst(value);
-		if (nameEntity == null) {
+		if (nameEntity == null)
+		{
 			nameEntity = newNameEntity(value);
 			nameEntity = merge(nameEntity);
 		}
@@ -91,7 +104,8 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	/**
 	 * Factory method for create a new name entity.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the new name entity
 	 */
 	T newNameEntity(final String value);

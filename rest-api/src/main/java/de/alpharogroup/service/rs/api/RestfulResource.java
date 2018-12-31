@@ -27,16 +27,19 @@ import de.alpharogroup.domain.DomainObject;
 /**
  * The interface {@link RestfulResource} provides crud methods
  *
- * @param <PK> the generic type of the primary key
- * @param <DO> the generic type of the domain object
+ * @param <PK>
+ *            the generic type of the primary key
+ * @param <DO>
+ *            the generic type of the domain object
  */
-public interface RestfulResource<PK, DO extends DomainObject<PK>> {
+public interface RestfulResource<PK, DO extends DomainObject<PK>>
+{
 
 	/**
-	 * Creates an entity from the given domain object and persist it to the
-	 * underlying database.
+	 * Creates an entity from the given domain object and persist it to the underlying database.
 	 *
-	 * @param domainObject the domain object
+	 * @param domainObject
+	 *            the domain object
 	 * @return the domain object with the id from the entity.
 	 */
 	@POST
@@ -46,7 +49,8 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 	/**
 	 * Deletes an entity in the underlying database from the given domain object
 	 *
-	 * @param domainObject the domain object to be deleted
+	 * @param domainObject
+	 *            the domain object to be deleted
 	 */
 	@POST
 	@Path("/delete/")
@@ -55,7 +59,8 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 	/**
 	 * Deletes an entity with the given id.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	@DELETE
 	@Path("/{id}/")
@@ -64,17 +69,18 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 	/**
 	 * Updates the given domain object to the underlying database.
 	 *
-	 * @param domainObject the domain object
+	 * @param domainObject
+	 *            the domain object
 	 */
 	@POST
 	@Path("/merge/")
 	void merge(DO domainObject);
 
 	/**
-	 * Read an entity with the given id and maps it to a domain object that will be
-	 * returned.
+	 * Read an entity with the given id and maps it to a domain object that will be returned.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the domain object
 	 */
 	@GET
@@ -84,7 +90,8 @@ public interface RestfulResource<PK, DO extends DomainObject<PK>> {
 	/**
 	 * Updates the given domain object to the underlying database.
 	 *
-	 * @param domainObject the domain object
+	 * @param domainObject
+	 *            the domain object
 	 */
 	@PUT
 	@Path("/")

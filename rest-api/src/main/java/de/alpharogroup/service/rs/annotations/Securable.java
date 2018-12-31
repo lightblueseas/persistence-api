@@ -23,10 +23,9 @@ import java.lang.annotation.Target;
 import javax.ws.rs.NameBinding;
 
 /**
- * The annotation {@link Securable} is annotated with the meta-annotation
- * {@link NameBinding} that is part of JAX-RS. The meta-annotation
- * {@link NameBinding} can be used to create other annotations to bind filters
- * and interceptors to resource classes and methods.
+ * The annotation {@link Securable} is annotated with the meta-annotation {@link NameBinding} that
+ * is part of JAX-RS. The meta-annotation {@link NameBinding} can be used to create other
+ * annotations to bind filters and interceptors to resource classes and methods.
  */
 @NameBinding
 @Target({ ElementType.TYPE, ElementType.METHOD })

@@ -21,12 +21,17 @@ import de.alpharogroup.db.entity.validation.IdentifiableValidatable;
 import de.alpharogroup.db.entity.version.Versionable;
 
 /**
- * The interface {@link IdentifiableValidatableVersionable} is a combination of
- * the interfaces {@link IdentifiableValidatable} and {@link Versionable}.
+ * The interface {@link IdentifiableValidatableVersionable} is a combination of the interfaces
+ * {@link IdentifiableValidatable} and {@link Versionable}.
  *
- * @param <PK> the generic type of the identifier
- * @param <T> the generic type of time measurement
+ * @param <PK>
+ *            the generic type of the identifier
+ * @param <T>
+ *            the generic type of time measurement
  */
 public interface IdentifiableValidatableVersionable<PK extends Serializable, T>
-		extends IdentifiableValidatable<PK, T>, Versionable {
+	extends
+		IdentifiableValidatable<PK, T>,
+		Versionable
+{
 }

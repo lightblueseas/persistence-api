@@ -16,13 +16,16 @@
 package de.alpharogroup.db.entity.create;
 
 /**
- * The interface {@link Creatable} can be implemented from an entity that needs
- * the data of the point of time from its creation
+ * The interface {@link Creatable} can be implemented from an entity that needs the data of the
+ * point of time from its creation
  *
- * @param <T> the generic type of time measurement
- * @param <U> the generic type of the user or account
+ * @param <T>
+ *            the generic type of time measurement
+ * @param <U>
+ *            the generic type of the user or account
  */
-public interface Creatable<T, U> {
+public interface Creatable<T, U>
+{
 
 	/**
 	 * Gets the point of time from creation
@@ -41,14 +44,16 @@ public interface Creatable<T, U> {
 	/**
 	 * Sets the point of time from creation
 	 *
-	 * @param created the point of time from creation
+	 * @param created
+	 *            the point of time from creation
 	 */
 	void setCreated(T created);
 
 	/**
 	 * Sets the user or account that created this entity
 	 *
-	 * @param user the user or account that created this entity
+	 * @param user
+	 *            the user or account that created this entity
 	 */
 	void setCreatedBy(U user);
 }

@@ -20,10 +20,15 @@ import java.io.Serializable;
 import de.alpharogroup.db.entity.Identifiable;
 
 /**
- * The interface {@link IdentifiableVersionable} is a combination of the
- * interfaces {@link Identifiable} and {@link Versionable}.
+ * The interface {@link IdentifiableVersionable} is a combination of the interfaces
+ * {@link Identifiable} and {@link Versionable}.
  * 
- * @param <PK> the generic type of the identifier
+ * @param <PK>
+ *            the generic type of the identifier
  */
-public interface IdentifiableVersionable<PK extends Serializable> extends Identifiable<PK>, Versionable {
+public interface IdentifiableVersionable<PK extends Serializable>
+	extends
+		Identifiable<PK>,
+		Versionable
+{
 }

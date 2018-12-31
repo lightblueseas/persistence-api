@@ -20,14 +20,21 @@ import java.io.Serializable;
 import de.alpharogroup.db.entity.Identifiable;
 
 /**
- * The interface {@link IdentifiableKeyValueOwner} is a combination of the
- * interfaces {@link Identifiable} and {@link KeyValueOwner}.
+ * The interface {@link IdentifiableKeyValueOwner} is a combination of the interfaces
+ * {@link Identifiable} and {@link KeyValueOwner}.
  *
- * @param <PK> the generic type of the identifier
- * @param <O> the generic type of the owner
- * @param <K> the generic type of the key
- * @param <V> the generic type of the value
+ * @param <PK>
+ *            the generic type of the identifier
+ * @param <O>
+ *            the generic type of the owner
+ * @param <K>
+ *            the generic type of the key
+ * @param <V>
+ *            the generic type of the value
  */
 public interface IdentifiableKeyValueOwner<PK extends Serializable, O, K, V>
-		extends Identifiable<PK>, KeyValueOwner<O, K, V> {
+	extends
+		Identifiable<PK>,
+		KeyValueOwner<O, K, V>
+{
 }

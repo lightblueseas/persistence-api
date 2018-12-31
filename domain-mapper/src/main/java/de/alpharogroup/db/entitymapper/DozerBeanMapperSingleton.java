@@ -18,10 +18,11 @@ package de.alpharogroup.db.entitymapper;
 import org.dozer.DozerBeanMapper;
 
 /**
- * The class {@link DozerBeanMapperSingleton} holds a single instance of the
- * class {@linkplain DozerBeanMapper}.
+ * The class {@link DozerBeanMapperSingleton} holds a single instance of the class
+ * {@linkplain DozerBeanMapper}.
  */
-public final class DozerBeanMapperSingleton {
+public final class DozerBeanMapperSingleton
+{
 
 	/** The only single one instance. */
 	private static final DozerBeanMapper instance = new DozerBeanMapper();
@@ -31,13 +32,15 @@ public final class DozerBeanMapperSingleton {
 	 *
 	 * @return single one instance of the {@linkplain DozerBeanMapper} object.
 	 */
-	public static DozerBeanMapper get() {
+	public static DozerBeanMapper get()
+	{
 		return instance;
 	}
 
 	/**
 	 * Instantiates a new {@link DozerBeanMapperSingleton}.
 	 */
-	private DozerBeanMapperSingleton() {
+	private DozerBeanMapperSingleton()
+	{
 	}
 }

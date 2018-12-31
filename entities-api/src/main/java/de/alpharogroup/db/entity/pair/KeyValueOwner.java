@@ -16,15 +16,18 @@
 package de.alpharogroup.db.entity.pair;
 
 /**
- * The interface {@link KeyValueOwner} can be implemented from an entity that
- * needs the data of a generic key value pair with his owner which can be also
- * the parent if it is from the same type.
+ * The interface {@link KeyValueOwner} can be implemented from an entity that needs the data of a
+ * generic key value pair with his owner which can be also the parent if it is from the same type.
  *
- * @param <O> the generic type of the owner
- * @param <K> the generic type of the key
- * @param <V> the generic type of the value
+ * @param <O>
+ *            the generic type of the owner
+ * @param <K>
+ *            the generic type of the key
+ * @param <V>
+ *            the generic type of the value
  */
-public interface KeyValueOwner<O, K, V> {
+public interface KeyValueOwner<O, K, V>
+{
 
 	/**
 	 * Gets the key.
@@ -50,21 +53,24 @@ public interface KeyValueOwner<O, K, V> {
 	/**
 	 * Sets the key.
 	 *
-	 * @param key the new key
+	 * @param key
+	 *            the new key
 	 */
 	void setKey(final K key);
 
 	/**
 	 * Sets the owner.
 	 *
-	 * @param owner the new owner
+	 * @param owner
+	 *            the new owner
 	 */
 	void setOwner(final O owner);
 
 	/**
 	 * Sets the value.
 	 *
-	 * @param value the new value
+	 * @param value
+	 *            the new value
 	 */
 	void setValue(final V value);
 }

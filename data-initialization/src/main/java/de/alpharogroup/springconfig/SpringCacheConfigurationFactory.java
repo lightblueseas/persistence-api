@@ -36,20 +36,25 @@ import lombok.experimental.UtilityClass;
  * A factory class for creating cache configuration objects.
  */
 @UtilityClass
-public class SpringCacheConfigurationFactory {
+public class SpringCacheConfigurationFactory
+{
 
 	/**
-	 * Factory method for create the new composite {@link CacheManager} from the
-	 * given {@link CacheManager}'s.
+	 * Factory method for create the new composite {@link CacheManager} from the given
+	 * {@link CacheManager}'s.
 	 *
-	 * @param cacheCacheManager the cache cache manager
+	 * @param cacheCacheManager
+	 *            the cache cache manager
 	 * @return the new {@link CacheManager}
 	 */
-	public static CacheManager newCacheManager(final CacheManager... cacheCacheManager) {
+	public static CacheManager newCacheManager(final CacheManager... cacheCacheManager)
+	{
 
 		final List<CacheManager> cacheManagers = ListFactory.newArrayList();
-		for (final CacheManager cm : cacheCacheManager) {
-			if (cm != null) {
+		for (final CacheManager cm : cacheCacheManager)
+		{
+			if (cm != null)
+			{
 				cacheManagers.add(cm);
 			}
 		}
@@ -67,7 +72,8 @@ public class SpringCacheConfigurationFactory {
 	 *
 	 * @return the new {@link SimpleKeyGenerator}
 	 */
-	public static KeyGenerator newSimpleKeyGenerator() {
+	public static KeyGenerator newSimpleKeyGenerator()
+	{
 		return new SimpleKeyGenerator();
 	}
 
@@ -76,7 +82,8 @@ public class SpringCacheConfigurationFactory {
 	 *
 	 * @return the new {@link SimpleCacheResolver}
 	 */
-	public static CacheResolver newSimpleCacheResolver() {
+	public static CacheResolver newSimpleCacheResolver()
+	{
 		return new SimpleCacheResolver();
 	}
 
@@ -85,18 +92,22 @@ public class SpringCacheConfigurationFactory {
 	 *
 	 * @return the new {@link SimpleCacheErrorHandler}
 	 */
-	public static CacheErrorHandler newSimpleCacheErrorHandler() {
+	public static CacheErrorHandler newSimpleCacheErrorHandler()
+	{
 		return new SimpleCacheErrorHandler();
 	}
 
 	/**
-	 * Factory method for create the new {@link EhCacheManagerFactoryBean} object
-	 * from the given file name as {@link String} object.
+	 * Factory method for create the new {@link EhCacheManagerFactoryBean} object from the given
+	 * file name as {@link String} object.
 	 *
-	 * @param ehcacheXmlFilename the xml filename
+	 * @param ehcacheXmlFilename
+	 *            the xml filename
 	 * @return the new {@link EhCacheManagerFactoryBean}
 	 */
-	public static EhCacheManagerFactoryBean newEhCacheManagerFactoryBean(final String ehcacheXmlFilename) {
+	public static EhCacheManagerFactoryBean newEhCacheManagerFactoryBean(
+		final String ehcacheXmlFilename)
+	{
 		final EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
 		cacheManagerFactoryBean.setConfigLocation(new ClassPathResource(ehcacheXmlFilename));
 		cacheManagerFactoryBean.setShared(true);
@@ -104,14 +115,18 @@ public class SpringCacheConfigurationFactory {
 	}
 
 	/**
-	 * Factory method for create the new {@link EhCacheCacheManager} object from the
-	 * given {@link EhCacheManagerFactoryBean} object.
+	 * Factory method for create the new {@link EhCacheCacheManager} object from the given
+	 * {@link EhCacheManagerFactoryBean} object.
 	 *
-	 * @param cacheManagerFactoryBean the {@link EhCacheManagerFactoryBean} object
+	 * @param cacheManagerFactoryBean
+	 *            the {@link EhCacheManagerFactoryBean} object
 	 * @return the new {@link EhCacheCacheManager}
 	 */
-	public static EhCacheCacheManager newEhCacheCacheManager(final EhCacheManagerFactoryBean cacheManagerFactoryBean) {
-		final EhCacheCacheManager cacheManger = new EhCacheCacheManager(cacheManagerFactoryBean.getObject());
+	public static EhCacheCacheManager newEhCacheCacheManager(
+		final EhCacheManagerFactoryBean cacheManagerFactoryBean)
+	{
+		final EhCacheCacheManager cacheManger = new EhCacheCacheManager(
+			cacheManagerFactoryBean.getObject());
 		return cacheManger;
 	}
 

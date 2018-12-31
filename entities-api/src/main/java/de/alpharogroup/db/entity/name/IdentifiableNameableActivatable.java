@@ -21,11 +21,16 @@ import de.alpharogroup.db.entity.Identifiable;
 import de.alpharogroup.db.entity.activatable.Activatable;
 
 /**
- * The interface {@link IdentifiableNameableActivatable} is a combination of the
- * interfaces {@link Identifiable}, {@link Nameable} and {@link Activatable}.
+ * The interface {@link IdentifiableNameableActivatable} is a combination of the interfaces
+ * {@link Identifiable}, {@link Nameable} and {@link Activatable}.
  * 
- * @param <PK> the generic type of the identifier
+ * @param <PK>
+ *            the generic type of the identifier
  */
 public interface IdentifiableNameableActivatable<PK extends Serializable>
-		extends Identifiable<PK>, Nameable, Activatable {
+	extends
+		Identifiable<PK>,
+		Nameable,
+		Activatable
+{
 }

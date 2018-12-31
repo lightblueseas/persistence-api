@@ -32,12 +32,17 @@ import lombok.Setter;
 /**
  * The abstract class {@link AbstractBusinessService}.
  *
- * @param <T> the type of the domain object
- * @param <PK> the type of the primary key from the domain object
- * @param <REPOSITORY> the type of the data access object.
+ * @param <T>
+ *            the type of the domain object
+ * @param <PK>
+ *            the type of the primary key from the domain object
+ * @param <REPOSITORY>
+ *            the type of the data access object.
  */
 public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK extends Serializable, REPOSITORY extends GenericRepository<T, PK>>
-		implements BusinessService<T, PK> {
+	implements
+		BusinessService<T, PK>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -51,7 +56,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Query createNativeQuery(String sqlString) {
+	public Query createNativeQuery(String sqlString)
+	{
 		return getRepository().createNativeQuery(sqlString);
 	}
 
@@ -60,7 +66,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Query createNativeQuery(String sqlString, Class resultClass) {
+	public Query createNativeQuery(String sqlString, Class resultClass)
+	{
 		return getRepository().createNativeQuery(sqlString, resultClass);
 	}
 
@@ -68,7 +75,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Query createNativeQuery(String sqlString, String resultSetMapping) {
+	public Query createNativeQuery(String sqlString, String resultSetMapping)
+	{
 		return getRepository().createNativeQuery(sqlString, resultSetMapping);
 	}
 
@@ -77,8 +85,10 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void delete(List<T> objects) {
-		for (final T t : objects) {
+	public void delete(List<T> objects)
+	{
+		for (final T t : objects)
+		{
 			delete(t.getId());
 		}
 	}
@@ -88,7 +98,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void delete(PK id) {
+	public void delete(PK id)
+	{
 		getRepository().delete(id);
 	}
 
@@ -97,7 +108,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void delete(T object) {
+	public void delete(T object)
+	{
 		getRepository().delete(object);
 	}
 
@@ -105,7 +117,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void evict(T object) {
+	public void evict(T object)
+	{
 		getRepository().evict(object);
 	}
 
@@ -113,7 +126,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean exists(PK id) {
+	public boolean exists(PK id)
+	{
 		return getRepository().exists(id);
 	}
 
@@ -121,7 +135,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<T> findAll() {
+	public List<T> findAll()
+	{
 		return getRepository().findAll();
 	}
 
@@ -129,7 +144,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T get(PK id) {
+	public T get(PK id)
+	{
 		return getRepository().get(id);
 	}
 
@@ -137,7 +153,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EntityManager getEntityManager() {
+	public EntityManager getEntityManager()
+	{
 		return getRepository().getEntityManager();
 	}
 
@@ -145,7 +162,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Query getQuery(String jpqlString) {
+	public Query getQuery(String jpqlString)
+	{
 		return getRepository().getQuery(jpqlString);
 	}
 
@@ -153,7 +171,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T load(PK id) {
+	public T load(PK id)
+	{
 		return getRepository().load(id);
 	}
 
@@ -162,7 +181,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public List<T> merge(List<T> objects) {
+	public List<T> merge(List<T> objects)
+	{
 		return getRepository().merge(objects);
 	}
 
@@ -171,7 +191,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public T merge(T object) {
+	public T merge(T object)
+	{
 		return getRepository().merge(object);
 	}
 
@@ -180,7 +201,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void refresh(T object) {
+	public void refresh(T object)
+	{
 		getRepository().refresh(object);
 	}
 
@@ -189,7 +211,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public List<PK> save(List<T> objects) {
+	public List<PK> save(List<T> objects)
+	{
 		return getRepository().save(objects);
 	}
 
@@ -198,7 +221,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public PK save(T newInstance) {
+	public PK save(T newInstance)
+	{
 		return getRepository().save(newInstance);
 	}
 
@@ -207,7 +231,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void saveOrUpdate(List<T> objects) {
+	public void saveOrUpdate(List<T> objects)
+	{
 		getRepository().saveOrUpdate(objects);
 	}
 
@@ -216,7 +241,8 @@ public abstract class AbstractBusinessService<T extends BaseEntity<PK>, PK exten
 	 */
 	@Override
 	@Transactional
-	public void saveOrUpdate(T object) {
+	public void saveOrUpdate(T object)
+	{
 		getRepository().saveOrUpdate(object);
 	}
 }

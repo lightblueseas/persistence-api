@@ -33,10 +33,15 @@ import lombok.NonNull;
  * The class {@link DefaultDeleteStrategy} is a default implementation of the
  * {@link DeleteStrategy}.
  *
- * @param <T> the type of the entity object
- * @param <PK> the type of the primary key from the entity object
+ * @param <T>
+ *            the type of the entity object
+ * @param <PK>
+ *            the type of the primary key from the entity object
  */
-public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable> implements DeleteStrategy<T, PK> {
+public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializable>
+	implements
+		DeleteStrategy<T, PK>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -47,15 +52,17 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	/** The class type of the entity. */
 	@Getter
 	@SuppressWarnings("unchecked")
-	private final Class<T> type = (Class<T>) TypeArgumentsExtensions.getFirstTypeArgument(DefaultDeleteStrategy.class,
-			this.getClass());
+	private final Class<T> type = (Class<T>)TypeArgumentsExtensions
+		.getFirstTypeArgument(DefaultDeleteStrategy.class, this.getClass());
 
 	/**
 	 * Instantiates a new {@link DefaultDeleteStrategy}.
 	 *
-	 * @param repository the repository
+	 * @param repository
+	 *            the repository
 	 */
-	public DefaultDeleteStrategy(AbstractRepository<T, PK> repository) {
+	public DefaultDeleteStrategy(AbstractRepository<T, PK> repository)
+	{
 		this.repository = repository;
 	}
 
@@ -63,8 +70,10 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(List<T> objects) {
-		for (final T entity : objects) {
+	public void delete(List<T> objects)
+	{
+		for (final T entity : objects)
+		{
 			delete(entity);
 		}
 	}
@@ -73,7 +82,8 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(PK id) {
+	public void delete(PK id)
+	{
 		final T entity = getEntityManager().find(type, id);
 		delete(entity);
 	}
@@ -83,10 +93,14 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	 */
 	@Override
 	@Transactional
-	public void delete(T entity) {
-		if (getEntityManager().contains(entity)) {
+	public void delete(T entity)
+	{
+		if (getEntityManager().contains(entity))
+		{
 			getEntityManager().remove(entity);
-		} else {
+		}
+		else
+		{
 			getEntityManager().remove(getEntityManager().merge(entity));
 		}
 	}
@@ -96,7 +110,8 @@ public class DefaultDeleteStrategy<T extends BaseEntity<PK>, PK extends Serializ
 	 *
 	 * @return the entity manager
 	 */
-	private EntityManager getEntityManager() {
+	private EntityManager getEntityManager()
+	{
 		return this.repository.getEntityManager();
 	}
 

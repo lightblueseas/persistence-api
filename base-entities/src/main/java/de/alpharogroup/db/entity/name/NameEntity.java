@@ -26,15 +26,19 @@ import javax.persistence.MappedSuperclass;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The class {@link NameEntity} is a base entity for all name entities. A name
- * entity is an entity with a single string value.
+ * The class {@link NameEntity} is a base entity for all name entities. A name entity is an entity
+ * with a single string value.
  *
- * @param <PK> the generic type of the id
+ * @param <PK>
+ *            the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Access(AccessType.FIELD)
-public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK> implements IdentifiableNameable<PK> {
+public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
+	implements
+		IdentifiableNameable<PK>
+{
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

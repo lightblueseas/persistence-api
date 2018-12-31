@@ -31,16 +31,19 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 /**
  * A factory class for creating jpa configuration objects.
  */
-public class SpringJpaFactory {
+public class SpringJpaFactory
+{
 
 	/**
 	 * Factory method for create the new {@link DataSource} object from the given
 	 * {@link DataSourceBean} object.
 	 *
-	 * @param dataSourceBean the {@link DataSourceBean} object
+	 * @param dataSourceBean
+	 *            the {@link DataSourceBean} object
 	 * @return the new {@link DataSource}
 	 */
-	public static DataSource newDataSource(final DataSourceBean dataSourceBean) {
+	public static DataSource newDataSource(final DataSourceBean dataSourceBean)
+	{
 		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(dataSourceBean.getDriverClassName());
 		dataSource.setUrl(dataSourceBean.getUrl());
@@ -50,19 +53,24 @@ public class SpringJpaFactory {
 	}
 
 	/**
-	 * Factory method for create the new
-	 * {@link LocalContainerEntityManagerFactoryBean} object from the given
-	 * persistence unit name as {@link String} object, the {@link DataSource}
-	 * object, the {@link JpaVendorAdapter} object and the jpa {@link Properties}.
+	 * Factory method for create the new {@link LocalContainerEntityManagerFactoryBean} object from
+	 * the given persistence unit name as {@link String} object, the {@link DataSource} object, the
+	 * {@link JpaVendorAdapter} object and the jpa {@link Properties}.
 	 *
-	 * @param persistenceUnitName the persistence unit name
-	 * @param dataSource          the data source
-	 * @param vendorAdapter       the vendor adapter
-	 * @param jpaProperties       the jpa properties
+	 * @param persistenceUnitName
+	 *            the persistence unit name
+	 * @param dataSource
+	 *            the data source
+	 * @param vendorAdapter
+	 *            the vendor adapter
+	 * @param jpaProperties
+	 *            the jpa properties
 	 * @return the new {@link LocalContainerEntityManagerFactoryBean} object
 	 */
-	public static LocalContainerEntityManagerFactoryBean newEntityManagerFactoryBean(String persistenceUnitName,
-			DataSource dataSource, JpaVendorAdapter vendorAdapter, Properties jpaProperties) {
+	public static LocalContainerEntityManagerFactoryBean newEntityManagerFactoryBean(
+		String persistenceUnitName, DataSource dataSource, JpaVendorAdapter vendorAdapter,
+		Properties jpaProperties)
+	{
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
 		entityManagerFactoryBean.setPersistenceUnitName(persistenceUnitName);
@@ -78,23 +86,27 @@ public class SpringJpaFactory {
 	 * Factory method for create the new {@link JdbcTemplate} object from the given
 	 * {@link DataSource} object.
 	 *
-	 * @param dataSource the {@link DataSource} object
+	 * @param dataSource
+	 *            the {@link DataSource} object
 	 * @return the new {@link JdbcTemplate}
 	 */
-	public static JdbcTemplate newJdbcTemplate(DataSource dataSource) {
+	public static JdbcTemplate newJdbcTemplate(DataSource dataSource)
+	{
 		JdbcTemplate jdbcTemplate;
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		return jdbcTemplate;
 	}
 
 	/**
-	 * Factory method for create the new {@link JpaVendorAdapter} object from the
-	 * given {@link Database} object.
+	 * Factory method for create the new {@link JpaVendorAdapter} object from the given
+	 * {@link Database} object.
 	 *
-	 * @param db the {@link Database} object
+	 * @param db
+	 *            the {@link Database} object
 	 * @return the new {@link JpaVendorAdapter}
 	 */
-	public static JpaVendorAdapter newJpaVendorAdapter(Database db) {
+	public static JpaVendorAdapter newJpaVendorAdapter(Database db)
+	{
 		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setShowSql(false);
 		hibernateJpaVendorAdapter.setGenerateDdl(true);
@@ -103,13 +115,16 @@ public class SpringJpaFactory {
 	}
 
 	/**
-	 * Factory method for create the new {@link JpaTransactionManager} object from
-	 * the given {@link EntityManagerFactory} object.
+	 * Factory method for create the new {@link JpaTransactionManager} object from the given
+	 * {@link EntityManagerFactory} object.
 	 *
-	 * @param entityManagerFactory {@link EntityManagerFactory} object
+	 * @param entityManagerFactory
+	 *            {@link EntityManagerFactory} object
 	 * @return the new {@link JpaTransactionManager}
 	 */
-	public static JpaTransactionManager newTransactionManager(EntityManagerFactory entityManagerFactory) {
+	public static JpaTransactionManager newTransactionManager(
+		EntityManagerFactory entityManagerFactory)
+	{
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;

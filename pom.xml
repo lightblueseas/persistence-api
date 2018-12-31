@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>5</version>
+		<version>5.1</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -41,14 +41,12 @@
 		<!-- JAVAEE-API version -->
 		<javaee-api.version>7.0</javaee-api.version>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>5.4</mystic-crypt.version>
+		<mystic-crypt.version>5.7</mystic-crypt.version>
 		<crypt-core.version>${mystic-crypt.version}</crypt-core.version>
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
-		<test-objects.version>4.28</test-objects.version>
-		<!-- TMP version -->
-		<jcommons-lang.version>4.35</jcommons-lang.version>
-		<spring-data-jpa.version>2.0.8.RELEASE</spring-data-jpa.version>
+		<test-objects.version>5</test-objects.version>
+		<spring-data-jpa.version>2.1.3.RELEASE</spring-data-jpa.version>
 		<!-- ENT-CORE version -->
 		<ent-core.version>1</ent-core.version>
 		<!-- ENT-API version -->
@@ -116,12 +114,28 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>business-api</artifactId>
 				<version>${business-api.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>data-api</artifactId>
 				<version>${data-api.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -188,6 +202,12 @@
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
 				<version>${spring-data-jpa.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 		</dependencies>

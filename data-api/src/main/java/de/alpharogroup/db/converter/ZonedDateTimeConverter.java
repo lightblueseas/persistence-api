@@ -23,20 +23,22 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- * The class {@link ZonedDateTimeConverter} is an attribute converter for
- * {@link ZonedDateTime} to {@link Date}.
+ * The class {@link ZonedDateTimeConverter} is an attribute converter for {@link ZonedDateTime} to
+ * {@link Date}.
  *
- * {@link ZonedDateTime} the type of the entity attribute {@link Date} the type
- * of the database column
+ * {@link ZonedDateTime} the type of the entity attribute {@link Date} the type of the database
+ * column
  */
 @Converter(autoApply = true)
-public class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, Date> {
+public class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, Date>
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date convertToDatabaseColumn(final ZonedDateTime date) {
+	public Date convertToDatabaseColumn(final ZonedDateTime date)
+	{
 		final Instant instant = Instant.from(date);
 		return Date.from(instant);
 	}
@@ -45,7 +47,8 @@ public class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ZonedDateTime convertToEntityAttribute(final Date value) {
+	public ZonedDateTime convertToEntityAttribute(final Date value)
+	{
 		final Instant instant = value.toInstant();
 		return ZonedDateTime.from(instant);
 	}

@@ -20,9 +20,11 @@ import java.io.Serializable;
 /**
  * Marker interface for domain objects.
  *
- * @param <K> the primary key type of the corresponding entity
+ * @param <K>
+ *            the primary key type of the corresponding entity
  */
-public interface DomainObject<K> extends Serializable {
+public interface DomainObject<K> extends Serializable
+{
 
 	/**
 	 * Gets the id.
@@ -34,7 +36,8 @@ public interface DomainObject<K> extends Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	void setId(K id);
 }

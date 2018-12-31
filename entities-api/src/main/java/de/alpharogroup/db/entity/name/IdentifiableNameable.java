@@ -23,7 +23,9 @@ import de.alpharogroup.db.entity.Identifiable;
  * The interface {@link IdentifiableNameable} is a combination of the interfaces
  * {@link Identifiable} and {@link Nameable}.
  * 
- * @param <PK> the generic type of the identifier
+ * @param <PK>
+ *            the generic type of the identifier
  */
-public interface IdentifiableNameable<PK extends Serializable> extends Identifiable<PK>, Nameable {
+public interface IdentifiableNameable<PK extends Serializable> extends Identifiable<PK>, Nameable
+{
 }

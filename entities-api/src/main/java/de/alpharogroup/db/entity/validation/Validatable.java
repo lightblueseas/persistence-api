@@ -18,9 +18,11 @@ package de.alpharogroup.db.entity.validation;
 /**
  * The interface {@link Validatable}.
  *
- * @param <T> the generic type of time measurement
+ * @param <T>
+ *            the generic type of time measurement
  */
-public interface Validatable<T> {
+public interface Validatable<T>
+{
 
 	/**
 	 * Gets the valid from.
@@ -39,14 +41,16 @@ public interface Validatable<T> {
 	/**
 	 * Sets the valid from.
 	 *
-	 * @param validFrom the new valid from
+	 * @param validFrom
+	 *            the new valid from
 	 */
 	void setValidFrom(T validFrom);
 
 	/**
 	 * Sets the valid till.
 	 *
-	 * @param validTill the new valid till
+	 * @param validTill
+	 *            the new valid till
 	 */
 	void setValidTill(T validTill);
 }

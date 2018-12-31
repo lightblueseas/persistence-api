@@ -21,16 +21,17 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The abstract class {@link BaseDomainObject} is the base class for all domain
- * objects.
+ * The abstract class {@link BaseDomainObject} is the base class for all domain objects.
  *
- * @param <K> the primary key type of the corresponding entity
+ * @param <K>
+ *            the primary key type of the corresponding entity
  */
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class BaseDomainObject<K> implements DomainObject<K> {
+public abstract class BaseDomainObject<K> implements DomainObject<K>
+{
 	/**
 	 * The serialVersionUID.
 	 */

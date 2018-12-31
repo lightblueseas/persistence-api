@@ -31,10 +31,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The class {@link VersionableUniqueNameEntity} is a base entity for a table
- * with a single unique value of length of 255.
+ * The class {@link VersionableUniqueNameEntity} is a base entity for a table with a single unique
+ * value of length of 255.
  *
- * @param <PK> the generic type of the id
+ * @param <PK>
+ *            the generic type of the id
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -43,7 +44,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class VersionableUniqueNameEntity<PK extends Serializable> extends VersionableNameEntity<PK> {
+public abstract class VersionableUniqueNameEntity<PK extends Serializable>
+	extends
+		VersionableNameEntity<PK>
+{
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

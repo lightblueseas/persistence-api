@@ -23,10 +23,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The abstract class {@link VersionableNameBaseDomainObject} is the base class
- * for all domain objects that have a name attribute and are versionable.
+ * The abstract class {@link VersionableNameBaseDomainObject} is the base class for all domain
+ * objects that have a name attribute and are versionable.
  *
- * @param <K> the primary key type of the corresponding entity
+ * @param <K>
+ *            the primary key type of the corresponding entity
  */
 @Getter
 @Setter
@@ -34,7 +35,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class VersionableNameBaseDomainObject<K> extends VersionableBaseDomainObject<K> {
+public class VersionableNameBaseDomainObject<K> extends VersionableBaseDomainObject<K>
+{
 
 	/**
 	 * The serialVersionUID.
