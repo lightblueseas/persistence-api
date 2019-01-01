@@ -14,7 +14,7 @@
 	<artifactId>persistence-api</artifactId>
 	<!-- NOTE: on version change DO NOT FORGET to change ${persistence-api.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>6.6</version>
+	<version>6.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
@@ -26,7 +26,7 @@
 
 	<properties>
 		<!-- PERSISTENCE-API versions -->
-		<persistence-api.version>6.6</persistence-api.version>
+		<persistence-api.version>6.7-SNAPSHOT</persistence-api.version>
 		<base-entities.version>${persistence-api.version}</base-entities.version>
 		<base-service-api.version>${persistence-api.version}</base-service-api.version>
 		<business-api.version>${persistence-api.version}</business-api.version>
