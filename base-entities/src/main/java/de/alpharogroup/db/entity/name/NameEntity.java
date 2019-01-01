@@ -17,10 +17,6 @@ package de.alpharogroup.db.entity.name;
 
 import java.io.Serializable;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import de.alpharogroup.db.entity.BaseEntity;
@@ -33,8 +29,6 @@ import de.alpharogroup.db.entity.BaseEntity;
  *            the generic type of the id
  */
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Access(AccessType.FIELD)
 public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
 	implements
 		IdentifiableNameable<PK>

@@ -4,6 +4,12 @@
 Version 6.6-SNAPSHOT
 -------------
 
+CHANGED:
+
+- update of parent version to 5.1
+- update of ent-core dependency version to 1.1 
+- removed annotation Inheritance
+
 Version 6.5
 -------------
 ADDED:
