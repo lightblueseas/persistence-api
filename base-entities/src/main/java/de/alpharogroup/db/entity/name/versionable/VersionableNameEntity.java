@@ -17,10 +17,6 @@ package de.alpharogroup.db.entity.name.versionable;
 
 import java.io.Serializable;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
@@ -38,8 +34,6 @@ import lombok.Setter;
  *            the generic type of the id
  */
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Access(AccessType.FIELD)
 @Getter
 @Setter
 @NoArgsConstructor

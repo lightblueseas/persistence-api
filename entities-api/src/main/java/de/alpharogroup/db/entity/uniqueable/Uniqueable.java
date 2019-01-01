@@ -13,27 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.name;
+package de.alpharogroup.db.entity.uniqueable;
 
 import java.io.Serializable;
 
-import javax.persistence.MappedSuperclass;
-
-import de.alpharogroup.db.entity.BaseEntity;
-
 /**
- * The class {@link NameEntity} is a base entity for all name entities. A name entity is an entity
- * with a single string value.
+ * The interface {@link Uniqueable} can be implemented from an entity that have to be uniqueable. An
+ * good example would be entities that are needed in rest services
  *
  * @param <PK>
- *            the generic type of the id
+ *            the generic type of the unique identifier
  */
-@MappedSuperclass
-public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
-	implements
-		IdentifiableNameable<PK>
+public interface Uniqueable<PK extends Serializable>
 {
 
-	/** The serial Version UID. */
-	private static final long serialVersionUID = 1L;
+	/**
+	 * Gets the uuid.
+	 *
+	 * @return the uuid
+	 */
+	PK getUuid();
+
+	/**
+	 * Sets the uuid.
+	 *
+	 * @param uuid
+	 *            the new uuid
+	 */
+	void setUuid(final PK uuid);
 }

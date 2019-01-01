@@ -44,7 +44,6 @@ public class DefaultSaveOrUpdateStrategy<T extends BaseEntity<PK>, PK extends Se
 		SaveOrUpdateStrategy<T, PK>
 {
 
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 

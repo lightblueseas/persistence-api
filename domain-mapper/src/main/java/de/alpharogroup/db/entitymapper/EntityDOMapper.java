@@ -23,7 +23,6 @@ import org.dozer.Mapper;
 import org.dozer.MappingException;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.domain.DomainObject;
 
 /**
  * The Interface {@link EntityDOMapper} provides the methods for mapping entities to domain objects
@@ -34,7 +33,7 @@ import de.alpharogroup.domain.DomainObject;
  * @param <DO>
  *            the generic type of the domain object
  */
-public interface EntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>>
+public interface EntityDOMapper<E extends BaseEntity<?>, DO>
 {
 
 	/**

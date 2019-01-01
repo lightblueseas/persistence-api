@@ -142,5 +142,4 @@ public class JdbcUrlBean
 	/** The protocol. */
 	private String protocol;
 
-
 }

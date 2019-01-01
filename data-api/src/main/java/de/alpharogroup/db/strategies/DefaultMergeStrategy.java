@@ -43,7 +43,6 @@ public class DefaultMergeStrategy<T extends BaseEntity<PK>, PK extends Serializa
 		MergeStrategy<T, PK>
 {
 
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 

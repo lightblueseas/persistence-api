@@ -24,24 +24,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.hibernate.engine.jdbc.internal.DDLFormatterImpl;
 import org.hibernate.engine.jdbc.internal.Formatter;
 
-import de.alpharogroup.file.create.CreateFileQuietlyExtensions;
+import de.alpharogroup.file.create.CreateFileExtensions;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
-import de.alpharogroup.file.write.WriteFileQuietlyExtensions;
+import de.alpharogroup.file.write.WriteFileExtensions;
 import de.alpharogroup.io.StreamExtensions;
 import de.alpharogroup.jdbc.ConnectionsExtensions;
+import lombok.extern.java.Log;
 
 /**
  * The abstract class {@link AbstractDatabaseInitialization} for initialize, drop and create a
  * database.
  */
+@Log
 public abstract class AbstractDatabaseInitialization
 {
 
@@ -81,10 +83,6 @@ public abstract class AbstractDatabaseInitialization
 	/** The Constant JDBC_USER_KEY. */
 	public static final String JDBC_USER_KEY = "jdbc.user";
 
-	/** The logger constant. */
-	protected static final Logger LOG = Logger
-		.getLogger(AbstractDatabaseInitialization.class.getName());
-
 	/** The database name. */
 	protected String databaseName;
 
@@ -106,8 +104,8 @@ public abstract class AbstractDatabaseInitialization
 	/** The initialization process. */
 	protected String initializationProcess;
 
-	/** The log. */
-	protected boolean log;
+	/** The logging flag. */
+	protected boolean logging;
 
 	/** The postgres database. */
 	protected boolean postgresDatabase;
@@ -127,7 +125,7 @@ public abstract class AbstractDatabaseInitialization
 		databasePassword = databaseProperties.getProperty(JDBC_PASSWORD_KEY);
 		initializationProcess = databaseProperties.getProperty(JDBC_CREATE_DB_PROCESS_KEY);
 		fileEncoding = databaseProperties.getProperty(JDBC_FILE_ENCODING_KEY, "UTF-8");
-		log = BooleanUtils.toBoolean(databaseProperties.getProperty(JDBC_SHOW_SQL_LOG_KEY));
+		logging = BooleanUtils.toBoolean(databaseProperties.getProperty(JDBC_SHOW_SQL_LOG_KEY));
 		final String vendor = databaseProperties.getProperty(JDBC_DB_VENDOR_KEY);
 		if ((vendor != null) && !vendor.isEmpty())
 		{
@@ -157,8 +155,8 @@ public abstract class AbstractDatabaseInitialization
 		final Formatter formatter = new DDLFormatterImpl();
 		final File schema = new File(sqlDir, "schema.sql");
 		final String schemaString;
-		LOG.debug("start process of creation of initializeSchema.sql file.");
-		LOG.debug("read from file schema.sql");
+		log.log(Level.FINE, "start process of creation of initializeSchema.sql file.");
+		log.log(Level.FINE, "read from file schema.sql");
 		if (postgresDatabase)
 		{
 			schemaString = replaceMediumblobToBytea(schema);
@@ -175,7 +173,7 @@ public abstract class AbstractDatabaseInitialization
 			final File createEnums = new File(sqlDir, "createEnumTypes.sql");
 			if (createEnums.exists())
 			{
-				LOG.debug("read from file createEnumTypes.sql");
+				log.log(Level.FINE, "read from file createEnumTypes.sql");
 				final String result = ReadFileExtensions.readFromFile(createEnums);
 				sb.append(result);
 				sb.append(System.getProperty("line.separator"));
@@ -183,7 +181,7 @@ public abstract class AbstractDatabaseInitialization
 			final File updateEnums = new File(sqlDir, "updateEnumFields.sql");
 			if (updateEnums.exists())
 			{
-				LOG.debug("read from file updateEnumFields.sql");
+				log.log(Level.FINE, "read from file updateEnumFields.sql");
 				final String result = ReadFileExtensions.readFromFile(updateEnums);
 				sb.append(result);
 				sb.append(System.getProperty("line.separator"));
@@ -193,15 +191,15 @@ public abstract class AbstractDatabaseInitialization
 			"createIndexesAndForeignKeys.sql");
 		if (createIndexesAndForeignKeys.exists())
 		{
-			LOG.debug("read from file createIndexesAndForeignKeys.sql");
+			log.log(Level.FINE, "read from file createIndexesAndForeignKeys.sql");
 			final String result = ReadFileExtensions.readFromFile(createIndexesAndForeignKeys);
 			sb.append(result);
 		}
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
-		LOG.debug("write result to file initializeSchema.sql");
-		final boolean writen = WriteFileQuietlyExtensions.writeStringToFile(initializeSchemaDdl,
+		log.log(Level.FINE, "write result to file initializeSchema.sql");
+		final boolean writen = WriteFileExtensions.writeStringToFile(initializeSchemaDdl,
 			sb.toString(), fileEncoding);
-		LOG.debug("end process of creation of initializeSchema.sql file.");
+		log.log(Level.FINE, "end process of creation of initializeSchema.sql file.");
 		return writen;
 	}
 
@@ -227,7 +225,7 @@ public abstract class AbstractDatabaseInitialization
 
 		if (writen)
 		{
-			LOG.debug("write process of file initializeSchema.sql is finished");
+			log.log(Level.FINE, "write process of file initializeSchema.sql is finished");
 		}
 		createSchemaFromScript(jdbcConnection);
 	}
@@ -245,11 +243,11 @@ public abstract class AbstractDatabaseInitialization
 	protected void createSchemaFromScript(final Connection jdbcConnection)
 		throws IOException, SQLException
 	{
-		LOG.debug("creating database schema from script");
+		log.log(Level.FINE, "creating database schema from script");
 		final File insertsDir = getInsertDir();
 		final File initializeSchemaDdl = new File(insertsDir, "initializeSchema.sql");
 		final String result = ReadFileExtensions.readFromFile(initializeSchemaDdl);
-		ConnectionsExtensions.executeSqlScript(jdbcConnection, result, log);
+		ConnectionsExtensions.executeSqlScript(jdbcConnection, result, logging);
 	}
 
 	/**
@@ -286,11 +284,11 @@ public abstract class AbstractDatabaseInitialization
 			"src/main/resources/dll", "dropSchema.sql");
 		if (!dropSchemaSqlFile.exists())
 		{
-			CreateFileQuietlyExtensions.newFileQuietly(dropSchemaSqlFile);
+			CreateFileExtensions.newFile(dropSchemaSqlFile);
 		}
 		ConnectionsExtensions.executeSqlScript(
 			(BufferedReader)StreamExtensions.getReader(dropSchemaSqlFile, fileEncoding, false),
-			jdbcConnection, log);
+			jdbcConnection, logging);
 	}
 
 	/**
@@ -367,16 +365,16 @@ public abstract class AbstractDatabaseInitialization
 	 */
 	public void initializeDatabase() throws ClassNotFoundException, SQLException, IOException
 	{
-		LOG.debug("Initialize database started...");
+		log.log(Level.FINE, "Initialize database started...");
 		final String processtype = getProcessType();
-		LOG.debug("with processtype " + processtype);
+		log.log(Level.FINE, "with processtype " + processtype);
 
 		// check if database exist...
 		final boolean dbExists = ConnectionsExtensions.existsPostgreSQLDatabase(host, databaseName,
 			databaseUser, databasePassword);
 		if (!dbExists)
 		{
-			LOG.debug("database does not exists");
+			log.log(Level.FINE, "database does not exists");
 			newEmptyDatabaseWithoutTables();
 		}
 
@@ -385,25 +383,25 @@ public abstract class AbstractDatabaseInitialization
 
 			if (processtype.equals(DELETE_PROCESS))
 			{
-				LOG.debug("delete and create empty database without tables");
+				log.log(Level.FINE, "delete and create empty database without tables");
 				deleteAndCreateEmptyDatabaseWithoutTables();
 			}
 
-			LOG.debug("Get jdbc connection to database");
+			log.log(Level.FINE, "Get jdbc connection to database");
 			try ( // Get jdbc connection...
 				Connection jdbcConnection = ConnectionsExtensions.getPostgreSQLConnection(host,
 					databaseName, databaseUser, databasePassword))
 			{
 				if (processtype.equals(DROP_PROCESS))
 				{
-					LOG.debug("drop database schema");
+					log.log(Level.FINE, "drop database schema");
 					// drop database schema...
 					dropTablesAndSequences(jdbcConnection);
 				}
-				LOG.debug("create database schema");
+				log.log(Level.FINE, "create database schema");
 				// create database schema...
 				createSchema(jdbcConnection, processtype);
-				LOG.debug("initialize database with some data");
+				log.log(Level.FINE, "initialize database with some data");
 				// initialize database with some data...
 				initializeDatabase(jdbcConnection);
 				// close connection...
@@ -431,7 +429,7 @@ public abstract class AbstractDatabaseInitialization
 		{
 			ConnectionsExtensions.executeSqlScript(
 				(BufferedReader)StreamExtensions.getReader(scriptFiles.get(i), fileEncoding, false),
-				jdbcConnection, log);
+				jdbcConnection, logging);
 		}
 	}
 
@@ -483,9 +481,9 @@ public abstract class AbstractDatabaseInitialization
 					createIndexesAndAlterTable.add(currentLine);
 				}
 			}
-			WriteFileQuietlyExtensions.writeLinesToFile(dropTables, dropSchemaSqlDir, "UTF-8");
-			WriteFileQuietlyExtensions.writeLinesToFile(createTables, schemaSqlDir, "UTF-8");
-			WriteFileQuietlyExtensions.writeLinesToFile(createIndexesAndAlterTable,
+			WriteFileExtensions.writeLinesToFile(dropTables, dropSchemaSqlDir, "UTF-8");
+			WriteFileExtensions.writeLinesToFile(createTables, schemaSqlDir, "UTF-8");
+			WriteFileExtensions.writeLinesToFile(createIndexesAndAlterTable,
 				createIndexesAndForeignKeys, "UTF-8");
 		}
 	}
@@ -517,7 +515,7 @@ public abstract class AbstractDatabaseInitialization
 	{
 		final String contentSchema = ReadFileExtensions.readFromFile(schema);
 		final String result = StringUtils.replace(contentSchema, "MEDIUMBLOB", "BYTEA");
-		WriteFileQuietlyExtensions.writeStringToFile(schema, result, "UTF-8");
+		WriteFileExtensions.writeStringToFile(schema, result, "UTF-8");
 		return result;
 	}
 

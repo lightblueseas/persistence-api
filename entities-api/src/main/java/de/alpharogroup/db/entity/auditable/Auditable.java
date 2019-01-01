@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.db.entity.name;
+package de.alpharogroup.db.entity.auditable;
 
-import java.io.Serializable;
-
-import javax.persistence.MappedSuperclass;
-
-import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.create.Creatable;
+import de.alpharogroup.db.entity.modify.LastModified;
 
 /**
- * The class {@link NameEntity} is a base entity for all name entities. A name entity is an entity
- * with a single string value.
+ * The interface {@link Auditable} is a combination of the interfaces {@link Creatable} and
+ * {@link LastModified} and can be implemented by classes with auditing purposes.
  *
- * @param <PK>
- *            the generic type of the id
+ * @param <T>
+ *            the generic type of time measurement
+ * @param <U>
+ *            the generic type of the user or account
  */
-@MappedSuperclass
-public abstract class NameEntity<PK extends Serializable> extends BaseEntity<PK>
-	implements
-		IdentifiableNameable<PK>
+public interface Auditable<T, U> extends Creatable<T, U>, LastModified<T, U>
 {
-
-	/** The serial Version UID. */
-	private static final long serialVersionUID = 1L;
 }

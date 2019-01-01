@@ -96,7 +96,6 @@ public interface GenericRepository<T extends BaseEntity<PK>, PK extends Serializ
 	public Query createNativeQuery(String sqlString,
 		@SuppressWarnings("rawtypes") Class resultClass);
 
-
 	/**
 	 * Factory method for create a new instance of {@link Query} from the given sql string and
 	 * execute a native sql statement.

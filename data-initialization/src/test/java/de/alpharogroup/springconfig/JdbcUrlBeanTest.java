@@ -72,7 +72,6 @@ public class JdbcUrlBeanTest
 		actual = JdbcUrlBean.newPostgresJdbcUrl(bean);
 		assertEquals(expected, actual);
 
-
 	}
 
 }

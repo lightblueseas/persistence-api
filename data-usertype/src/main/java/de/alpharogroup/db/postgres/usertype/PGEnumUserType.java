@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.logging.Level;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -29,7 +30,7 @@ import org.hibernate.usertype.EnhancedUserType;
 import org.hibernate.usertype.ParameterizedType;
 import org.postgresql.util.PGobject;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
 /**
  * The class {@link PGEnumUserType} maps string to enum and back. Can be used only with Postgres
@@ -39,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Asterios Raptis
  */
-@Slf4j
+@Log
 public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 {
 
@@ -142,7 +143,8 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	{
 		final String columnName = names[0];
 		final Object columnValue = rs.getObject(columnName);
-		log.debug("Result set column {0} value is {1}", columnName, columnValue);
+		Object params[] = { columnName, columnValue };
+		log.log(Level.FINE, "Result set column {0} value is {1}", params);
 		if (rs.wasNull())
 		{
 			return null;
@@ -186,14 +188,15 @@ public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 	{
 		if (value == null)
 		{
-			log.debug("Binding null to parameter {0} ", index);
+			log.log(Level.FINE, "Binding null to parameter {0} ", index);
 			st.setNull(index, Types.OTHER);
 			// UPDATE: To support NULL insertion, change to:
 			// st.setNull(index, 1111);
 		}
 		else
 		{
-			log.debug("Result set column {0} value is {1}", value, index);
+			Object params[] = { value, index };
+			log.log(Level.FINE, "Result set column {0} value is {1}", params);
 			// Notice 1111 which java.sql.Type for Postgres Enum
 			st.setObject(index, (value), Types.OTHER);
 		}

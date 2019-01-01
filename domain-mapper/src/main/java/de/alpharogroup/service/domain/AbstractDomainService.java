@@ -27,9 +27,10 @@ import de.alpharogroup.db.entitymapper.EntityDOMapper;
 import de.alpharogroup.db.repository.api.GenericRepository;
 import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
-import de.alpharogroup.merge.object.MergeObjectQuietlyExtensions;
+import de.alpharogroup.merge.object.MergeObjectExtensions;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 /**
  * The Class {@link AbstractDomainService}.
@@ -166,11 +167,12 @@ public abstract class AbstractDomainService<PK extends Serializable, DO extends 
 	 */
 	@Transactional
 	@Override
+	@SneakyThrows
 	public DO update(final DO domainObject)
 	{
 		final E dbEntity = repository.get(domainObject.getId());
 		E entity = getMapper().toEntity(domainObject);
-		MergeObjectQuietlyExtensions.mergeOrCopyQuietly(dbEntity, entity);
+		MergeObjectExtensions.merge(dbEntity, entity);
 		entity = repository.merge(entity);
 		return domainObject;
 	}

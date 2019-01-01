@@ -25,7 +25,6 @@ import org.dozer.loader.api.TypeMappingOptions;
 
 import de.alpharogroup.collections.CollectionExtensions;
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.domain.DomainObject;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 import lombok.Getter;
 
@@ -38,7 +37,7 @@ import lombok.Getter;
  * @param <DO>
  *            the generic type
  */
-public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO extends DomainObject<?>>
+public abstract class AbstractEntityDOMapper<E extends BaseEntity<?>, DO>
 	implements
 		EntityDOMapper<E, DO>
 {

@@ -5,9 +5,18 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>6.5</version>
+		<version>6.6</version>
 	</parent>
 
 	<artifactId>entities-api</artifactId>
+	
+	<dependencies>
+		<!-- ENT-API DEPENDENCY -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>ent-api</artifactId>
+		</dependency>
+
+	</dependencies>
 
 </project>
