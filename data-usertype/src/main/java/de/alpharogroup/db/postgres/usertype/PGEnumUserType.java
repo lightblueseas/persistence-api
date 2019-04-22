@@ -39,7 +39,9 @@ import lombok.extern.java.Log;
  * Note: Only use with Postgres and hibernate 5!!!
  *
  * @author Asterios Raptis
+ * @deprecated use instead the same name class in project pg-enum-usertype
  */
+@Deprecated
 @Log
 public class PGEnumUserType implements EnhancedUserType, ParameterizedType
 {
