@@ -9,6 +9,7 @@ CHANGED:
 - update of parent version to 5.1
 - update of ent-core dependency version to 1.1 
 - removed annotation Inheritance
+- update of spring-data-jpa dependency version to 2.1.9.RELEASE
 
 Version 6.5
 -------------

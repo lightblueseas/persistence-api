@@ -46,7 +46,7 @@
 		<crypt-data.version>${mystic-crypt.version}</crypt-data.version>
 		<!-- TEST-OBJECTS version -->
 		<test-objects.version>5</test-objects.version>
-		<spring-data-jpa.version>2.1.3.RELEASE</spring-data-jpa.version>
+		<spring-data-jpa.version>2.1.9.RELEASE</spring-data-jpa.version>
 		<!-- ENT-CORE version -->
 		<ent-core.version>1.1</ent-core.version>
 		<!-- ENT-API version -->
