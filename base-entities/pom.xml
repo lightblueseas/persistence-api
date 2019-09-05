@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>base-entities</artifactId>
+	<!-- deprecated project => use instead ent-core project -->
 
 	<dependencies>
 		<!-- HIBERNATE DEPENDENCIES -->

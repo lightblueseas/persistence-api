@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>entities-api</artifactId>
-	
+	<!-- deprecated project => use instead ent-api project -->
 	<dependencies>
 		<!-- ENT-API DEPENDENCY -->
 		<dependency>
