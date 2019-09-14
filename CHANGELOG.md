@@ -10,6 +10,11 @@ CHANGED:
 - update of ent-core dependency version to 1.1 
 - removed annotation Inheritance
 - update of spring-data-jpa dependency version to 2.1.9.RELEASE
+- update of ent-core dependency version to 1.3.2
+- update of ent-api dependency version to 1.2
+- tagged module project base-entities as deprecated. Moved to own project ent-core
+- tagged module project data-usertype as deprecated. Moved to own project pg-enum-usertype
+- tagged module project entities-api as deprecated. Moved to own project ent-api
 
 Version 6.5
 -------------

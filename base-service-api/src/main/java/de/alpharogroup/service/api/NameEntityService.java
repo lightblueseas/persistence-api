@@ -35,7 +35,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 
 	/**
 	 * Find the entity object from the given name value.
-	 * 
+	 *
 	 * @param nameValue
 	 *            the name value
 	 * @return the found entity object or null if not.
@@ -71,7 +71,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 
 	/**
 	 * Find the entity object from the given name value.
-	 * 
+	 *
 	 * @param nameValue
 	 *            the name value
 	 * @return the found entity object or null if not.
