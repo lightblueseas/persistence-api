@@ -16,6 +16,11 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>business-api</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>ent-core</artifactId>
+		</dependency>
 
 	</dependencies>
 

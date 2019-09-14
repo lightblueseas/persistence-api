@@ -23,12 +23,11 @@ import javax.persistence.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.db.entity.name.JpqlStringFactory;
-import de.alpharogroup.db.entity.name.NameEntity;
+import de.alpharogroup.db.entity.name.BasicNameEntity;
 import de.alpharogroup.db.service.api.BusinessService;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
 
-public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable>
+public interface NameEntityService<T extends BasicNameEntity<PK>, PK extends Serializable>
 	extends
 		BusinessService<T, PK>
 {

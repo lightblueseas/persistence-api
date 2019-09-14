@@ -16,7 +16,7 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>base-entities</artifactId>
+			<artifactId>ent-core</artifactId>
 		</dependency>
 		<!-- HIBERNATE DEPENDENCIES -->
 		<dependency>
