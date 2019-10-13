@@ -32,7 +32,6 @@
 		<data-api.version>${persistence-api.version}</data-api.version>
 		<data-initialization.version>${persistence-api.version}</data-initialization.version>
 		<domain-api.version>${persistence-api.version}</domain-api.version>
-		<domain-mapper.version>${persistence-api.version}</domain-mapper.version>
 		<rest-api.version>${persistence-api.version}</rest-api.version>
 		<rest-client.version>${persistence-api.version}</rest-client.version>
 		<!-- JAVAEE-API version -->
@@ -56,7 +55,6 @@
 		<module>data-api</module>
 		<module>business-api</module>
 		<module>base-service-api</module>
-		<module>domain-mapper</module>
 		<module>rest-api</module>
 		<module>rest-client</module>
 	</modules>
@@ -137,12 +135,6 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>domain-api</artifactId>
 				<version>${domain-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>domain-mapper</artifactId>
-				<version>${domain-mapper.version}</version>
 			</dependency>
 
 			<dependency>
