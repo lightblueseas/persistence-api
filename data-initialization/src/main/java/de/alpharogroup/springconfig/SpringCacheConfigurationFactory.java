@@ -34,7 +34,9 @@ import lombok.experimental.UtilityClass;
 
 /**
  * A factory class for creating cache configuration objects.
+ * @deprecated use instead same name class in project spring-tool-extensions
  */
+@Deprecated
 @UtilityClass
 public class SpringCacheConfigurationFactory
 {

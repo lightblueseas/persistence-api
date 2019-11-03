@@ -30,7 +30,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 /**
  * A factory class for creating jpa configuration objects.
+ * @deprecated use instead same name class in project spring-tool-extensions
  */
+@Deprecated
 public class SpringJpaFactory
 {
 

@@ -22,7 +22,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * The class {@link DataSourceBean}.
+ * @deprecated use instead same name class in project silly-jdbc
  */
+@Deprecated
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
