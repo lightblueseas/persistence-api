@@ -61,7 +61,7 @@ import de.alpharogroup.service.rs.enums.AuthenticationScheme;
  * </ol>
  * Note: The step 3 is not required if the server has issued a signed token (such as JWT, which
  * allows you to perform stateless authentication).
- * 
+ *
  * Note: also see <a href=
  * "https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">Best
  * practice for REST token-based authentication with JAX-RS and Jersey</a>
@@ -175,13 +175,23 @@ public abstract class AuthenticationFilter implements ContainerRequestFilter
 		if (isSigninPath(path))
 		{
 			// check if scheme is https
-			if (!servletRequest.isSecure())
+			if (!isSecureRequest(servletRequest))
 			{
 				throw new SSLException("use https scheme");
 			}
 			isSigninRequest = true;
 		}
 		return isSigninRequest;
+	}
+
+	/**
+	 * Checks if the current request is a secure request, means that the scheme is https
+	 *
+	 * @param request the request
+	 * @return true, if is secure request
+	 */
+	protected boolean isSecureRequest(final HttpServletRequest request){
+		return request.isSecure();
 	}
 
 	/**
